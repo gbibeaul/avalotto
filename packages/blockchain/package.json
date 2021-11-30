@@ -1,0 +1,30 @@
+{
+    "name": "blockchain",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/preset-typescript": "^7.16.0",
+        "@openzeppelin/contracts": "^4.4.0",
+        "@types/chai": "^4.2.22",
+        "@types/jest": "^27.0.3",
+        "@types/node": "^16.11.10",
+        "hardhat": "^2.7.0",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.2"
+    },
+    "dependencies": {
+        "@nomiclabs/hardhat-ethers": "^2.0.2",
+        "@nomiclabs/hardhat-waffle": "^2.0.1",
+        "@types/mocha": "^9.0.0",
+        "chai": "^4.3.4",
+        "ethereum-waffle": "^3.4.0",
+        "ethers": "^5.5.1",
+        "hardhat-jest-plugin": "^0.0.6",
+        "jest": "^27.3.1"
+    },
+    "scripts": {
+        "start:chain": "hardhat node",
+        "deploy:local": "hardhat run --network localhost scripts/deploy.ts"
+    }
+}
