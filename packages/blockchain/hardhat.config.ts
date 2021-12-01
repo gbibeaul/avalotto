@@ -62,7 +62,7 @@ export default {
         version: "0.7.0",
       },
       {
-        version: "0.8.0",
+        version: "0.8.10",
       },
     ],
   },
@@ -71,6 +71,10 @@ export default {
       gasPrice: 225000000000,
       chainId: !forkingData ? 43112 : undefined, //Only specify a chainId if we are not forking
       forking: forkingData,
+      // mining: {
+      //   auto: false,
+      //   interval: 5000,
+      // },
     },
     local: {
       url: "http://localhost:9650/ext/bc/C/rpc",

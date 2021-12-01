@@ -4,7 +4,9 @@
         "packages/*"
     ],
     "scripts": {
-        "start:chain": "yarn workspace blockchain run start:chain",
-        "start:web": "yarn workspace webapp run dev"
+        "start:chain": "yarn workspace blockchain run node",
+        "start:web": "yarn workspace webapp run dev",
+        "test:chain": "yarn workspace blockchain run test",
+        "build:chain": "yarn workspace blockchain run compile"
     }
 }

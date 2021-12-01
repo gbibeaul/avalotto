@@ -1,12 +1,12 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const MyCryptoLions = await ethers.getContractFactory("MyCryptoLions");
-  const myCryptoLions = await MyCryptoLions.deploy("MyCryptoLions", "MCL");
+  const Lotto = await ethers.getContractFactory("Lotto");
+  const lotto = await Lotto.deploy();
 
-  await myCryptoLions.deployed();
+  await lotto.deployed();
 
-  console.log("MyCryptoLions deployed to:", myCryptoLions.address);
+  console.log("Lotto deployed to:", lotto.address);
 }
 
 main()
