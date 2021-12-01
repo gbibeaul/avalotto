@@ -9,7 +9,7 @@ const getDeployedContract = async () => {
   const [owner, trusted, nonTrusted] = await ethers.getSigners();
 
   const Lotto = await ethers.getContractFactory("Lotto");
-  const lotto = await Lotto.deploy(trusted.address);
+  const lotto = await Lotto.deploy(trusted.address, owner.address);
 
   await lotto.deployed();
   return lotto;
@@ -21,9 +21,6 @@ const mineEmptyBlocks = async (numberOfBlocks: number) => {
   }
 };
 
-/**
- *
- */
 describe("Lotto", async function () {
   it("Should deploy", async function () {
     const lotto = await getDeployedContract();
@@ -91,5 +88,82 @@ describe("Lotto", async function () {
     const [draw2] = await lotto.connect(trusted).functions.getLastDrawNumbers();
 
     expect(draw1).to.not.deep.equal(draw2);
+  });
+
+  it("accepts bets", async function () {
+    const lotto = await getDeployedContract();
+    const [owner, trusted, nonTrusted] = await ethers.getSigners();
+
+    const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
+    await lotto
+      .connect(nonTrusted)
+      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+
+    const [amountOfBets] = await lotto
+      .connect(nonTrusted)
+      .functions.getAmountOfBetForNumbers(numbers);
+
+    expect(amountOfBets.toNumber()).to.equal(1);
+  });
+
+  it("refuses a bet from the trusted party", async function () {
+    const lotto = await getDeployedContract();
+    const [owner, trusted, nonTrusted] = await ethers.getSigners();
+
+    const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
+    const bet = lotto
+      .connect(trusted)
+      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+
+    expect(bet).to.be.rejectedWith(Error);
+  });
+
+  it("refuses bets after the seed was sent", async function () {
+    const lotto = await getDeployedContract();
+    const [owner, trusted, nonTrusted] = await ethers.getSigners();
+
+    const seed = ethers.utils.id("hello234");
+    await lotto.connect(trusted).functions.setSealedSeed(seed);
+
+    const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
+    const bet = lotto
+      .connect(nonTrusted)
+      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+
+    expect(bet).to.be.rejectedWith(Error);
+  });
+
+  it("accepts multiple bets", async function () {
+    const lotto = await getDeployedContract();
+    const [owner, trusted, nonTrusted1, nonTrusted2] =
+      await ethers.getSigners();
+
+    // place a first bet from account 1
+    const numbers1 = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
+    const bet1 = await lotto
+      .connect(nonTrusted1)
+      .functions.bet(numbers1, { value: ethers.utils.parseEther("1") });
+
+    // place a second bet from account 2
+    const numbers2 = [4, 5, 6].map((x) => ethers.BigNumber.from(x));
+    const bet2 = await lotto.connect(nonTrusted2).functions.bet(numbers2, {
+      value: ethers.utils.parseEther("1"),
+    });
+
+    // place the same bet from account 2
+    const bet3 = await lotto.connect(nonTrusted2).functions.bet(numbers1, {
+      value: ethers.utils.parseEther("1"),
+    });
+
+    const [amountOfBets] = await lotto
+      .connect(nonTrusted1)
+      .functions.getAmountOfBetForNumbers(numbers1);
+
+    const [amountOfBets2] = await lotto
+      .connect(nonTrusted2)
+      .functions.getAmountOfBetForNumbers(numbers2);
+
+    expect(amountOfBets.toNumber()).to.equal(2);
+    expect(amountOfBets2.toNumber()).to.equal(1);
   });
 });
