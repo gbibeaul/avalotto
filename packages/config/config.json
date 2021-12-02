@@ -1,0 +1,32 @@
+{
+  "prod": {
+    "contracts": {
+      "Lotto": {
+        "name": "Lotto",
+        "owner": "0x0",
+        "trustedEntity": "0x0",
+        "address": "0x0"
+      }
+    }
+  },
+  "test": {
+    "contracts": {
+      "Lotto": {
+        "name": "Lotto",
+        "owner": "0x0",
+        "trustedEntity": "0x0",
+        "address": "0x0"
+      }
+    }
+  },
+  "dev": {
+    "contracts": {
+      "Lotto": {
+        "name": "Lotto",
+        "owner": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "trustedEntity": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      }
+    }
+  }
+}

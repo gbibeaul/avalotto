@@ -26,13 +26,15 @@
         "hardhat-jest-plugin": "^0.0.6",
         "jest": "^27.3.1",
         "ts-node": "^10.4.0",
-        "typescript": "^4.5.2"
+        "typescript": "^4.5.2",
+        "config": "*"
     },
     "scripts": {
         "compile": "hardhat compile",
         "start:chain": "hardhat node",
         "test": "hardhat test",
         "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
-        "deliver:lotto": "hardhat test && ts-node scripts/deliver-contract.ts Lotto"
+        "deliver:lotto": "hardhat test && ts-node scripts/deliver-contract.ts Lotto",
+        "deploy:lotto:dev": "hardhat run --network localhost scripts/deploy-dev.ts"
     }
 }
