@@ -1,6 +1,11 @@
+/**
+ * This is the exact same contract as Lotto.sol with the exception that the winner of the draw is hardcoded to be 1,2,3
+ * This contract is never meant to be used in production, it is only meant to be used for testing purposes.
+ */
+
 pragma solidity ^0.8.10;
 
-contract Lotto {
+contract LottoWinnerMock {
   struct LastDraw {
     address [] winners;
     uint256 jackpot;
@@ -143,26 +148,11 @@ contract Lotto {
 
 
 
-  /** 
-   * @dev ENSURE THIS FUNCTION IS NOT RETURNING [uint256(1), uint256(2), uint256(3)]
-   *  if that's the case you are coding in the test contract
+  /**
+   * this function is mocked. Never use it in this state in a live contract on mainnet
    */
   function _getLotteryResults(uint _random) private pure returns (uint256[3] memory) {
-    uint256 _currentIndex = 0;
-
-    uint256 _num1 = (getDigit(_random, _currentIndex) * 10) + getDigit(_random, _currentIndex + 1);
-    _currentIndex += 2;
-    uint256 _num2 = (getDigit(_random, _currentIndex) * 10) + getDigit(_random, _currentIndex + 1);
-    _currentIndex += 2;
-    while(_num1 == _num2) {
-      _num2 = (getDigit(_random, _currentIndex) * 10) + getDigit(_random, _currentIndex + 1);
-      _currentIndex += 2;
-    }
-    uint256 _num3 = (getDigit(_random, _currentIndex) * 10) + getDigit(_random, _currentIndex + 1);
-    while(_num3 == _num1 || _num3 == _num2) {
-      _num3 = (getDigit(_random, _currentIndex) * 10) + getDigit(_random, _currentIndex + 1);
-    }
-    return [_num1, _num2, _num3];
+    return [uint256(1), uint256(2), uint256(3)];
   } 
 
   function _executePayment() public onlyTrustedParty {
@@ -176,6 +166,7 @@ contract Lotto {
     payoutAllWinners(_amountForEachWinner);
     jackpot = 0;
   }
+
 
   function reveal(bytes32 _seed) public onlyTrustedParty returns (uint256[3] memory) {
     require(seedSet);

@@ -26,17 +26,6 @@ function createWallet() {
 
 export const wallet = createWallet();
 
-// write a function that takes in a number and returns the digits at the specific index using modulo and rounds down
-
-// implement a rounding algorithm to the nearest integer
-const roundDown = (number) => {
-
-
-
-
-
-
-        const getDigit = (number, index) => {
-            // do not include the decimal point
-            return number % Math.pow(10, index + 1) / Math.pow(10, index)
-        }
+const getDigit = (number, index) => {
+    return number % Math.pow(10, index + 1) / Math.pow(10, index) | 0;
+};

@@ -1,0 +1,6 @@
+{
+    "name": "lotto",
+    "main": "Lotto.json",
+    "description": "The resulting bytecode and ABI for loto contract protocol",
+    "license": "MIT"
+}
