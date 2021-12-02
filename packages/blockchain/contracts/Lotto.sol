@@ -79,13 +79,12 @@ contract Lotto {
     return bets[uint256(keccak256(abi.encodePacked(_numbers)))].length;
   }
 
-
-
 /**
     PAYOUT ACTIONS
  */ 
   function payoutAllWinners(uint256 amount) public betsClosedActions {
     for (uint256 i = 0; i < bets[uint256(keccak256(abi.encodePacked(lastDraw.numbers)))].length; i++) {
+      console.log('i', i, 'amount', amount);
       payable(bets[uint256(keccak256(abi.encodePacked(lastDraw.numbers)))][i]).transfer(amount);
     }
   }
@@ -104,7 +103,6 @@ contract Lotto {
     require(_numbers[0] >= 0 && _numbers[0] <= 99, "Number 1 must be between 0 and 99");
     require(_numbers[1] >= 0 && _numbers[1] <= 99, "Number 2 must be between 0 and 99");
     require(_numbers[2] >= 0 && _numbers[2] <= 99, "Number 3 must be between 0 and 99");
-
     jackpot += msg.value;
     bets[uint256(keccak256(abi.encodePacked(_numbers)))].push(msg.sender);
   }
@@ -162,12 +160,20 @@ contract Lotto {
       _num3 = (getDigit(_random, _currentIndex) * 10) + getDigit(_random, _currentIndex + 1);
     }
     return [_num1, _num2, _num3];
+
+    // return [uint256(1), uint256(2), uint256(3)];
   } 
 
   function _executePayment() public onlyTrustedParty {
-    payTreasury(jackpot / 20);
-    payoutAllWinners((jackpot / 20) * 19);
+    // we keep 5% of the jackpot as treasury and pay the treasury
+    uint256 _amountForTreasury = jackpot / 20;
+    payTreasury(_amountForTreasury);
+    jackpot = jackpot - _amountForTreasury;
 
+    // the rest of the jackpot is divided equally among the winners
+    uint256 _amountForEachWinner = jackpot / bets[uint256(keccak256(abi.encodePacked(lastDraw.numbers)))].length;
+    payoutAllWinners(_amountForEachWinner);
+    jackpot = 0;
   }
 
 
@@ -184,9 +190,9 @@ contract Lotto {
     lastDraw.sealedSeed = _seed;
     lastDraw.jackpot = jackpot;
     lastDraw.winners = bets[uint256(keccak256(abi.encodePacked(lastDraw.numbers)))];
-    jackpot = 0;
 
-
+    _executePayment();
+    
     emit Draw(lastDraw.numbers);
 
     seedSet = false;
