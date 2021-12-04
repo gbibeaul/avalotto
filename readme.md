@@ -15,7 +15,7 @@ The player rewards and stakes yields are balanced by the protocol to insure the 
 1. Establish yield and stake rewards comptroller for the protocol
 1. Launch the pre-sale and alpha of the protocol with two games: black jack and slots.
 1. Launch the beta of the protocol with the rest of the games.
-1. Launch the public release of the protocol and institue a decentralied governance system.
+1. Launch the public release of the protocol and institue a decentralized governance system.
 
 ## Prerequesites
 
