@@ -27,6 +27,7 @@ contract Lotto {
   mapping (uint256 => address[]) bets;
   uint256[] placedBets = new uint256[](0);
   event Draw (uint256[3] numbers);
+  event jackpotUpdated (uint256 jackpot);
 
   /**
     * @dev Sets who is the initial trusted party. This is the party responsible for placing the seed. They are not able to bet for draws.
@@ -78,6 +79,10 @@ contract Lotto {
     return bets[uint256(keccak256(abi.encodePacked(_numbers)))].length;
   }
 
+  function getCurrentJackpot() public view returns (uint256) {
+    return jackpot;
+  }
+
 /**
     PAYOUT ACTIONS
  */ 
@@ -104,6 +109,7 @@ contract Lotto {
     jackpot += msg.value;
     placedBets.push(uint256(keccak256(abi.encodePacked(_numbers))));
     bets[uint256(keccak256(abi.encodePacked(_numbers)))].push(msg.sender);
+    emit jackpotUpdated(jackpot);
   }
 
 

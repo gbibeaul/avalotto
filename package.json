@@ -5,7 +5,7 @@
     ],
     "scripts": {
         "start:chain": "yarn workspace blockchain run start:chain",
-        "start:web": "yarn workspace webapp run dev",
+        "start:web": "yarn workspace @gamble/ui run dev",
         "test:chain": "yarn workspace blockchain run test",
         "build:chain": "yarn workspace blockchain run compile",
         "deliver": "yarn workspace blockchain run deliver:lotto",

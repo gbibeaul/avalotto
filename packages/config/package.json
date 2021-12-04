@@ -1,5 +1,5 @@
 {
-    "name": "config",
+    "name": "@gamble/config",
     "version": "1.0.0",
     "description": "This is the configuration package that holds the source of truth for the different environments",
     "main": "config.json"

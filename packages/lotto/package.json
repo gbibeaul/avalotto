@@ -1,6 +1,8 @@
 {
-    "name": "lotto",
+    "name": "@gamble/lotto",
+    "version": "1.0.0",
     "main": "Lotto.json",
-    "description": "The resulting bytecode and ABI for loto contract protocol",
-    "license": "MIT"
+    "description": "The resulting bytecode and ABI for lotto contract protocol",
+    "license": "MIT",
+    "types": "Lotto.json"
 }
