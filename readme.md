@@ -25,11 +25,11 @@ The player rewards and stakes yields are balanced by the protocol to insure the 
 
 ## Developer environment
 
-1. Launch the test network `yarn start:chain`
-1. add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
+- Launch the test network `yarn start:chain`
+- add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
  - new RPC URL http://127.0.0.1:8545/
  - new network name "Hardhat test"
  - new network id "43112"
  - Currency Symbol(Optional) AVAX
-1. From a another terminal, deploy the contract to the test network `yarn start:contract`
-1. In the same terminal where you deployed the contract, start the UI `yarn start:ui`
+- From a another terminal, deploy the contract to the test network `yarn start:contract`
+- In the same terminal where you deployed the contract, start the UI `yarn start:ui`
