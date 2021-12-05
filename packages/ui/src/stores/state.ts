@@ -12,16 +12,20 @@ type State = {
   userAddress: string;
   ethereumDetected: boolean;
   errors: null | null;
+  bets: BigNumber[][];
   loading: boolean;
+  buying: boolean;
 };
 
 const initialState: State = {
   jackpot: BigNumber.from(0),
   userBalance: BigNumber.from(0),
   userAddress: "",
+  bets: [],
   ethereumDetected: false,
   loading: true,
   errors: null,
+  buying: false,
 };
 
 const createState = () => {
@@ -48,6 +52,8 @@ const createState = () => {
 
   const updateErrors = (errors: null | null) =>
     update((s) => ({ ...s, errors }));
+
+  const updateBuying = (buying: boolean) => update((s) => ({ ...s, buying }));
 
   const downloadMetamask = async () => {
     onboarding.startOnboarding();
@@ -76,6 +82,7 @@ const createState = () => {
     // @ts-ignore
     window.ethereum.on("accountsChanged", updateUserAddress);
 
+    const bets = await lotto.getBets();
     try {
       const userAddress = await ethereum.getSigner().getAddress();
       const userBalance = await ethereum.getBalance(userAddress);
@@ -83,6 +90,7 @@ const createState = () => {
         ...state,
         userAddress,
         userBalance,
+        bets,
         ethereumDetected: true,
       }));
     } catch (e) {
@@ -93,7 +101,15 @@ const createState = () => {
   const placeBet = async (numbers: BigNumber[]) => {
     try {
       const { lotto } = await getProviders();
-      await lotto.bet(numbers, { value: ethers.utils.parseEther("1") });
+      await lotto.bet(numbers, {
+        value: ethers.utils.parseEther("1"),
+      });
+
+      update((state) => ({
+        ...state,
+        bets: [...state.bets, numbers],
+        buying: false,
+      }));
     } catch (e) {
       updateErrors(e);
     }
@@ -111,6 +127,7 @@ const createState = () => {
     placeBet,
     downloadMetamask,
     connectMetamask,
+    updateBuying,
   };
 };
 

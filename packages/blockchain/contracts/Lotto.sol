@@ -25,6 +25,7 @@ contract Lotto {
   LastDraw lastDraw;
   
   mapping (uint256 => address[]) bets;
+  mapping (address => uint256[][]) playerBets;
   uint256[] placedBets = new uint256[](0);
   event Draw (uint256[3] numbers);
   event jackpotUpdated (uint256 jackpot);
@@ -83,6 +84,12 @@ contract Lotto {
     return jackpot;
   }
 
+  function getBets() public view returns (uint256[][] memory) {
+    return playerBets[msg.sender];
+  }
+
+    
+
 /**
     PAYOUT ACTIONS
  */ 
@@ -108,6 +115,7 @@ contract Lotto {
     require(_numbers[2] >= 0 && _numbers[2] <= 99, "Number 3 must be between 0 and 99");
     jackpot += msg.value;
     placedBets.push(uint256(keccak256(abi.encodePacked(_numbers))));
+    playerBets[msg.sender].push(_numbers);
     bets[uint256(keccak256(abi.encodePacked(_numbers)))].push(msg.sender);
     emit jackpotUpdated(jackpot);
   }

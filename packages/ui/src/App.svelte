@@ -6,29 +6,33 @@
   import "smelte/src/tailwind.css";
 
   import { stateStore } from "./stores/state";
+  import { routing, Routes } from "./stores/routing";
+  import TicketList from "./components/TicketList.svelte";
 
   let userAddress;
-  let jackpot;
-  let userBalance;
+  let bets;
+  let route;
 
   stateStore.subscribe((value) => {
     userAddress = value.userAddress;
-    jackpot = value.jackpot;
-    userBalance = value.userBalance;
+    bets = value.bets;
   });
 
-  const handlePlaceBet = () => {
-    const bet = [99, 22, 33].map(ethers.BigNumber.from);
-    stateStore.placeBet(bet);
-  };
+  routing.subscribe((value) => {
+    route = value;
+  });
 </script>
 
 <main>
   <Jackpot />
-  {#if userAddress}
-    <Buy />
-  {:else}
+  {#if route === Routes.noAccount}
     <ConnectMetamask />
+  {/if}
+  {#if route === Routes.buying}
+    <Buy />
+  {/if}
+  {#if route === Routes.hasBet}
+    <TicketList />
   {/if}
 </main>
 
