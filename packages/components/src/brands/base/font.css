@@ -1,0 +1,10 @@
+:root {
+    --base-font-family-museo-slab: museo-slab;
+    --base-font-family-museo-sans: 'museo-sans';
+    --base-font-family-museo-sans-condensed: museo-sans-condensed;
+    --base-font-family-helvetica-arial: Helvetica, Arial, sans-serif;
+    --base-font-family-code: Menlo, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+        Courier, monospace;
+
+    --font-size: 1.6rem; /* Default browser font-size */
+}

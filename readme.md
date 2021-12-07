@@ -31,5 +31,5 @@ The player rewards and stakes yields are balanced by the protocol to insure the 
     - new network name "Hardhat test"
     - new network id "43112"
     - Currency Symbol(Optional) AVAX
-- From a another terminal, deploy the contract to the test network `yarn start:contract`
+- From a another terminal, deploy the contract to the test network `yarn deploy:lotto:dev`
 - In the same terminal where you deployed the contract, start the UI `yarn start:ui`

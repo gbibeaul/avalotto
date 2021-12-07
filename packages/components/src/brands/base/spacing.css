@@ -1,0 +1,19 @@
+:root {
+    --base-spacing-01: 0.5rem;
+    --base-spacing-02: 1rem;
+    --base-spacing-03: 1.5rem;
+    --base-spacing-04: 2rem;
+    --base-spacing-05: 2.5rem;
+    --base-spacing-06: 3.5rem;
+    --base-spacing-07: 5rem;
+    --base-spacing-08: 7.5rem;
+    --base-spacing-09: 10rem;
+
+    --base-layout-01: 1.6rem;
+    --base-layout-02: 2.4rem;
+    --base-layout-03: 3.2rem;
+    --base-layout-04: 4.8rem;
+    --base-layout-05: 6.4rem;
+    --base-layout-06: 9.6rem;
+    --base-layout-07: 16rem;
+}
