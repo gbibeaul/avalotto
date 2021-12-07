@@ -1,0 +1,11 @@
+{
+    "name": "@gamble/typescript-config",
+    "version": "0.1.3",
+    "license": "UNLICENSED",
+    "main": "tsconfig.json",
+    "scripts": {},
+    "dependencies": {
+        "@tsconfig/svelte": "^2.0.1",
+        "typescript": "^4.3.4"
+    }
+}

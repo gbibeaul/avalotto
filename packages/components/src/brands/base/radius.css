@@ -1,0 +1,7 @@
+:root {
+    --base-radius-sharp: 0px;
+    --base-radius-100: 3px;
+    --base-radius-200: 6px;
+    --base-radius-300: 9px;
+    --base-radius-round: 100%;
+}

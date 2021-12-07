@@ -1,0 +1,14 @@
+{
+    "name": "@gamble/prettier-config",
+    "version": "1.0.0",
+    "license": "UNLICENSED",
+    "main": "prettier.config.js",
+    "scripts": {},
+    "dependencies": {
+        "prettier-plugin-packagejson": "^2.2.12",
+        "prettier-plugin-svelte": "^2.4.0"
+    },
+    "peerDependencies": {
+        "prettier": "^2.4.0"
+    }
+}
