@@ -19,7 +19,7 @@
     underlineWidth = `${widthPercent}%`;
   } else {
     underlineOffset = $longestTab && $longestTab * $selectedIndex;
-    underlineWidth = `${$currentTheme !== "fv-classic" ? $longestTab : 0}px`;
+    underlineWidth = `${$currentTheme !== "gb-classic" ? $longestTab : 0}px`;
   }
 
   $: cssVarStyles = `

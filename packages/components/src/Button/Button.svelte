@@ -71,7 +71,7 @@
     on:mouseenter
     on:mouseleave
     on:focus
-    data-testid="fvButtonSkeleton"
+    data-testid="gbButtonSkeleton"
   />
 {:else if href && !disabled}
   <a
