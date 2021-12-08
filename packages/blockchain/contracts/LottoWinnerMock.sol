@@ -6,7 +6,7 @@
 pragma solidity ^0.8.10;
 
 contract LottoWinnerMock {
-  struct LastDraw {
+   struct LastDraw {
     address [] winners;
     uint256 jackpot;
     uint256 drawTime;
@@ -30,8 +30,10 @@ contract LottoWinnerMock {
   LastDraw lastDraw;
   
   mapping (uint256 => address[]) bets;
+  mapping (address => uint256[][]) playerBets;
   uint256[] placedBets = new uint256[](0);
   event Draw (uint256[3] numbers);
+  event jackpotUpdated (uint256 jackpot);
 
   /**
     * @dev Sets who is the initial trusted party. This is the party responsible for placing the seed. They are not able to bet for draws.
@@ -83,6 +85,16 @@ contract LottoWinnerMock {
     return bets[uint256(keccak256(abi.encodePacked(_numbers)))].length;
   }
 
+  function getCurrentJackpot() public view returns (uint256) {
+    return jackpot;
+  }
+
+  function getBets() public view returns (uint256[][] memory) {
+    return playerBets[msg.sender];
+  }
+
+    
+
 /**
     PAYOUT ACTIONS
  */ 
@@ -108,7 +120,9 @@ contract LottoWinnerMock {
     require(_numbers[2] >= 0 && _numbers[2] <= 99, "Number 3 must be between 0 and 99");
     jackpot += msg.value;
     placedBets.push(uint256(keccak256(abi.encodePacked(_numbers))));
+    playerBets[msg.sender].push(_numbers);
     bets[uint256(keccak256(abi.encodePacked(_numbers)))].push(msg.sender);
+    emit jackpotUpdated(jackpot);
   }
 
 
@@ -166,7 +180,6 @@ contract LottoWinnerMock {
     payoutAllWinners(_amountForEachWinner);
     jackpot = 0;
   }
-
 
   function reveal(bytes32 _seed) public onlyTrustedParty returns (uint256[3] memory) {
     require(seedSet);
