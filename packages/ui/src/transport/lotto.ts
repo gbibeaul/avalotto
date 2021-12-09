@@ -10,12 +10,15 @@ const useMock = true;
 
 const abi = useMock ? lottoWinnerMockAbi : lottoAbi;
 const address = useMock
-  ? config.dev.contracts.LottoWinnerMock.address
+  ? config.test.contracts.LottoWinnerMock.address
   : config.dev.contracts.Lotto.address;
 
 export const lottoProvider = (signer?: Signer) =>
   new ethers.Contract(
     address,
     abi,
-    signer ?? new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/")
+    signer ??
+      new ethers.providers.JsonRpcProvider(
+        "https://api.avax-test.network/ext/bc/C/rpc"
+      )
   );

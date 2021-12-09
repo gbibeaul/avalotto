@@ -9,6 +9,7 @@
         "start:admin": "yarn workspace @gamble/admin run dev",
         "test:chain": "yarn workspace @gamble/blockchain run test",
         "build:chain": "yarn workspace @gamble/blockchain run compile",
+        "build:ui": "yarn workspace @gamble/ui run build",
         "deliver": "yarn workspace @gamble/blockchain run deliver:lotto && yarn workspace @gamble/blockchain run deliver:lotto-winner-mock",
         "deploy:lotto:dev": "yarn workspace @gamble/blockchain run deploy:lotto:dev",
         "deploy:lottowinnermock:dev": "yarn workspace @gamble/blockchain run deploy:lottoWinnerMock:dev"
