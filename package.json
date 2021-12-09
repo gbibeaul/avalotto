@@ -4,11 +4,14 @@
         "packages/*"
     ],
     "scripts": {
-        "start:chain": "yarn workspace blockchain run start:chain",
+        "start:chain": "yarn workspace @gamble/blockchain run start:chain",
         "start:ui": "yarn workspace @gamble/ui run dev",
-        "test:chain": "yarn workspace blockchain run test",
-        "build:chain": "yarn workspace blockchain run compile",
-        "deliver": "yarn workspace blockchain run deliver:lotto",
-        "deploy:lotto:dev": "yarn workspace blockchain run deploy:lotto:dev"
+        "start:admin": "yarn workspace @gamble/admin run dev",
+        "test:chain": "yarn workspace @gamble/blockchain run test",
+        "build:chain": "yarn workspace @gamble/blockchain run compile",
+        "build:ui": "yarn workspace @gamble/ui run build",
+        "deliver": "yarn workspace @gamble/blockchain run deliver:lotto && yarn workspace @gamble/blockchain run deliver:lotto-winner-mock",
+        "deploy:lotto:dev": "yarn workspace @gamble/blockchain run deploy:lotto:dev",
+        "deploy:lottowinnermock:dev": "yarn workspace @gamble/blockchain run deploy:lottoWinnerMock:dev"
     }
 }
