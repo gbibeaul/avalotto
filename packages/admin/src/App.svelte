@@ -13,18 +13,12 @@
 
   const handleSubmitSeed = async (e) => {
     e.preventDefault();
-    console.log("setting seed");
-    console.log(userAddress);
-    const hashedSeed = ethers.utils.id(seed);
-    await stateStore.setSeed(hashedSeed);
+    await stateStore.setSeed(seed);
   };
 
   const handleReveal = (e) => {
     e.preventDefault();
-    console.log("reveal seed");
-    console.log(userAddress);
-    const hashedSeed = ethers.utils.id(seed);
-    stateStore.reveal(hashedSeed);
+    stateStore.reveal(seed);
   };
 </script>
 

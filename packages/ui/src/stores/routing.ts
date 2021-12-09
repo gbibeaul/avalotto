@@ -8,7 +8,10 @@ export enum Routes {
 }
 
 export const routing = derived(stateStore, ($stateStore) => {
-  if ($stateStore.userAddress === null) {
+  if (
+    $stateStore.userAddress === null ||
+    $stateStore.userAddress.length === 0
+  ) {
     return Routes.noAccount;
   }
 
