@@ -79,7 +79,7 @@
 						</form>
             {#if done}
             <p class="mt-4 text-lg leading-6 text-indigo-200">
-              Tank you for subscribing!
+              Thank you for subscribing!
             </p>
             {/if}
 					</div>
