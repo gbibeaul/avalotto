@@ -36,7 +36,7 @@
 				</div>
 			</div>
 			<div class="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1 flex">
-				<img src="/assets/treasure.svg" alt="App screenshot" />
+				<img width="100%" height="100%" src="/assets/treasure.svg" alt="App screenshot" />
 			</div>
 		</div>
 	</div>
