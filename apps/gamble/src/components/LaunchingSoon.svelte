@@ -2,8 +2,8 @@
     <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
       <div class="pr-16 sm:text-center sm:px-16">
         <p class="font-medium text-white flex justify-center">
-          <span class="md:hidden">
-            Follow us on githut!
+          <span class="md:hidden mr-2">
+            Follow us on github !
           </span>
           <span class="hidden md:inline mr-2">
             Stay up to date with development by following on github or subscribing!
