@@ -3,7 +3,7 @@
       <div class="pr-16 sm:text-center sm:px-16">
         <p class="font-medium text-white flex justify-center">
           <span class="md:hidden">
-            We announced a new product!
+            Follow us on githut!
           </span>
           <span class="hidden md:inline mr-2">
             Stay up to date with development by following on github or subscribing!
