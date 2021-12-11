@@ -27,6 +27,7 @@
         "typescript": "^4.0.0"
     },
     "dependencies": {
+        "@fullhuman/postcss-purgecss": "^4.1.3",
         "@gamble/components": "^1.0.0",
         "@gamble/config": "^1.0.0",
         "@gamble/lotto": "^1.0.0",
