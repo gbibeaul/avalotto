@@ -3,8 +3,8 @@ import { BigNumber, ethers } from "ethers";
 import MetaMaskOnboarding from "@metamask/onboarding";
 
 import { getProviders, lottoProvider } from "../transport";
+import { isClientEthInjected } from "../helpers/ssr.helpers";
 
-const onboarding = new MetaMaskOnboarding();
 
 type State = {
   jackpot: BigNumber;
@@ -56,6 +56,7 @@ const createState = () => {
   const updateBuying = (buying: boolean) => update((s) => ({ ...s, buying }));
 
   const downloadMetamask = async () => {
+    const onboarding = new MetaMaskOnboarding();
     onboarding.startOnboarding();
   };
 
@@ -115,7 +116,7 @@ const createState = () => {
     }
   };
 
-  if (window.ethereum) {
+  if (isClientEthInjected()) {
     updateEthereumDetected(true);
     initialLoadMetamask();
   }
