@@ -12,9 +12,9 @@ async function main() {
   await lotto.deployed();
 
   const config = await fs.readJson(CONFIG_PATH);
-  config.local.contracts.LottoWinnerMock.address = lotto.address;
-  config.local.contracts.LottoWinnerMock.owner = owner.address;
-  config.local.contracts.LottoWinnerMock.trustedEntity = trusted.address;
+  config.Local.contracts.LottoWinnerMock.address = lotto.address;
+  config.Local.contracts.LottoWinnerMock.owner = owner.address;
+  config.Local.contracts.LottoWinnerMock.trustedEntity = trusted.address;
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
 
