@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import fs from "fs-extra";
 
-const CONFIG_PATH = "../config/config.json";
+const CONFIG_PATH = "../../packages/config/config.json";
 
 async function main() {
   const [owner, trusted] = await ethers.getSigners();

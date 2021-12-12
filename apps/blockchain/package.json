@@ -31,7 +31,7 @@
         "typescript": "^4.5.2"
     },
     "scripts": {
-        "compile": "hardhat compile",
+        "build": "hardhat compile",
         "start:chain": "hardhat node",
         "test": "hardhat test",
         "deploy:local": "hardhat run --network localhost scripts/deploy.ts",

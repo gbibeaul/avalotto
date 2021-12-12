@@ -77,11 +77,9 @@ const createState = () => {
 
   const setSeed = async (seed: string) => {
     try {
-      console.log(seed);
       const { lotto } = await getProviders();
       await lotto.setSealedSeed(ethers.utils.id(seed));
     } catch (e) {
-      console.log(e);
       updateErrors(e);
     }
   };
@@ -91,7 +89,6 @@ const createState = () => {
       const { lotto } = await getProviders();
       await lotto.reveal(ethers.utils.id(seed));
     } catch (e) {
-      console.log(e);
       updateErrors(e);
     }
   };

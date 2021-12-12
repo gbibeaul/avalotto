@@ -1,23 +1,24 @@
-import { writable, derived } from "svelte/store";
+import { derived } from "svelte/store";
 import { stateStore } from "./state";
 
-export enum Routes {
+
+export enum LottoState {
   noAccount = "no-account",
   hasBet = "has-bet",
   buying = "buying",
 }
 
-export const routing = derived(stateStore, ($stateStore) => {
+export const lottoActions = derived(stateStore, ($stateStore) => {
   if (
     $stateStore.userAddress === null ||
     $stateStore.userAddress.length === 0
   ) {
-    return Routes.noAccount;
+    return LottoState.noAccount;
   }
 
   if ($stateStore.bets.length === 0 || $stateStore.buying) {
-    return Routes.buying;
+    return LottoState.buying;
   }
 
-  return Routes.hasBet;
+  return LottoState.hasBet;
 });

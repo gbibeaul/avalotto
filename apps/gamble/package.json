@@ -22,8 +22,10 @@
 		"@metamask/onboarding": "^1.0.1",
 		"@metamask/providers": "^8.1.1",
 		"@supabase/supabase-js": "^1.28.5",
+		"cookie": "^0.4.1",
 		"dotenv": "^10.0.0",
-		"ethers": "^5.5.2"
+		"ethers": "^5.5.2",
+		"svelte-icons": "^2.1.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { List, Button } from "smelte";
   import { stateStore } from "../stores/state";
-  import { routing } from "../stores/routing";
+  import { routing } from "../stores/lottoActions";
 
   let bets;
 
