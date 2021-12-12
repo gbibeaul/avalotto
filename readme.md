@@ -25,11 +25,11 @@ The player rewards and stakes yields are balanced by the protocol to insure the 
 
 ## Developer environment
 
+- copy the content of .env.example to a .env file. Ask team members for supabase keys if they are relevant to your work. They probably are not.
 - Launch the test network `yarn start:chain`
 - add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
     - new RPC URL http://127.0.0.1:8545/
     - new network name "Hardhat test"
     - new network id "43112"
     - Currency Symbol(Optional) AVAX
-- From a another terminal, deploy the contract to the test network `yarn deploy:lotto:dev`
-- In the same terminal where you deployed the contract, start the UI `yarn start:ui`
+- From a another terminal, deploy the contract to the test network `yarn dev`

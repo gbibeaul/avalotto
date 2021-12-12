@@ -1,5 +1,5 @@
 {
-  "prod": {
+  "avalanche": {
     "contracts": {
       "Lotto": {
         "name": "Lotto",
@@ -15,7 +15,7 @@
       }
     }
   },
-  "test": {
+  "fuji": {
     "contracts": {
       "Lotto": {
         "name": "Lotto",
@@ -31,7 +31,7 @@
       }
     }
   },
-  "dev": {
+  "local": {
     "contracts": {
       "Lotto": {
         "name": "Lotto",
