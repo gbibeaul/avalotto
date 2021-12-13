@@ -28,14 +28,14 @@ npm manifest:
     ],
     "scripts": {
       "build": "yarn turbo run build",
-      "deliver": "yarn workspace @gamble/blockchain run deliver:lotto && yarn workspace @gamble/blockchain run deliver:lotto-winner-mock",
-      "deploy:lotto:dev": "yarn workspace @gamble/blockchain run deploy:lotto:dev",
-      "deploy:lottowinnermock:dev": "yarn workspace @gamble/blockchain run deploy:lottoWinnerMock:dev",
+      "deliver": "yarn workspace blockchain run deliver:lotto && yarn workspace blockchain run deliver:lotto-winner-mock",
+      "deploy:lotto:dev": "yarn workspace blockchain run deploy:lotto:dev",
+      "deploy:lottowinnermock:dev": "yarn workspace blockchain run deploy:lottoWinnerMock:dev",
       "start:admin": "yarn workspace @gamble/admin run dev",
       "start:chain": "node scripts/startchain.js",
       "start:ui": "yarn workspace @gamble/ui run dev",
       "dev": "yarn workspace gamble run dev",
-      "test:chain": "yarn workspace @gamble/blockchain run test"
+      "test:chain": "yarn workspace blockchain run test"
     },
     "devDependencies": {
       "npm-run-all": "^4.1.5",
