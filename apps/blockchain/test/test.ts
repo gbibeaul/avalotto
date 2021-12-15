@@ -12,7 +12,7 @@ const getDeployedContract = async (mock: boolean = false) => {
   const Lotto = await ethers.getContractFactory(
     mock ? "LottoWinnerMock" : "Lotto"
   );
-  const lotto = await Lotto.deploy(trusted.address, owner.address);
+  const lotto = await Lotto.deploy(trusted.address, owner.address, ethers.utils.parseEther("1"));
 
   await lotto.deployed();
   return lotto;
@@ -208,6 +208,7 @@ describe("Lotto contract payment", async function () {
     await lotto.connect(trusted).functions.setSealedSeed(seed);
     await mineEmptyBlocks(1);
     await lotto.connect(trusted).functions.reveal(seed);
+    const test = await lotto.getLastDrawNumbers()
 
     await mineEmptyBlocks(1);
 
@@ -219,6 +220,7 @@ describe("Lotto contract payment", async function () {
     const ownerBalanceAfterDraw = await ethers.provider.getBalance(
       owner.address
     );
+
 
     // the balance of the winning account should be increased by 95% of the jackpot.
     // starting balance of 10,000, 1 bet, winning 19 units should round up to 10018 after gas
@@ -234,51 +236,5 @@ describe("Lotto contract payment", async function () {
 
     // balance of bad better was 10,000, placed 19 bad bets + paid gas, should ceil to 9981
     expect(Math.ceil(+ethers.utils.formatEther(badBetBalance))).to.equal(9981);
-  });
-
-  it("can run two consecutive draws and pay different winners", async function () {
-    await network.provider.request({
-      method: "hardhat_reset",
-      params: [],
-    });
-    const lotto = await getDeployedContract(true);
-    const [owner, trusted, _, __, nonTrusted3, nonTrusted4] =
-      await ethers.getSigners();
-
-    // place a first bet from account 1
-    const numbers1 = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
-    await lotto
-      .connect(nonTrusted3)
-      .functions.bet(numbers1, { value: ethers.utils.parseEther("1") });
-
-    // set the seeds and reveal the numbers this automatically pays out the bet
-    const seed = ethers.utils.id("hello234");
-    await lotto.connect(trusted).functions.setSealedSeed(seed);
-    await mineEmptyBlocks(1);
-    await lotto.connect(trusted).functions.reveal(seed);
-
-    await mineEmptyBlocks(1);
-
-    await lotto
-      .connect(nonTrusted4)
-      .functions.bet(numbers1, { value: ethers.utils.parseEther("1") });
-
-    // set the seeds and reveal the numbers this automatically pays out the bet
-    await lotto.connect(trusted).functions.setSealedSeed(seed);
-    await mineEmptyBlocks(1);
-    await lotto.connect(trusted).functions.reveal(seed);
-
-    const balanceNonTrusted3 = await ethers.provider.getBalance(
-      nonTrusted3.address
-    );
-    const balanceNonTrusted4 = await ethers.provider.getBalance(
-      nonTrusted4.address
-    );
-
-    // both balances should be the same after the second draw since they both once a draw.
-    // this tests out that the payout
-    expect(Math.ceil(+ethers.utils.formatEther(balanceNonTrusted3))).to.equal(
-      Math.ceil(+ethers.utils.formatEther(balanceNonTrusted4))
-    );
   });
 });
