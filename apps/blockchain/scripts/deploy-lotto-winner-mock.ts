@@ -7,14 +7,14 @@ async function main() {
   const [owner, trusted] = await ethers.getSigners();
 
   const Lotto = await ethers.getContractFactory("LottoWinnerMock");
-  const lotto = await Lotto.deploy(trusted.address, owner.address);
+  const lotto = await Lotto.deploy(trusted.address, owner.address, ethers.utils.parseEther("1"));
 
   await lotto.deployed();
 
   const config = await fs.readJson(CONFIG_PATH);
-  config.local.contracts.LottoWinnerMock.address = lotto.address;
-  config.local.contracts.LottoWinnerMock.owner = owner.address;
-  config.local.contracts.LottoWinnerMock.trustedEntity = trusted.address;
+  config.Local.contracts.LottoWinnerMock.address = lotto.address;
+  config.Local.contracts.LottoWinnerMock.owner = owner.address;
+  config.Local.contracts.LottoWinnerMock.trustedEntity = trusted.address;
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
 

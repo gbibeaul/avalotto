@@ -99,6 +99,10 @@ contract Lotto {
         return playerBets[msg.sender];
     }
 
+    function getNextDrawTime() public view returns (uint256) {
+        return nextDraw;
+    }
+
     /**
     BETTING ACTIONS
  */

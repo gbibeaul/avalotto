@@ -99,6 +99,10 @@ contract LottoWinnerMock {
         return playerBets[msg.sender];
     }
 
+    function getNextDrawTime() public view returns (uint256) {
+        return nextDraw;
+    }
+
     /**
     PAYOUT ACTIONS
  */
