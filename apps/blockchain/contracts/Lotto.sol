@@ -44,7 +44,7 @@ contract Lotto {
         trustedParty = _trustedParty;
         treasury = _treasury;
         ticketValue = _ticketValue;
-        nextDraw = block.timestamp + 2 weeks;
+        nextDraw = block.timestamp + 1 weeks;
     }
 
     /**
@@ -250,6 +250,7 @@ contract Lotto {
 
         seedSet = false;
         betsClosed = false;
+        nextDraw = block.number + 1 weeks;
 
         return _drawNumbers;
     }
