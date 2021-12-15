@@ -35,8 +35,8 @@
         "start:chain": "hardhat node",
         "test": "hardhat test",
         "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
-        "deliver:lotto": "hardhat test && ts-node scripts/deliver-contract.ts Lotto",
-        "deliver:lotto-winner-mock": "hardhat test && ts-node scripts/deliver-contract.ts LottoWinnerMock",
+        "deliver:lotto": "ts-node scripts/deliver-contract.ts Lotto",
+        "deliver:lotto-winner-mock": "ts-node scripts/deliver-contract.ts LottoWinnerMock",
         "deploy:lotto:dev": "hardhat run --network localhost scripts/deploy-dev.ts",
         "deploy:lottoWinnerMock:dev": "hardhat run --network localhost scripts/deploy-lotto-winner-mock.ts"
     }
