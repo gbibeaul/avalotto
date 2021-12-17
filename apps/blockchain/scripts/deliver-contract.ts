@@ -7,7 +7,7 @@ async function main() {
   const contractName = process.argv[2];
 
   const contractExists = await fs.pathExists(`./contracts/${contractName}.sol`);
-  const yarnWorkspaceExists = await fs.pathExists(`../${contractName}`);
+  const yarnWorkspaceExists = await fs.pathExists(`../../packages/${contractName}`);
 
   if (!contractExists) {
     console.log(`Contract ${contractName} does not exist`);
@@ -20,7 +20,7 @@ async function main() {
   }
 
   const LOTTO_CONTRACT_PATH = `./artifacts/contracts/${contractName}.sol/`;
-  const LOTTO_PACKAGE_PATH = `../${contractName}/`;
+  const LOTTO_PACKAGE_PATH = `../../packages/${contractName}/`;
   await fs.copySync(LOTTO_CONTRACT_PATH, LOTTO_PACKAGE_PATH);
 }
 

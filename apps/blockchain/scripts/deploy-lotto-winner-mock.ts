@@ -7,7 +7,7 @@ async function main() {
   const [owner, trusted] = await ethers.getSigners();
 
   const Lotto = await ethers.getContractFactory("LottoWinnerMock");
-  const lotto = await Lotto.deploy(trusted.address, owner.address);
+  const lotto = await Lotto.deploy(trusted.address, owner.address, ethers.utils.parseEther("1"));
 
   await lotto.deployed();
 
