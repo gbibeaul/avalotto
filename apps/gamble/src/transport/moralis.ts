@@ -1,4 +1,5 @@
 import Moralis from 'moralis';
+import { loadEnv } from 'vite'
 
 export const moralisProvider = async () => {
 	const serverUrl = import.meta.env.VITE_MORALIS_SERVER_URL;

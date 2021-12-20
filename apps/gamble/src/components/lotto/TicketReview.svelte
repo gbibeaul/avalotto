@@ -3,15 +3,24 @@
 	import FaLongArrowAltLeft from 'svelte-icons/fa/FaLongArrowAltLeft.svelte';
 	import { format } from 'date-fns';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
+	import { walletStore } from '../../stores/wallet';
+	import { getShortenedAddress } from '../../helpers/display.helpers';
 
 	let currentStep: LottoSteps;
 	let jackpot: BigNumber;
 	let plays: number[][];
+	let wallet: string;
+	let hash: string;
 
 	lottoStore.subscribe((value) => {
 		currentStep = value.currentStep;
 		plays = value.plays;
 		jackpot = value.jackpot;
+		hash = value.txHash;
+	});
+
+	walletStore.subscribe((value) => {
+		wallet = value.walletAddress;
 	});
 
 	const formatNumber = (num: number): string => {
@@ -22,29 +31,38 @@
 	};
 
 	const handleBuy = () => {
-		lottoStore.placeBet(plays)
-	}
+		lottoStore.placeBet(plays);
+	};
 </script>
 
 <!-- outer component with gradient bg -->
-<div class="justify-center flex  max-w-xl" class:hide={currentStep === LottoSteps.SELECT_PLAYS}>
+<div class="justify-center flex lg:w-2/6" class:hide={currentStep === LottoSteps.SELECT_PLAYS}>
 	<!-- white card -->
-	<main class=" w-11/12 bg-white mt-12 rounded-md overflow-y-scroll mb-36 flex flex-row">
+	<main class=" w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36 flex flex-row">
 		<!-- left portion of card -->
-		<div class="w-5/6 p-6 flex flex-col">
+		<div class="w-5/6 p-4 flex flex-col">
 			<!-- row with back arrow and inted -->
 			<div class="flex justify-between mb-8">
-				<button class="h-10 w-8"><FaLongArrowAltLeft /></button>
-				<span
-					class="w-5/6 border-solid border-2 border-black flex justify-center items-center font uppercase"
-					>ticket Not yet minted</span
+				<button
+					class="h-10 w-8 mr-4"
+					on:click={() => lottoStore.setStep(LottoSteps.SELECT_PLAYS)}
+					class:hide-big={currentStep === LottoSteps.SELECT_PLAYS}><FaLongArrowAltLeft /></button
 				>
+				<span
+					class="w-5/6 lg:w-full border-solid border-2 border-black flex justify-center items-center font uppercase"
+				>
+					{#if hash}
+						Transaction: {getShortenedAddress(hash)}
+					{:else}
+						ticket Not yet minted
+					{/if}
+				</span>
 			</div>
 
 			<!-- row with ava logo date and price -->
 			<div class="flex justify-between mb-8 items-center">
 				<img
-					class="h-12 sm:h-20"
+					class="sm:h-20 h-10 lg:h-14"
 					src="/assets/Avax_logo_large.svg"
 					alt="avalanche blockchain network logo"
 				/>
@@ -52,7 +70,9 @@
 					<time class="font-bold uppercase text-lg flex justify-end"
 						>{format(new Date(), 'dd-MMM-yyyy')}</time
 					>
-					<span class="font-bold uppercase sm:text-5xl text-4xl">{utils.formatEther(jackpot)} AVAX</span>
+					<span class="font-bold uppercase sm:text-5xl text-4xl lg:text-2xl"
+						>{utils.formatEther(jackpot)} AVAX</span
+					>
 				</div>
 			</div>
 
@@ -75,7 +95,7 @@
 			</div>
 
 			<div class="flex  justify-center border-solid border-2 border-black font uppercase mb-8">
-				connected wallet:
+				connected wallet: {getShortenedAddress(wallet)}
 			</div>
 
 			<!-- row evening gamblefi -->
@@ -95,7 +115,9 @@
 			</div>
 
 			<div class="flex justify-center">
-				<button on:click={handleBuy} class="bg-avaloto w-80 bg-indigo-500 text-white rounded h-12">buy now</button>
+				<button on:click={handleBuy} class="bg-avaloto w-80 bg-indigo-500 text-white rounded h-12"
+					>buy now</button
+				>
 			</div>
 		</div>
 
@@ -112,6 +134,12 @@
 <style>
 	@media only screen and (max-width: 1024px) {
 		.hide {
+			display: none;
+		}
+	}
+
+	@media only screen and (min-width: 1024px) {
+		.hide-big {
 			display: none;
 		}
 	}

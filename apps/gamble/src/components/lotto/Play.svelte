@@ -24,7 +24,7 @@
 	};
 </script>
 
-<div class="container px-8 flex md:flex-row flex-col justify-center lg:max-w-lg border-b-2 drop-shadow-sm border-gray-100 ">
+<div class="container px-8 flex md:flex-row flex-col justify-center  border-b-2 drop-shadow-sm border-gray-100 ">
 	<p class="w-full md:w-1/6 flex text-bold text-lg justify-center mt-8 ">PLAY {playNo}</p>
 	<div class="flex container space-x-3 justify-center">
 		<section class="flex py-4 space-x-3">

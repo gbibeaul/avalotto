@@ -28,14 +28,14 @@
 	}
 </script>
 
-<div class="justify-center flex" class:hide={currentStep === LottoSteps.REVIEW_TICKET}>
-	<main class="w-11/12 bg-white mt-12 rounded-md overflow-y-scroll mb-36">
+<div class="justify-center flex lg:w-4/6" class:hide={currentStep === LottoSteps.REVIEW_TICKET}>
+	<main class="w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36">
 		<hgroup
 			class="h-48 flex flex-col justify-center py-6 border-b-2 shadow-[0_15px_10px_-15px_#111] "
 		>
-			<strong class="font-bold flex justify-center text-sm uppercase">The current jackpot is</strong
+			<strong class="font-bold flex justify-center text-sm uppercase">The current jackpot (FUJI TEST) is</strong
 			>
-			<em class="flex justify-center font-italic text-6xl">{utils.formatEther(jackpot)} AVAX</em>
+			<em class="flex justify-center font-italic text-6xl">{utils.formatEther(jackpot)} AVAX </em>
 		</hgroup>
 		<section class="bg-white flex justify-center flex-col  px-8">
 			{#each plays as [num1, num2, num3], i}

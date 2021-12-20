@@ -4,7 +4,9 @@ import { writable } from 'svelte/store';
 
 export enum LottoSteps {
 	SELECT_PLAYS = 'selectPlays',
-	REVIEW_TICKET = 'reviewTicket'
+	REVIEW_TICKET = 'reviewTicket',
+	CONFIRMING = 'confirming',
+	CONFIRMED = 'confirmed'
 }
 
 type LottoState = {
@@ -12,13 +14,15 @@ type LottoState = {
 	plays: number[][];
 	transactionId: string;
 	jackpot: BigNumber;
+	txHash: string;
 };
 
 const initialState: LottoState = {
 	jackpot: BigNumber.from(0),
 	currentStep: LottoSteps.SELECT_PLAYS,
 	plays: [],
-	transactionId: ''
+	transactionId: '',
+	txHash: ''
 };
 
 const createLotto = () => {
@@ -36,6 +40,10 @@ const createLotto = () => {
 		update((s) => ({ ...s, transactionId }));
 	};
 
+	const setTxHash = (txHash: string) => {
+		update((s) => ({ ...s, txHash }));
+	};
+
 	const updateJackpot = (jackpot: BigNumber) => update((s) => ({ ...s, jackpot }));
 
 	const listenJackpot = async () => {
@@ -46,17 +54,19 @@ const createLotto = () => {
 	};
 
 	const placeBet = async (numbers: number[][]) => {
-		console.log('hello')
 		try {
 			const { lotto } = await getProviders();
 			const betsToBigNumbers = numbers.map((bet) => bet.map(BigNumber.from));
-			await lotto.bet(betsToBigNumbers, {
+			const transaction = await lotto.bet(betsToBigNumbers, {
 				value: utils.parseEther(String(numbers.length))
 			});
+			setStep(LottoSteps.CONFIRMING);
+			const tx = await transaction.wait(1);
+			setTxHash(tx.transactionHash);
+			setStep(LottoSteps.CONFIRMED);
 		} catch (e) {
 			console.error(e);
 		}
-
 	};
 
 	// lotto listeners
