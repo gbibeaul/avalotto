@@ -1,6 +1,7 @@
 import { BigNumber, utils } from 'ethers';
 import { getProviders, lottoProvider } from '../transport';
 import { writable } from 'svelte/store';
+import { parse } from 'dotenv';
 
 export enum LottoSteps {
 	SELECT_PLAYS = 'selectPlays',
@@ -50,6 +51,8 @@ const createLotto = () => {
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
 		updateJackpot(jackpot);
+		const betPrice = await lotto.getTicketPrice()
+		console.log(betPrice)
 		lotto.on('jackpotUpdated', updateJackpot);
 	};
 

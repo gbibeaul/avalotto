@@ -43,7 +43,7 @@ contract LottoWinnerMock {
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
-        ticketValue = _ticketValue;
+        ticketValue = _ticketValue * 1 ether;
         nextDraw = block.timestamp + 1 weeks;
     }
 
@@ -101,6 +101,10 @@ contract LottoWinnerMock {
 
     function getNextDrawTime() public view returns (uint256) {
         return nextDraw;
+    }
+
+    function getTicketPrice() public view returns (uint256) {
+        return ticketValue;
     }
 
     /**

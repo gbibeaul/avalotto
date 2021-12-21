@@ -43,7 +43,7 @@ contract Lotto {
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
-        ticketValue = _ticketValue;
+        ticketValue = _ticketValue * 1 ether;
         nextDraw = block.timestamp + 1 weeks;
     }
 
@@ -103,6 +103,10 @@ contract Lotto {
         return nextDraw;
     }
 
+    function getTicketPrice() public view returns (uint256) {
+        return ticketValue;
+    }
+
     /**
     BETTING ACTIONS
  */
@@ -126,6 +130,7 @@ contract Lotto {
                 _bets[i][2] < 100 && _bets[i][2] >= 0,
                 "Number 3 must be between 0 and 99"
             );
+
         }
 
         jackpot += msg.value;
