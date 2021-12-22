@@ -34,11 +34,15 @@ const createLotto = () => {
 		update((s) => ({ ...s, plays }));
 	};
 
+	const requestAccount = () => {
+		window.ethereum
+			.request({ method: 'eth_requestAccounts' })
+			.then(walletStore.updateWalletAddress);
+	};
+
 	const setStep = (currentStep: LottoSteps) => {
 		if (currentStep === LottoSteps.REVIEW_TICKET) {
-			window.ethereum
-				.request({ method: 'eth_requestAccounts' })
-				.then(walletStore.updateWalletAddress);
+			requestAccount();
 		}
 
 		update((s) => ({ ...s, currentStep }));
@@ -64,6 +68,7 @@ const createLotto = () => {
 
 	const placeBet = async (numbers: number[][]) => {
 		try {
+			requestAccount()
 			const { lotto } = await getProviders();
 			const betsToBigNumbers = numbers.map((bet) => bet.map(BigNumber.from));
 			const transaction = await lotto.bet(betsToBigNumbers, {
