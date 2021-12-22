@@ -1,14 +1,15 @@
 import { BigNumber, utils } from 'ethers';
 import { getProviders, lottoProvider } from '../transport';
 import { writable } from 'svelte/store';
-import { parse } from 'dotenv';
-
+import { walletStore } from './wallet';
 export enum LottoSteps {
 	SELECT_PLAYS = 'selectPlays',
 	REVIEW_TICKET = 'reviewTicket',
 	CONFIRMING = 'confirming',
 	CONFIRMED = 'confirmed'
 }
+
+const getRandom = () => Math.floor(Math.random() * 100);
 
 type LottoState = {
 	currentStep: LottoSteps;
@@ -21,7 +22,7 @@ type LottoState = {
 const initialState: LottoState = {
 	jackpot: BigNumber.from(0),
 	currentStep: LottoSteps.SELECT_PLAYS,
-	plays: [],
+	plays: [[getRandom(), getRandom(), getRandom()]],
 	transactionId: '',
 	txHash: ''
 };
@@ -34,6 +35,12 @@ const createLotto = () => {
 	};
 
 	const setStep = (currentStep: LottoSteps) => {
+		if (currentStep === LottoSteps.REVIEW_TICKET) {
+			window.ethereum
+				.request({ method: 'eth_requestAccounts' })
+				.then(walletStore.updateWalletAddress);
+		}
+
 		update((s) => ({ ...s, currentStep }));
 	};
 
@@ -51,8 +58,7 @@ const createLotto = () => {
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
 		updateJackpot(jackpot);
-		const betPrice = await lotto.getTicketPrice()
-		console.log(betPrice)
+		const betPrice = await lotto.getTicketPrice();
 		lotto.on('jackpotUpdated', updateJackpot);
 	};
 
@@ -80,7 +86,8 @@ const createLotto = () => {
 		setPlays,
 		setStep,
 		setTransactionId,
-		placeBet
+		placeBet,
+		updateJackpot
 	};
 };
 

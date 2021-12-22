@@ -5,6 +5,7 @@
 
 	let currentStep: LottoSteps;
 	let jackpot: BigNumber;
+	let plays = $lottoStore.plays
 
 	lottoStore.subscribe((value) => {
 		currentStep = value.currentStep;
@@ -12,8 +13,6 @@
 	});
 
 	const getRandom = () => Math.floor(Math.random() * 100);
-
-	let plays = [[getRandom(), getRandom(), getRandom()]];
 
 	const handleAddPlay = () => {
 		plays = [...plays, [getRandom(), getRandom(), getRandom()]];
@@ -33,7 +32,8 @@
 		<hgroup
 			class="h-48 flex flex-col justify-center py-6 border-b-2 shadow-[0_15px_10px_-15px_#111] "
 		>
-			<strong class="font-bold flex justify-center text-sm uppercase">The current jackpot (FUJI TEST) is</strong
+			<strong class="font-bold flex justify-center text-sm uppercase"
+				>The current jackpot (FUJI TEST) is</strong
 			>
 			<em class="flex justify-center font-italic text-6xl">{utils.formatEther(jackpot)} AVAX </em>
 		</hgroup>

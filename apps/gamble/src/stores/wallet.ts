@@ -15,21 +15,35 @@ const initialState: WalletState = {
 const createWallet = () => {
 	const { update, subscribe } = writable(initialState);
 
-	const updateWalletAddress = (wallets: string[]) => [
-		update((s) => ({ ...s, walletAddress: wallets[0] }))
-	];
+	const updateWalletAddress = (wallets: string[]) => {
+		if(wallets.length === 0) {
+			fetch('/api/remove-metamask');
+			update((s) => ({ ...s, walletAddress: '' }));
+			return
+		}
+		const walletAddress = wallets[0];
+		if(walletAddress.length && isClientEthInjected()) {
+		fetch('/api/set-metamask', {
+			method: 'POST',
+			body: JSON.stringify({ walletAddress })
+		});
+		}
+
+		update((s) => ({ ...s, walletAddress }));
+	};
+
+
 
 	const init = () => {
 		if (isClientEthInjected()) {
-			window.ethereum.request({ method: 'eth_requestAccounts' }).then(updateWalletAddress);
+			window.ethereum.on('accountsChanged', updateWalletAddress);
 		}
-
-		window.ethereum.on('accountsChanged', updateWalletAddress);
 	};
 
 	return {
 		subscribe,
-		init
+		init,
+		updateWalletAddress
 	};
 };
 

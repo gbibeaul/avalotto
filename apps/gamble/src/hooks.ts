@@ -4,8 +4,8 @@ import { parse } from 'cookie';
 export async function handle({ request, resolve }) {
 	const cookies = parse(request.headers.cookie || '');
 
-	if (cookies.address) {
-		request.locals.address = cookies.address
+	if (cookies.walletAddress) {
+		request.locals.walletAddress = cookies.walletAddress
 		return resolve(request);
 	}
 
@@ -15,9 +15,9 @@ export async function handle({ request, resolve }) {
 
 /** @type {import('@sveltejs/kit').GetSession} */
 export function getSession(request) {
-	return request?.locals?.address
+	return request?.locals?.walletAddress
 		? {
-				address: request.locals.address
+			walletAddress: request.locals.walletAddress
 		  }
 		: {};
 }

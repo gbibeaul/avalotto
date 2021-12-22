@@ -2,11 +2,11 @@ import { serialize } from 'cookie';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post(req) {
-	const { address } = JSON.parse(req.body);
+	const { walletAddress } = JSON.parse(req.body);
 	return {
 		status: 201,
 		headers: {
-			'Set-Cookie': serialize('address', address, {
+			'Set-Cookie': serialize('walletAddress', walletAddress, {
 				path: '/',
 				httpOnly: true,
 				sameSite: 'strict',
