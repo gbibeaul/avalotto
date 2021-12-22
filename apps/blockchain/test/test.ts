@@ -31,7 +31,7 @@ const betMultipleBadBets = async (lotto: Contract, numOfBets: number) => {
   for (let i = 0; i < numOfBets; i++) {
     await lotto
       .connect(nonTrusted2)
-      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+      .functions.bet([numbers], { value: ethers.utils.parseEther("1") });
   }
 };
 
@@ -108,7 +108,7 @@ describe("Lotto", async function () {
     const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
     await lotto
       .connect(nonTrusted)
-      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+      .functions.bet([numbers], { value: ethers.utils.parseEther("1") });
 
     const [amountOfBets] = await lotto
       .connect(nonTrusted)
@@ -124,7 +124,7 @@ describe("Lotto", async function () {
     const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
     const bet = lotto
       .connect(trusted)
-      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+      .functions.bet([numbers], { value: ethers.utils.parseEther("1") });
 
     expect(bet).to.be.rejectedWith(Error);
   });
@@ -139,7 +139,7 @@ describe("Lotto", async function () {
     const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
     const bet = lotto
       .connect(nonTrusted)
-      .functions.bet(numbers, { value: ethers.utils.parseEther("1") });
+      .functions.bet([numbers], { value: ethers.utils.parseEther("1") });
 
     expect(bet).to.be.rejectedWith(Error);
   });
@@ -153,16 +153,16 @@ describe("Lotto", async function () {
     const numbers1 = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
     await lotto
       .connect(nonTrusted1)
-      .functions.bet(numbers1, { value: ethers.utils.parseEther("1") });
+      .functions.bet([numbers1], { value: ethers.utils.parseEther("1") });
 
     // place a second bet from account 2
     const numbers2 = [4, 5, 6].map((x) => ethers.BigNumber.from(x));
-    await lotto.connect(nonTrusted2).functions.bet(numbers2, {
+    await lotto.connect(nonTrusted2).functions.bet([numbers2], {
       value: ethers.utils.parseEther("1"),
     });
 
     // place the same bet from account 2
-    await lotto.connect(nonTrusted2).functions.bet(numbers1, {
+    await lotto.connect(nonTrusted2).functions.bet([numbers1], {
       value: ethers.utils.parseEther("1"),
     });
 
@@ -198,7 +198,7 @@ describe("Lotto contract payment", async function () {
     const numbers1 = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
     await lotto
       .connect(nonTrusted1)
-      .functions.bet(numbers1, { value: ethers.utils.parseEther("1") });
+      .functions.bet([numbers1], { value: ethers.utils.parseEther("1") });
 
     // placing wrong bets to see a difference in the balance after payment
     await betMultipleBadBets(lotto, 19);

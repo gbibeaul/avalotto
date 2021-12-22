@@ -25,9 +25,9 @@
       },
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
-        "owner": "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955",
-        "trustedEntity": "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955",
-        "address": "0xef11d1c2aa48826d4c41e54ab82d1ff5ad8a64ca"
+        "owner": "0x414d820a17a5c4f30fdf175aa7eda540661a9a3c",
+        "trustedEntity": "0x414d820a17a5c4f30fdf175aa7eda540661a9a3c",
+        "address": "0xB44D38ec722fE6b252f2a9c5687464018BE0b84e"
       }
     }
   },
@@ -43,7 +43,7 @@
         "name": "Lotto",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "trustedEntity": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
         "trusted": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
       }
     }

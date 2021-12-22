@@ -9,5 +9,5 @@ export const getShortenedAddress = (address: string) =>
   )}`;
 
 // make a function that gives a random digit between 0 and 99
-export const randomDigit = (limit: number = 99) =>
-  Math.floor(Math.random() * limit + 1);
+export const getRandom = () => Math.floor(Math.random() * 100);
+

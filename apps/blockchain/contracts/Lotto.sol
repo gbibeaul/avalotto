@@ -43,7 +43,7 @@ contract Lotto {
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
-        ticketValue = _ticketValue;
+        ticketValue = _ticketValue * 1 ether;
         nextDraw = block.timestamp + 1 weeks;
     }
 
@@ -103,33 +103,47 @@ contract Lotto {
         return nextDraw;
     }
 
+    function getTicketPrice() public view returns (uint256) {
+        return ticketValue;
+    }
+
     /**
     BETTING ACTIONS
  */
-    function bet(uint256[3] memory _numbers) public payable betsOpened {
-        require(msg.value == ticketValue, "Bet not the right value avax");
+    function bet(uint256[][] memory _bets) public payable betsOpened {
         require(
-            _numbers[0] != _numbers[1] &&
-                _numbers[0] != _numbers[2] &&
-                _numbers[1] != _numbers[2],
-            "Each number must be unique"
+            msg.value / _bets.length == ticketValue,
+            "Bet not the right value avax"
         );
-        require(
-            _numbers[0] >= 0 && _numbers[0] <= 99,
-            "Number 1 must be between 0 and 99"
-        );
-        require(
-            _numbers[1] >= 0 && _numbers[1] <= 99,
-            "Number 2 must be between 0 and 99"
-        );
-        require(
-            _numbers[2] >= 0 && _numbers[2] <= 99,
-            "Number 3 must be between 0 and 99"
-        );
+        // loop on each bet to validate it
+        for (uint256 i = 0; i < _bets.length; i++) {
+            require(_bets[i].length == 3, "Each bet must have 3 numbers");
+            require(
+                _bets[i][0] < 100 && _bets[i][0] >= 0,
+                "Number 1 must be between 0 and 99"
+            );
+            require(
+                _bets[i][1] < 100 && _bets[i][1] >= 0,
+                "Number 2 must be between 0 and 99"
+            );
+            require(
+                _bets[i][2] < 100 && _bets[i][2] >= 0,
+                "Number 3 must be between 0 and 99"
+            );
+
+        }
+
         jackpot += msg.value;
-        placedBets.push(uint256(keccak256(abi.encodePacked(_numbers))));
-        playerBets[msg.sender].push(_numbers);
-        bets[uint256(keccak256(abi.encodePacked(_numbers)))].push(msg.sender);
+
+        // loop on each bet to store it
+        for (uint256 i = 0; i < _bets.length; i++) {
+            placedBets.push(uint256(keccak256(abi.encodePacked(_bets[i]))));
+            playerBets[msg.sender].push(_bets[i]);
+            bets[uint256(keccak256(abi.encodePacked(_bets[i])))].push(
+                msg.sender
+            );
+        }
+
         emit jackpotUpdated(jackpot);
     }
 
