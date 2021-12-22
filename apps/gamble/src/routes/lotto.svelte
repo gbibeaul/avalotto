@@ -8,7 +8,6 @@
 
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
-		const getRandom = () => Math.floor(Math.random() * 100);
 
 		lottoStore.updateJackpot(jackpot);
 
