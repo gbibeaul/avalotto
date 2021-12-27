@@ -79,7 +79,7 @@
 	>
 		<div class="absolute inset-0 overflow-hidden">
 			<div class="absolute inset-0" aria-hidden="true">
-				<div class="fixed inset-y-0 pl-16 max-w-full right-0 flex">
+				<div class="fixed inset-y-0  max-w-full right-0 flex">
 					<div
 						use:clickOutside
 						on:click_outside={handleClose}
@@ -188,7 +188,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="flex-shrink-0 px-4 py-4 flex justify-center space-x-6 h-28">
+							<div class="flex-shrink-0 px-4 py-4 flex justify-center space-x-6 h-28 items-center ">
 								<button
 									type="button"
 									on:click={handleClose}
@@ -198,7 +198,7 @@
 								</button>
 								<button
 									type="submit"
-									class="w-40 bg-indigo-500 text-white rounded"
+									class="w-40 bg-indigo-500 text-white rounded h-12"
 								>
 									Save
 								</button>
