@@ -25,11 +25,16 @@ The player rewards and stakes yields are balanced by the protocol to insure the 
 
 ## Developer environment
 
-- copy the content of .env.example to a .env file. Ask team members for supabase keys if they are relevant to your work. They probably are not.
-- Launch the test network `yarn start:chain`
-- add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
+
+1. copy the content of .env.example to a .env file. Ask team members for supabase keys if they are relevant to your work. They probably are not.
+
+_N.B.: *If you are only doing ui work skip to step 4_
+
+2. (If you are only doing ui work skip to step 4) Launch the test network `yarn start:chain`
+3. add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
     - new RPC URL http://127.0.0.1:8545/
     - new network name "Hardhat test"
     - new network id "43112"
     - Currency Symbol(Optional) AVAX
-- From a another terminal, deploy the contract to the test network `yarn dev`
+4. To work againts Fuji Testnet, run `yarn dev:fuji`, for the local network from a another terminal, deploy the contract to the test network `yarn dev`
+

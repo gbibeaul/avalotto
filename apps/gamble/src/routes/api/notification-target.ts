@@ -1,3 +1,4 @@
+import { session } from '$app/stores';
 import { networkParser } from '../..//helpers/configParser.helpers';
 import { NetworkIds } from '../../constants';
 import { supabase } from '../../transport/supabase';
@@ -21,7 +22,7 @@ export async function post(request) {
 
 		const res = await supabase
 			.from('notification_targets')
-			.upsert({ id: address, enabled: true, browser, email, discord, signature, network_id });
+			.upsert({ id: address.toLowerCase(), enabled: true, browser, email, discord, signature, network_id });
 
 		return res;
 	} catch (error) {

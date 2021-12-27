@@ -3,8 +3,9 @@ import { isClientEthInjected } from '../helpers/ssr.helpers';
 import { ethereumProvider } from '../transport';
 import { NOTIFICATION_APPROVAL } from '../constants';
 import { requestAccount } from './wallet'
+import type { Notification_targets } from '..//types';
 
-type NotificationState = {
+interface NotificationState extends Notification_targets {
 	menuOpen: boolean;
 };
 
@@ -28,6 +29,10 @@ const createNotification = () => {
 		update((s) => ({ ...s, menuOpen: !s.menuOpen }));
 	};
 
+	const updateNotificationTarget = (notificationTarget: Notification_targets) => {
+		update(s => ({...s, ...notificationTarget}))
+	}
+
 	const approveNotifications = async () => {
 		try {
 			if (isClientEthInjected()) {
@@ -49,7 +54,8 @@ const createNotification = () => {
 	return {
 		subscribe,
 		toggleNotificationMenu,
-		approveNotifications
+		approveNotifications,
+		updateNotificationTarget
 	};
 };
 
