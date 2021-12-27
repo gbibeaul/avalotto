@@ -14,10 +14,12 @@
 		lottoStore.updateJackpot(jackpot);
 		notificationStore.updateNotificationTarget(notifications);
 
+
 		return {
 			props: {}
 		};
 	}
+
 </script>
 
 <script lang="ts">
