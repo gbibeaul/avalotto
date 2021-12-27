@@ -17,7 +17,8 @@ export async function post(request) {
 		
 		if(!isBearerValid(request.headers.authorization, apiKey.data[0])) {
 			return {
-				message: 'not authorized'
+				message: 'not authorized',
+				status: 403
 			}
 		}
 
@@ -33,12 +34,12 @@ export async function post(request) {
 		emailProvider.sendMail(mailOptions);
 
 		return {
-			sucess: true
+			success: true
 		};
 	} catch (error) {
 		console.error(error);
 		return {
-			error: JSON.stringify(error)
+			error: 'Sending notification failed'
 		};
 	}
 }

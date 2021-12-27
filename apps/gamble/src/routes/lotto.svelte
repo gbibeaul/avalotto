@@ -23,7 +23,7 @@
 	import Banner from '../components/lotto/Banner.svelte';
 	import TicketPurchase from '../components/lotto/TicketPurchase.svelte';
 	import TicketReview from '../components/lotto/TicketReview.svelte';
-	import NotificationPannel from '../components/lotto/NotificationPannel.svelte';
+	import NotificationPanel from '../components/lotto/NotificationPannel.svelte';
 
 </script>
 
@@ -32,6 +32,6 @@
 	<div class="lg:flex lg:justify-between px-2">
 		<TicketPurchase />
 		<TicketReview />
-		<NotificationPannel />
+		<NotificationPanel />
 	</div>
 </div>
