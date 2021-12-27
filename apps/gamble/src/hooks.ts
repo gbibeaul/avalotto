@@ -1,11 +1,12 @@
 import { parse } from 'cookie';
+import { supabase } from './transport/supabase';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ request, resolve }) {
 	const cookies = parse(request.headers.cookie || '');
 
 	if (cookies.walletAddress) {
-		request.locals.walletAddress = cookies.walletAddress
+		request.locals.walletAddress = cookies.walletAddress;
 		return resolve(request);
 	}
 
@@ -14,10 +15,18 @@ export async function handle({ request, resolve }) {
 }
 
 /** @type {import('@sveltejs/kit').GetSession} */
-export function getSession(request) {
-	return request?.locals?.walletAddress
-		? {
-			walletAddress: request.locals.walletAddress
-		  }
-		: {};
+export async function getSession(request) {
+	if (request?.locals?.walletAddress) {
+		const walletAddress = request?.locals?.walletAddress;
+		const { data } = await supabase
+			.from('notification_targets')
+			.select()
+			.eq('id', walletAddress.toLowerCase());
+		return {
+			walletAddress,
+			notifications: data[0]
+		};
+	}
+
+	return {};
 }

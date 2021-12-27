@@ -15,6 +15,7 @@
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
     "start:ui": "yarn workspace @gamble/ui run dev",
     "dev": "yarn deploy:lottowinnermock:dev && MOCK=true yarn workspace gamble run dev",
+    "dev:fuji": "MOCK=true yarn workspace gamble run dev",
     "dev:gamble": "yarn workspace gamble run dev"
   },
   "devDependencies": {

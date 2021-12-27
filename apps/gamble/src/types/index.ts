@@ -35,8 +35,8 @@ export interface Notification_targets {
 	network_id?: number /* foreign key to networks.id */;
 	enabled?: boolean;
 	email?: string;
-	discord?: boolean;
-	browser_enabled?: boolean;
+	discord?: string;
+	browser?: boolean;
 	signature?: string;
 	networks?: Networks;
 }
