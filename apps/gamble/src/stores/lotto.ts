@@ -17,6 +17,7 @@ type LottoState = {
 	transactionId: string;
 	jackpot: BigNumber;
 	txHash: string;
+	nextDrawOn: number;
 };
 
 const initialState: LottoState = {
@@ -24,7 +25,8 @@ const initialState: LottoState = {
 	currentStep: LottoSteps.SELECT_PLAYS,
 	plays: [[getRandom(), getRandom(), getRandom()]],
 	transactionId: '',
-	txHash: ''
+	txHash: '',
+	nextDrawOn: undefined
 };
 
 const createLotto = () => {
@@ -56,19 +58,29 @@ const createLotto = () => {
 		update((s) => ({ ...s, txHash }));
 	};
 
-	const updateJackpot = (jackpot: BigNumber) => update((s) => ({ ...s, jackpot }));
+	const updateJackpot = (jackpot: BigNumber) => {
+		update((s) => ({ ...s, jackpot}));
+	}
+		
+	const updateNextDrawOn = (nextDrawOn: BigNumber) => {
+		update((s) => ({ ...s, nextDrawOn: nextDrawOn.toNumber()}))
+	}
 
-	const listenJackpot = async () => {
+	const getInitialInfo = async () => {
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
 		updateJackpot(jackpot);
+
+		const nextDrawTime = await lotto.getNextDrawTime();
+		updateNextDrawOn(nextDrawTime);
+
 		const betPrice = await lotto.getTicketPrice();
 		lotto.on('jackpotUpdated', updateJackpot);
 	};
 
 	const placeBet = async (numbers: number[][]) => {
 		try {
-			requestAccount()
+			requestAccount();
 			const { lotto } = await getProviders();
 			const betsToBigNumbers = numbers.map((bet) => bet.map(BigNumber.from));
 			const transaction = await lotto.bet(betsToBigNumbers, {
@@ -84,7 +96,7 @@ const createLotto = () => {
 	};
 
 	// lotto listeners
-	listenJackpot();
+	getInitialInfo();
 
 	return {
 		subscribe,
@@ -92,7 +104,8 @@ const createLotto = () => {
 		setStep,
 		setTransactionId,
 		placeBet,
-		updateJackpot
+		updateJackpot,
+		updateNextDrawOn
 	};
 };
 
