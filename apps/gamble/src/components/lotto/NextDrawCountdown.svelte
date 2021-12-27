@@ -35,10 +35,10 @@
 	onDestroy(() => timer && clearInterval(timer));
 </script>
 
-<div class="lg:flex lg:border-0 items-end lg:mt-0 mt-4 lg:pt-0 pt-4 border-t-2 ">
+<div class="lg:flex items-end lg:mt-0 mt-4 lg:pt-0 pt-4 lg:border-0 border-t-2 ">
 	{#if nextDrawCountdown}
-		<p class="text-white text-xs">NEXT DRAW IN</p>
-		<p class="text-white italic font-bold lg:ml-2 ">
+		<p class="text-white text-xs whitespace-nowrap">NEXT DRAW IN</p>
+		<p class="text-white italic font-bold lg:ml-2 whitespace-nowrap">
 			{nextDrawCountdown}
 		</p>
 	{/if}

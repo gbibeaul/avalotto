@@ -1,23 +1,31 @@
 <script lang="ts">
 	import FaBell from 'svelte-icons/fa/FaBell.svelte';
+	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	import { notificationStore } from '../../stores/notification';
 	import NextDrawCountdown from './NextDrawCountdown.svelte';
-	
+
 	const handleNotification = () => {
 		notificationStore.toggleNotificationMenu(true);
 	};
 </script>
 
 <header
-	class="md:h-20 h-20 flex justify-between border-b-2 border-b-white/[.65] mx-6 py-4 items-center"
+	class="lg:h-34 h-26 flex flex-wrap lg:flex-nowrap items-center lg:border-b-2 border-b-white/[.65] mx-6 py-4"
 >
-	<img class="h-12" src="/assets/AVALotto_logo_white.svg" alt="AVALotto logo" />
-	<img
-		src="/assets/AVALotto_logo_white.svg"
-		class="object-contain lg:w-28 w-16 "
-		alt="AVALotto logo"
-	/>
+	<div class="lg:w-full w-1/2">
+		<img
+			src="/assets/AVALotto_logo_white.svg"
+			class="object-contain lg:w-28 w-16 "
+			alt="AVALotto logo"
+		/>
+	</div>
 
-	<NextDrawCountdown />
-	<button on:click={handleNotification} class="h-8 text-white"><FaBell /></button>
+	<div class="order-2 mr-4 lg:w-auto w-full">
+		<NextDrawCountdown />
+	</div>
+
+	<div class="flex lg:w-auto w-1/2 justify-end  lg:order-3">
+		<button on:click={handleNotification} class="h-8 mr-4 text-white"><FaBell /></button>
+		<button class="h-8 text-white "><FaBars /></button>
+	</div>
 </header>
