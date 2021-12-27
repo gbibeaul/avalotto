@@ -188,7 +188,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="flex-shrink-0 px-4 py-4 flex justify-center space-x-6">
+							<div class="flex-shrink-0 px-4 py-4 flex justify-center space-x-6 h-28">
 								<button
 									type="button"
 									on:click={handleClose}
