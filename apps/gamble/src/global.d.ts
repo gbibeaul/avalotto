@@ -6,3 +6,4 @@ declare global {
     ethereum: MetaMaskInpageProvider;
   }
 }
+

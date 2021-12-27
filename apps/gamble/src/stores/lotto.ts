@@ -1,7 +1,12 @@
 import { BigNumber, utils } from 'ethers';
+import { get } from 'svelte/store';
 import { getProviders, lottoProvider } from '../transport';
 import { writable } from 'svelte/store';
 import { walletStore } from './wallet';
+import type { Events } from '../types';
+import { networkParser } from '../helpers/configParser.helpers';
+import { NetworkIds } from '../constants';
+
 export enum LottoSteps {
 	SELECT_PLAYS = 'selectPlays',
 	REVIEW_TICKET = 'reviewTicket',
@@ -18,6 +23,8 @@ type LottoState = {
 	jackpot: BigNumber;
 	txHash: string;
 	nextDrawOn: number;
+	gameId: number;
+	currency: number;
 };
 
 const initialState: LottoState = {
@@ -26,7 +33,9 @@ const initialState: LottoState = {
 	plays: [[getRandom(), getRandom(), getRandom()]],
 	transactionId: '',
 	txHash: '',
-	nextDrawOn: undefined
+	nextDrawOn: undefined,
+	gameId: 1,
+	currency: 1
 };
 
 const createLotto = () => {
@@ -81,14 +90,43 @@ const createLotto = () => {
 	const placeBet = async (numbers: number[][]) => {
 		try {
 			requestAccount();
+			const value = numbers.length;
 			const { lotto } = await getProviders();
 			const betsToBigNumbers = numbers.map((bet) => bet.map(BigNumber.from));
+
+			const { walletAddress } = get(walletStore.wallet);
+
 			const transaction = await lotto.bet(betsToBigNumbers, {
-				value: utils.parseEther(String(numbers.length))
+				value: utils.parseEther(String(value))
 			});
+			
 			setStep(LottoSteps.CONFIRMING);
 			const tx = await transaction.wait(1);
 			setTxHash(tx.transactionHash);
+
+			const event: Events = {
+				game_id: initialState.gameId,
+				event_type: 1,
+				event_value: value,
+				incentive_value: 0,
+				network: NetworkIds[networkParser()],
+				currency: initialState.currency
+			};
+
+			fetch('/api/save-ticket', {
+				method: 'POST',
+				body: JSON.stringify({
+					transaction_id: tx.transactionHash,
+					numbers: betsToBigNumbers,
+					wallet_id: walletAddress
+				})
+			});
+
+			fetch('/api/event', {
+				method: 'POST',
+				body: JSON.stringify({ event })
+			});
+
 			setStep(LottoSteps.CONFIRMED);
 		} catch (e) {
 			console.error(e);

@@ -19,12 +19,20 @@ const abiMap = {
 	[LottoContractMode.Lotto]: lottoAbi
 };
 
-function isNetwork(value: string | boolean) : value is Network {
+export function isNetwork(value: string | boolean) : value is Network {
 	return (value as Network) in Network;
 }
 
-function isLottoContractMode(value: string | boolean): value is LottoContractMode {
+export function isLottoContractMode(value: string | boolean): value is LottoContractMode {
 	return (value as LottoContractMode) in LottoContractMode;
+}
+
+export const networkParser = () => {
+	if(!isNetwork(import.meta.env.VITE_AVALANCHE_NETWORK)) {
+		throw 'Network id not set'
+	}
+
+	return import.meta.env.VITE_AVALANCHE_NETWORK
 }
 
 export const lottoConfigParser = () => {
@@ -45,3 +53,5 @@ export const lottoConfigParser = () => {
 		networkAddress: Network[network]
 	};
 };
+
+
