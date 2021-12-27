@@ -1,19 +1,15 @@
 import { supabase } from '../../transport/supabase';
 
 export async function post(request) {
-	const { transaction_id, numbers, wallet_id } = JSON.parse(request.body);
+	try {
+		const { transaction_id, numbers, wallet_id } = JSON.parse(request.body);
+		const res = await supabase
+			.from('lotto_tickets')
+			.upsert({ id: transaction_id, numbers, wallet_id });
 
-	//check if exists
-	const { count } = await supabase
-		.from('tickets')
-		.select('transaction_id', { count: 'exact' })
-		.eq('transaction_id', transaction_id);
-
-	if (count === 0) {
-		await supabase.from('tickets').insert({ transaction_id, numbers, wallet_id });
+		return res;
+	} catch (error) {
+		console.error(error);
+		return error;
 	}
-
-	return {
-		success: true
-	};
 }

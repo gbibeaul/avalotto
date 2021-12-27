@@ -22,11 +22,14 @@
 		"@metamask/onboarding": "^1.0.1",
 		"@metamask/providers": "^8.1.1",
 		"@supabase/supabase-js": "^1.28.5",
+		"@tailwindcss/forms": "^0.4.0",
+		"@types/nodemailer": "^6.4.4",
 		"cookie": "^0.4.1",
 		"date-fns": "^2.27.0",
 		"dotenv": "^10.0.0",
 		"ethers": "^5.5.2",
 		"moralis": "^0.0.176",
+		"nodemailer": "^6.7.2",
 		"svelte-icons": "^2.1.0"
 	},
 	"devDependencies": {
