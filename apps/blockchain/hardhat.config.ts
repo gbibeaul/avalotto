@@ -2,6 +2,8 @@ import { task } from "hardhat/config";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers";
 import "@nomiclabs/hardhat-waffle";
+import "hardhat-erc1820";
+import '@openzeppelin/hardhat-upgrades';
 
 // When using the hardhat network, you may choose to fork Fuji or Avalanche Mainnet
 // This will allow you to debug contracts using the hardhat network while keeping the current network state
