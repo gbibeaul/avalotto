@@ -14,6 +14,14 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
     uint256 cashierCount;
     uint256 currentTransferProposal;
     uint256 currentUpgradeProposal;
+    uint256 houseProfitRatio;
+    uint256 profitDistributionRatio;
+    mapping(address => bool) isCashier;
+    mapping(address => bool) isCashierFlagged;
+    mapping(uint256 => transferProposal) transferProposals;
+    mapping(uint256 => upgradeProposal) upgradeProposals;
+    mapping(string => bool) approvedAssets;
+    mapping(address => bool) authorizedGames;
 
     function initialize(address[] memory _cashiers, address _governance)
         public
@@ -84,12 +92,6 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
         address unbanCashier;
         mapping(address => bool) approvals;
     }
-
-    mapping(address => bool) isCashier;
-    mapping(address => bool) isCashierFlagged;
-    mapping(uint256 => transferProposal) transferProposals;
-    mapping(uint256 => upgradeProposal) upgradeProposals;
-    mapping(string => bool) approvedAssets;
 
     // House functions. The house is a representative of the GAMBLE token holders.
     // The house is a delegator of the GAMBLE token holders. He can be revoked by a governance vote.
@@ -163,5 +165,15 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
     function rejectTransfer() public onlyCashier notProposer {
         delete transferProposals[currentTransferProposal];
         currentTransferProposal++;
+    }
+
+    function governanceSendAvax(uint256 _amount, address sendTo, string calldata _assetType)
+        public
+        governanceApproved
+    {
+        require(_amount > 0, "Proposed amount must be over 0");
+        require(approvedAssets[_assetType], "Asset type not approved");
+
+        // sendTo.transfer(_amount);
     }
 }

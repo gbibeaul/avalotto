@@ -36,40 +36,40 @@
   },
   "proxies": [
     {
-      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-      "txHash": "0x574128540e56b496e50891d0c75b19b3476a3fd51ea25b2c866cd4a1554c195a",
-      "kind": "uups"
-    },
-    {
-      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-      "txHash": "0xe1989d0c35b20df4ff5758f7c9927e06d6db77bfe7c79ba9b8b76d3ce825051f",
-      "kind": "uups"
-    },
-    {
       "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
       "txHash": "0x6c0f13498f2451b6693561eb2f0cc5023c041a604686cd1a22598a5b9a43995c",
       "kind": "uups"
     },
     {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0xdf7da1f9dccff7ee75c55aca3292f9a558853bec1adf22bd245d955b0372c6e8",
+      "kind": "uups"
+    },
+    {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "txHash": "0x84cf90d41b2628d5ed1977eed7c5853f4fc34aaaec80c06b39059ebf41097a86",
+      "kind": "uups"
+    },
+    {
       "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
-      "txHash": "0xe55b471a1cd66598c6054905be49a5bd864c3cbf291840eece47449da808a3bd",
+      "txHash": "0xb00118366d4cb90324d0d788cbba04b7000662bdcf37f32df5958d189c81b2be",
       "kind": "uups"
     },
     {
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-      "txHash": "0x7aa073a2c3c9e56d5cc12ec55bbf344c09f96f9e955296b8ab14445fb135f591",
+      "txHash": "0xddfd76196a56cc3b3de757c3e5ef9f5fc2a3d9babb11e2fe0d359dfdd145824b",
       "kind": "uups"
     },
     {
       "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
-      "txHash": "0x6e5ff7945034bda66f6b7bfcf682a6a15f40a294c362c51a0bfdb19afff0793b",
+      "txHash": "0x65868789f1ec1f53e7f44d852e7783a5abad27b4be30fe12ae644e3a8633751e",
       "kind": "uups"
     }
   ],
   "impls": {
     "5058b25d8b3fba6eee6d98d608a203163f4db844bf37f9553c2b1b14e5e2ede4": {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0x2d8cdee389022f975a596a139b1a06bed8a4dfcbca035b650d4c394a4aa555fe",
+      "txHash": "0x6c9a05c275639e58e9b839116ae309810ab8ab623a23e501697e908813452881",
       "layout": {
         "storage": [
           {
@@ -215,9 +215,9 @@
         }
       }
     },
-    "2ce33c015fd437bf19c69b37530ded3505599b2e7084f1f08ef142b9457fe508": {
+    "ca53dbd1d00a425e32ebd9a0256fa4c38320fc5666055bdfae49d3b225373bd4": {
       "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-      "txHash": "0x75c4c1be862903fbb56ea35fbd4b8b30afcf7c569b330e48352c17a97e10313b",
+      "txHash": "0xafa0fc9c21b9b7e06bbd0763989597b282ff04acacfd861d5f3aeac427eae032",
       "layout": {
         "storage": [
           {
@@ -266,61 +266,79 @@
             "contract": "Treasury",
             "label": "theHouse",
             "type": "t_address",
-            "src": "contracts/treasury/Treasury.sol:12"
+            "src": "contracts/Treasury.sol:12"
           },
           {
             "contract": "Treasury",
             "label": "governance",
             "type": "t_address",
-            "src": "contracts/treasury/Treasury.sol:13"
+            "src": "contracts/Treasury.sol:13"
           },
           {
             "contract": "Treasury",
             "label": "cashierCount",
             "type": "t_uint256",
-            "src": "contracts/treasury/Treasury.sol:14"
+            "src": "contracts/Treasury.sol:14"
           },
           {
             "contract": "Treasury",
             "label": "currentTransferProposal",
             "type": "t_uint256",
-            "src": "contracts/treasury/Treasury.sol:15"
+            "src": "contracts/Treasury.sol:15"
           },
           {
             "contract": "Treasury",
             "label": "currentUpgradeProposal",
             "type": "t_uint256",
-            "src": "contracts/treasury/Treasury.sol:16"
+            "src": "contracts/Treasury.sol:16"
+          },
+          {
+            "contract": "Treasury",
+            "label": "houseProfitRatio",
+            "type": "t_uint256",
+            "src": "contracts/Treasury.sol:17"
+          },
+          {
+            "contract": "Treasury",
+            "label": "profitDistributionRatio",
+            "type": "t_uint256",
+            "src": "contracts/Treasury.sol:18"
           },
           {
             "contract": "Treasury",
             "label": "isCashier",
             "type": "t_mapping(t_address,t_bool)",
-            "src": "contracts/treasury/Treasury.sol:88"
+            "src": "contracts/Treasury.sol:19"
           },
           {
             "contract": "Treasury",
             "label": "isCashierFlagged",
             "type": "t_mapping(t_address,t_bool)",
-            "src": "contracts/treasury/Treasury.sol:89"
+            "src": "contracts/Treasury.sol:20"
           },
           {
             "contract": "Treasury",
             "label": "transferProposals",
-            "type": "t_mapping(t_uint256,t_struct(transferProposal)1224_storage)",
-            "src": "contracts/treasury/Treasury.sol:90"
+            "type": "t_mapping(t_uint256,t_struct(transferProposal)9353_storage)",
+            "src": "contracts/Treasury.sol:21"
           },
           {
             "contract": "Treasury",
             "label": "upgradeProposals",
-            "type": "t_mapping(t_uint256,t_struct(upgradeProposal)1237_storage)",
-            "src": "contracts/treasury/Treasury.sol:91"
+            "type": "t_mapping(t_uint256,t_struct(upgradeProposal)9366_storage)",
+            "src": "contracts/Treasury.sol:22"
           },
           {
             "contract": "Treasury",
             "label": "approvedAssets",
             "type": "t_mapping(t_string_memory_ptr,t_bool)",
-            "src": "contracts/treasury/Treasury.sol:92"
+            "src": "contracts/Treasury.sol:23"
+          },
+          {
+            "contract": "Treasury",
+            "label": "authorizedGames",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "contracts/Treasury.sol:24"
           }
         ],
         "types": {
@@ -336,10 +354,10 @@
           "t_bool": {
             "label": "bool"
           },
-          "t_mapping(t_uint256,t_struct(transferProposal)1224_storage)": {
+          "t_mapping(t_uint256,t_struct(transferProposal)9353_storage)": {
             "label": "mapping(uint256 => struct Treasury.transferProposal)"
           },
-          "t_struct(transferProposal)1224_storage": {
+          "t_struct(transferProposal)9353_storage": {
             "label": "struct Treasury.transferProposal",
             "members": [
               {
@@ -366,10 +384,10 @@
           "t_array(t_address)dyn_storage": {
             "label": "address[]"
           },
-          "t_mapping(t_uint256,t_struct(upgradeProposal)1237_storage)": {
+          "t_mapping(t_uint256,t_struct(upgradeProposal)9366_storage)": {
             "label": "mapping(uint256 => struct Treasury.upgradeProposal)"
           },
-          "t_struct(upgradeProposal)1237_storage": {
+          "t_struct(upgradeProposal)9366_storage": {
             "label": "struct Treasury.upgradeProposal",
             "members": [
               {

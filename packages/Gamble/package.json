@@ -1,0 +1,8 @@
+{
+    "name": "@gamble/gamble-coin",
+    "version": "1.0.0",
+    "main": "Lotto.json",
+    "description": "The resulting bytecode and ABI for Gamble coin contract",
+    "license": "MIT",
+    "types": "Gamble.json"
+}
