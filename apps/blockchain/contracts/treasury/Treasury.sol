@@ -80,7 +80,7 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
         mapping(address => bool) approvals;
     }
 
-    struct overideTheHouseProposal {
+    struct overrideTheHouseProposal {
         address unbanCashier;
         mapping(address => bool) approvals;
     }
@@ -90,8 +90,6 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
     mapping(uint256 => transferProposal) transferProposals;
     mapping(uint256 => upgradeProposal) upgradeProposals;
     mapping(string => bool) approvedAssets;
-
-
 
     // House functions. The house is a representative of the GAMBLE token holders.
     // The house is a delegator of the GAMBLE token holders. He can be revoked by a governance vote.
