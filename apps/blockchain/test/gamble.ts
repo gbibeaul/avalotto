@@ -49,7 +49,7 @@ describe.only("Gamble Protocol", async function () {
     expect(gamble.deployTransaction).to.have.property("hash");
   });
 
-  it.only("allows transfers between accounts", async function () {
+  it.only("allows transfers to the treasury", async function () {
     const { gamble, treasury } = await getDeployedContract();
     const { owner, nonHolder1 } = await getSignerWithRoles();
 
