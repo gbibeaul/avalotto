@@ -12,7 +12,7 @@
     "deploy:dev": "yarn workspace @gamble/blockchain run deploy:dev",
     "start:admin": "yarn workspace @gamble/admin run dev",
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
-    "dev": "yarn deploy:dev && MOCK=true yarn workspace gamble run dev",
+    "dev": "yarn deploy:dev && yarn workspace gamble run dev",
     "dev:fuji": "yarn workspace gamble run dev",
     "dev:gamble": "yarn workspace gamble run dev"
   },

@@ -5,7 +5,7 @@
 
 	let currentStep: LottoSteps;
 	let jackpot: BigNumber;
-	let plays = $lottoStore.plays
+	let plays = $lottoStore.plays;
 
 	lottoStore.subscribe((value) => {
 		currentStep = value.currentStep;
@@ -37,26 +37,49 @@
 			>
 			<em class="flex justify-center font-italic text-6xl">{utils.formatEther(jackpot)} AVAX </em>
 		</hgroup>
-		<section class="bg-white flex justify-center flex-col  px-8">
-			{#each plays as [num1, num2, num3], i}
-				<Play
-					removePlay={() => handleRemovePLay(i)}
-					playNo={i + 1}
-					bind:num1
-					bind:num2
-					bind:num3
-					isFirst={i === 0}
-				/>
-			{/each}
-		</section>
-		<section class="flex justify-center py-4">
-			<button
-				on:click={handleAddPlay}
-				class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
-			>
-				Add a play
-			</button>
-		</section>
+		{#if currentStep === LottoSteps.SELECT_PLAYS}
+			<section class="bg-white flex justify-center flex-col  px-8">
+				{#each plays as [num1, num2, num3], i}
+					<Play
+						removePlay={() => handleRemovePLay(i)}
+						playNo={i + 1}
+						bind:num1
+						bind:num2
+						bind:num3
+						isFirst={i === 0}
+					/>
+				{/each}
+			</section>
+			<section class="flex justify-center py-4">
+				<button
+					on:click={handleAddPlay}
+					class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
+				>
+					Add a play
+				</button>
+			</section>
+		{/if}
+		{#if currentStep === LottoSteps.CONFIRMING}
+			<section class="h-64 flex flex-col justify-center py-8">
+				<strong class="font-bold flex justify-center text-sm">Confirming...</strong>
+			</section>
+		{/if}
+		{#if currentStep === LottoSteps.CONFIRMED}
+			<section class="h-64 flex flex-col justify-center py-8">
+				<strong class="font-bold flex justify-center text-sm">Ticket purchase confirmed</strong>
+				<span class="flex justify-center text-sm">
+					<div><b>Tx ID: </b> {$lottoStore.txHash}</div>
+				</span>
+				<em class="flex font-bold justify-center text-6xl text-indigo-500">GOOD LUCK!</em>
+				<em class="flex font-bold justify-center text-6xl text-indigo-500">🤞</em>
+			</section>
+			<section class="flex justify-center py-4">
+				<!-- TODO: on:click={handlePlayAgain} -->
+				<button class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16">
+					Play again
+				</button>
+			</section>
+		{/if}
 	</main>
 </div>
 {#if currentStep === LottoSteps.SELECT_PLAYS}
