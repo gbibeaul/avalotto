@@ -135,10 +135,9 @@ contract LottoWinnerMock {
     BETTING ACTIONS
     */
     function bet(uint256[][] memory _bets) public payable betsOpened {
-        
         require(
             msg.value / _bets.length == ticketValue,
-            "Bet not the right value"
+            "Bet not the right value avax"
         );
         // loop on each bet to validate it
         for (uint256 i = 0; i < _bets.length; i++) {
@@ -157,7 +156,8 @@ contract LottoWinnerMock {
             );
         }
 
-        jackpot += msg.value;
+        treasury.transfer(msg.value);
+        jackpot += (msg.value - (msg.value / 30));
 
         // loop on each bet to store it
         for (uint256 i = 0; i < _bets.length; i++) {
