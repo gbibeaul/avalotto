@@ -14,7 +14,7 @@ const CONFIG_PATH = "../../packages/config/config.json";
 async function main() {
   const config = await fs.readJson(CONFIG_PATH);
 
-  const [owner] = await ethers.getSigners();
+  const [owner, cashier] = await ethers.getSigners();
 
   const Gamble = await ethers.getContractFactory("GAMBLEToken");
   const Governance = await ethers.getContractFactory("GambleGovernance");
@@ -29,29 +29,24 @@ async function main() {
     [],
   ]);
   await gamble.deployed();
-  console.log(owner.address)
-  config.Local.contracts.Gamble.owner = owner.address
-  config.Local.contracts.Gamble.address = gamble.address
-
+  config.Local.contracts.Gamble.owner = owner.address;
+  config.Local.contracts.Gamble.address = gamble.address;
 
   /** deploy the DAO governance
    *  constructor args: token address
    */
   const governance = await Governance.deploy(gamble.address);
   await governance.deployed();
-  config.Local.contracts.Governance.owner = owner.address
-  config.Local.contracts.Governance.address = gamble.address
+  config.Local.contracts.Governance.owner = owner.address;
+  config.Local.contracts.Governance.address = gamble.address;
 
   /** deploy treasury
    *  contrustor args: cashiers address array, governance address
    */
-  const treasury = await upgrades.deployProxy(Treasury, [
-    [],
-    governance.address,
-  ]);
+  const treasury = await Treasury.deploy([cashier.address], governance.address);
   await treasury.deployed();
-  config.Local.contracts.Treasury.owner = owner.address
-  config.Local.contracts.Treasury.address = gamble.address
+  config.Local.contracts.Treasury.owner = owner.address;
+  config.Local.contracts.Treasury.address = gamble.address;
 
   /** deploy lottery
    * constructor args: trusted party address, treasury address, ticket price
@@ -64,7 +59,6 @@ async function main() {
   await lotto.deployed();
   config.Local.contracts.LottoWinnerMock.address = lotto.address;
   config.Local.contracts.LottoWinnerMock.owner = owner.address;
-
 }
 
 main()

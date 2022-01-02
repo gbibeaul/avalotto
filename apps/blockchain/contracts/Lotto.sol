@@ -1,9 +1,10 @@
-/**
- * This is the exact same contract as Lotto.sol with the exception that the winner of the draw is hardcoded to be 1,2,3
- * This contract is never meant to be used in production, it is only meant to be used for testing purposes.
- */
-
 pragma solidity ^0.8.10;
+
+import "hardhat/console.sol";
+
+interface ITreasury {
+    function payWinnings(uint256 _amount, address payable _winner, string calldata _assetType) external returns (bool);
+}
 
 contract Lotto {
     // administration
@@ -43,7 +44,7 @@ contract Lotto {
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
-        ticketValue = _ticketValue * 1 ether;
+        ticketValue = _ticketValue;
         nextDraw = block.timestamp + 1 weeks;
     }
 
@@ -130,10 +131,10 @@ contract Lotto {
                 _bets[i][2] < 100 && _bets[i][2] >= 0,
                 "Number 3 must be between 0 and 99"
             );
-
         }
 
-        jackpot += msg.value;
+        treasury.transfer(msg.value);
+        jackpot += (msg.value - (msg.value / 30));
 
         // loop on each bet to store it
         for (uint256 i = 0; i < _bets.length; i++) {
@@ -240,11 +241,6 @@ contract Lotto {
             bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))].length > 0;
 
         if (winnerFound) {
-            uint256 _amountForTreasury = jackpot / 20;
-
-            treasury.transfer(_amountForTreasury);
-            jackpot = jackpot - _amountForTreasury;
-
             uint256 _numberOfWinners = bets[
                 uint256(keccak256(abi.encodePacked(_drawNumbers)))
             ].length;
@@ -253,9 +249,14 @@ contract Lotto {
             uint256 _amountForEachWinner = jackpot / _numberOfWinners;
 
             for (uint256 i = 0; i < _numberOfWinners; i++) {
-                payable(
-                    bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))][i]
-                ).transfer(_amountForEachWinner);
+                address winner = bets[
+                    uint256(keccak256(abi.encodePacked(_drawNumbers)))
+                ][i];
+                ITreasury(treasury).payWinnings(
+                    _amountForEachWinner,
+                    payable(winner),
+                    "AVAX"
+                );
             }
 
             jackpot = 0;

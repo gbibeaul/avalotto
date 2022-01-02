@@ -44,13 +44,13 @@ const getDeployedContract = async (mock: boolean = false) => {
   return { gamble, governance, treasury };
 };
 
-describe.only("Gamble Protocol", async function () {
+describe("Gamble Protocol", async function () {
   it("Should deploy", async function () {
     const { gamble } = await getDeployedContract();
     expect(gamble.deployTransaction).to.have.property("hash");
   });
 
-  it.only("allows transfers to the treasury", async function () {
+  it("allows transfers to the treasury", async function () {
     const { gamble, treasury } = await getDeployedContract();
     const { owner } = await getSignerWithRoles();
 
@@ -63,7 +63,7 @@ describe.only("Gamble Protocol", async function () {
     expect(balance[0]).to.equal(ethers.BigNumber.from(10000000));
   });
 
-  it("Accepts proposals for transfers", async function() {
+  it.skip("Accepts proposals for transfers", async function() {
     const { gamble, treasury } = await getDeployedContract();
     const { owner } = await getSignerWithRoles()
 

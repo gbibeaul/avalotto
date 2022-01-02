@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
  * The treasury holds the protocol's funds. The staffing system will be gradually deprecated in favor of
  * automated protocol actions approved by the DAO as the ecosystem matures.
  */
-contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
+contract Treasury {
     address public theHouse;
     address public governance;
     uint256 cashierCount;
@@ -23,10 +23,7 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
     mapping(string => bool) approvedAssets;
     mapping(address => bool) authorizedGames;
 
-    function initialize(address[] memory _cashiers, address _governance)
-        public
-        initializer
-    {
+    constructor(address[] memory _cashiers, address _governance) {
         approvedAssets["AVAX"] = true;
         governance = _governance;
         theHouse = msg.sender;
@@ -38,8 +35,6 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
         currentTransferProposal = 0;
         currentUpgradeProposal = 0;
     }
-
-    function _authorizeUpgrade(address newImplementation) internal override {}
 
     modifier onlyTheHouse() {
         require(msg.sender == theHouse);
@@ -60,14 +55,24 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
         _;
     }
 
-    /**
-     * @dev future method to phase out the cashier system.
-     */
+    modifier approvedGame() {
+        require(
+            authorizedGames[msg.sender] == true,
+            "Only gamblefi approved games can use this action"
+        );
+        _;
+    }
+
     modifier governanceApproved() {
         require(
             msg.sender == governance,
             "Only the governance can execute this action"
         );
+        _;
+    }
+
+    modifier approvedAsset(string calldata _assetType) {
+        require(approvedAssets[_assetType] == true);
         _;
     }
 
@@ -167,13 +172,33 @@ contract Treasury is OwnableUpgradeable, UUPSUpgradeable {
         currentTransferProposal++;
     }
 
-    function governanceSendAvax(uint256 _amount, address sendTo, string calldata _assetType)
-        public
-        governanceApproved
-    {
+    function governanceSendAvax(
+        uint256 _amount,
+        address payable _sendTo,
+        string calldata _assetType
+    ) public governanceApproved returns (bool) {
         require(_amount > 0, "Proposed amount must be over 0");
-        require(approvedAssets[_assetType], "Asset type not approved");
+        if (
+            keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
+        ) {
+            _sendTo.transfer(_amount);
+            return true;
+        }
 
-        // sendTo.transfer(_amount);
+        return false;
+    }
+
+    function payWinnings(
+        uint256 _amount,
+        address payable _winner,
+        string calldata _assetType
+    ) public approvedGame approvedAsset(_assetType) returns (bool) {
+        if (
+            keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
+        ) {
+            _winner.transfer(_amount);
+            return true;
+        }
+        return false;
     }
 }

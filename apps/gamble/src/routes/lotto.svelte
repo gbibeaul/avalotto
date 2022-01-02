@@ -4,6 +4,7 @@
 
 	import { lottoStore } from '../stores/lotto';
 	import { lottoProvider } from '../transport/lotto';
+	
 	export async function load({ session }) {
 		const { walletAddress = '', notifications } = session;
 		walletStore.updateWalletAddress([walletAddress]);

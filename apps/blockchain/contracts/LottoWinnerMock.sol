@@ -3,6 +3,9 @@
  * This contract is never meant to be used in production, it is only meant to be used for testing purposes.
  */
 
+interface ITreasury {
+    function payWinnings(uint256 _amount, address payable _winner, string calldata _assetType) external returns (bool);
+}
 pragma solidity ^0.8.10;
 
 contract LottoWinnerMock {
@@ -43,7 +46,7 @@ contract LottoWinnerMock {
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
-        ticketValue = _ticketValue * 1 ether;
+        ticketValue = _ticketValue;
         nextDraw = block.timestamp + 1 weeks;
     }
 
@@ -221,6 +224,10 @@ contract LottoWinnerMock {
         require(storedBlockNumber < block.number);
         require(_seed == sealedSeed);
 
+        uint256 random = uint256(
+            keccak256(abi.encodePacked(_seed, blockhash(storedBlockNumber)))
+        );
+
         uint256[3] memory _drawNumbers = _getLotteryResults();
 
         previousDraws[amountOfDraws] = _drawNumbers;
@@ -231,11 +238,6 @@ contract LottoWinnerMock {
             bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))].length > 0;
 
         if (winnerFound) {
-            uint256 _amountForTreasury = jackpot / 20;
-
-            payTreasury(_amountForTreasury);
-            jackpot = jackpot - _amountForTreasury;
-
             uint256 _numberOfWinners = bets[
                 uint256(keccak256(abi.encodePacked(_drawNumbers)))
             ].length;
@@ -244,9 +246,14 @@ contract LottoWinnerMock {
             uint256 _amountForEachWinner = jackpot / _numberOfWinners;
 
             for (uint256 i = 0; i < _numberOfWinners; i++) {
-                payable(
-                    bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))][i]
-                ).transfer(_amountForEachWinner);
+                address winner = bets[
+                    uint256(keccak256(abi.encodePacked(_drawNumbers)))
+                ][i];
+                ITreasury(treasury).payWinnings(
+                    _amountForEachWinner,
+                    payable(winner),
+                    "AVAX"
+                );
             }
 
             jackpot = 0;
@@ -255,6 +262,7 @@ contract LottoWinnerMock {
 
         seedSet = false;
         betsClosed = false;
+        nextDraw = block.number + 1 weeks;
 
         return _drawNumbers;
     }
