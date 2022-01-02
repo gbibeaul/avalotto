@@ -39,7 +39,7 @@ const betMultipleBadBets = async (lotto: Contract, numOfBets: number) => {
   }
 };
 
-describe("Lotto", async function () {
+describe.only("Lotto", async function () {
   it("Should deploy", async function () {
     const lotto = await getDeployedContract();
     expect(lotto.deployTransaction).to.have.property("hash");
@@ -106,7 +106,7 @@ describe("Lotto", async function () {
   });
 
   it("accepts bets", async function () {
-    const lotto = await getDeployedContract();
+    const lotto = await getDeployedContract(true);
     const [owner, trusted, nonTrusted] = await ethers.getSigners();
 
     const numbers = [1, 2, 3].map(ethers.BigNumber.from);

@@ -8,6 +8,8 @@ interface ITreasury {
 }
 pragma solidity ^0.8.10;
 
+import "hardhat/console.sol";
+
 contract LottoWinnerMock {
     // administration
     address trustedParty;
@@ -156,6 +158,8 @@ contract LottoWinnerMock {
             );
         }
 
+        console.log(treasury);
+
         treasury.transfer(msg.value);
         jackpot += (msg.value - (msg.value / 30));
 
@@ -224,9 +228,9 @@ contract LottoWinnerMock {
         require(storedBlockNumber < block.number);
         require(_seed == sealedSeed);
 
-        uint256 random = uint256(
-            keccak256(abi.encodePacked(_seed, blockhash(storedBlockNumber)))
-        );
+        // uint256 random = uint256(
+        //     keccak256(abi.encodePacked(_seed, blockhash(storedBlockNumber)))
+        // );
 
         uint256[3] memory _drawNumbers = _getLotteryResults();
 

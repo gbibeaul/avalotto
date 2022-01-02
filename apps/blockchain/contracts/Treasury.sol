@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "hardhat/console.sol";
 
 /**
  * This contract contains a UUPS upgradable treasury to allowa cashier system to be implemented.
@@ -22,6 +23,29 @@ contract Treasury {
     mapping(uint256 => upgradeProposal) upgradeProposals;
     mapping(string => bool) approvedAssets;
     mapping(address => bool) authorizedGames;
+    event avaxFundChanged(uint256);
+
+    struct transferProposal {
+        uint256 amount;
+        address payable sendTo;
+        address proposer;
+        address[] approvedBy;
+    }
+
+    struct replaceTheHouseProposal {
+        address newHouse;
+        address proposer;
+        address[] approvedBy;
+    }
+
+    struct upgradeProposal {
+        mapping(address => bool) approvals;
+    }
+
+    struct overrideTheHouseProposal {
+        address unbanCashier;
+        mapping(address => bool) approvals;
+    }
 
     constructor(address[] memory _cashiers, address _governance) {
         approvedAssets["AVAX"] = true;
@@ -76,26 +100,13 @@ contract Treasury {
         _;
     }
 
-    struct transferProposal {
-        uint256 amount;
-        address payable sendTo;
-        address proposer;
-        address[] approvedBy;
-    }
+    receive() external payable {}
+    /**
+        VIEW GETTERS
+     */
 
-    struct replaceTheHouseProposal {
-        address newHouse;
-        address proposer;
-        address[] approvedBy;
-    }
-
-    struct upgradeProposal {
-        mapping(address => bool) approvals;
-    }
-
-    struct overrideTheHouseProposal {
-        address unbanCashier;
-        mapping(address => bool) approvals;
+    function getFundsAVAXAmount() public view returns (uint256) {
+        return address(this).balance;
     }
 
     // House functions. The house is a representative of the GAMBLE token holders.
@@ -182,6 +193,7 @@ contract Treasury {
             keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
         ) {
             _sendTo.transfer(_amount);
+            emit avaxFundChanged(address(this).balance);
             return true;
         }
 
@@ -197,6 +209,7 @@ contract Treasury {
             keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
         ) {
             _winner.transfer(_amount);
+            emit avaxFundChanged(address(this).balance);
             return true;
         }
         return false;
