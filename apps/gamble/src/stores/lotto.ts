@@ -45,6 +45,10 @@ const createLotto = () => {
 		update((s) => ({ ...s, plays }));
 	};
 
+	const resetState = () => {
+		update(() => ({ ...initialState }));
+	};
+
 	const requestAccount = () => {
 		window.ethereum
 			.request({ method: 'eth_requestAccounts' })
@@ -68,12 +72,12 @@ const createLotto = () => {
 	};
 
 	const updateJackpot = (jackpot: BigNumber) => {
-		update((s) => ({ ...s, jackpot}));
-	}
-		
+		update((s) => ({ ...s, jackpot }));
+	};
+
 	const updateNextDrawOn = (nextDrawOn: BigNumber) => {
-		update((s) => ({ ...s, nextDrawOn: nextDrawOn.toNumber()}))
-	}
+		update((s) => ({ ...s, nextDrawOn: nextDrawOn.toNumber() }));
+	};
 
 	const getInitialInfo = async () => {
 		const lotto = await lottoProvider();
@@ -84,7 +88,6 @@ const createLotto = () => {
 		updateNextDrawOn(nextDrawTime);
 
 		const betPrice = await lotto.getTicketPrice();
-		lotto.on('jackpotUpdated', updateJackpot);
 	};
 
 	const placeBet = async (numbers: number[][]) => {
@@ -99,7 +102,7 @@ const createLotto = () => {
 			const transaction = await lotto.bet(betsToBigNumbers, {
 				value: utils.parseEther(String(value))
 			});
-			
+
 			setStep(LottoSteps.CONFIRMING);
 			const tx = await transaction.wait(1);
 			setTxHash(tx.transactionHash);
@@ -143,7 +146,8 @@ const createLotto = () => {
 		setTransactionId,
 		placeBet,
 		updateJackpot,
-		updateNextDrawOn
+		updateNextDrawOn,
+		resetState
 	};
 };
 

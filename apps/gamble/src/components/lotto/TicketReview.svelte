@@ -11,6 +11,7 @@
 	let plays: number[][];
 	let wallet: string;
 	let hash: string;
+	let hide = false;
 
 	lottoStore.subscribe((value) => {
 		currentStep = value.currentStep;
@@ -33,10 +34,16 @@
 	const handleBuy = () => {
 		lottoStore.placeBet(plays);
 	};
+
+	$: {
+		hide = currentStep === LottoSteps.SELECT_PLAYS || currentStep === LottoSteps.CONFIRMED
+	}
+
+	console.log(currentStep === LottoSteps.SELECT_PLAYS)
 </script>
 
 <!-- outer component with gradient bg -->
-<div class="justify-center flex lg:w-2/6" class:hide={currentStep === LottoSteps.SELECT_PLAYS}>
+<div class="justify-center flex lg:w-2/6" class:hide={hide}>
 	<!-- white card -->
 	<main class=" w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36 flex flex-row">
 		<!-- left portion of card -->
@@ -71,7 +78,7 @@
 						>{format(new Date(), 'dd-MMM-yyyy')}</time
 					>
 					<span class="font-bold uppercase sm:text-5xl text-4xl lg:text-2xl"
-						>{utils.formatEther(jackpot)} AVAX</span
+						>{(+utils.formatEther(jackpot)).toFixed(2)} AVAX</span
 					>
 				</div>
 			</div>
