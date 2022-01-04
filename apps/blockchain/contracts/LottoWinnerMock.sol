@@ -158,8 +158,6 @@ contract LottoWinnerMock {
             );
         }
 
-        console.log(treasury);
-
         treasury.transfer(msg.value);
         jackpot += (msg.value - (msg.value / 30));
 

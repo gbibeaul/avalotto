@@ -12,6 +12,8 @@
 		jackpot = value.jackpot;
 	});
 
+
+	console.log(plays)
 	const getRandom = () => Math.floor(Math.random() * 100);
 
 	const handleAddPlay = () => {
@@ -26,7 +28,8 @@
 		plays = plays.filter((_, i) => index !== i);
 	};
 
-	$: {
+	const handleReviewTicket = () => {
+		lottoStore.setStep(LottoSteps.REVIEW_TICKET)
 		lottoStore.setPlays(plays);
 	}
 </script>
@@ -107,7 +110,7 @@
 		class="fixed left-0 bottom-0 w-full bg-white h-28 place-content-center flex p-6 lg:invisible shadow-[0_0px_4px_21px_rgba(0,0,0,0.2)]"
 	>
 		<button
-			on:click={() => lottoStore.setStep(LottoSteps.REVIEW_TICKET)}
+			on:click={handleReviewTicket}
 			class="bg-avaloto w-72 bg-indigo-500 text-white rounded">Review Transaction</button
 		>
 	</footer>

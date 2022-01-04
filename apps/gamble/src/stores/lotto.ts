@@ -46,7 +46,12 @@ const createLotto = () => {
 	};
 
 	const resetState = () => {
-		update(() => ({ ...initialState }));
+		const plays = [[getRandom(), getRandom(), getRandom()]];
+		const currentStep = LottoSteps.SELECT_PLAYS;
+		const transactionId = '';
+		const txHash = '';
+
+		update((s) => ({ ...s, plays, currentStep, transactionId, txHash }));
 	};
 
 	const requestAccount = () => {
@@ -82,12 +87,13 @@ const createLotto = () => {
 	const getInitialInfo = async () => {
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
-		updateJackpot(jackpot);
-
 		const nextDrawTime = await lotto.getNextDrawTime();
+
+		updateJackpot(jackpot);
 		updateNextDrawOn(nextDrawTime);
 
-		const betPrice = await lotto.getTicketPrice();
+		lotto.on('jackpotUpdated', updateJackpot)
+
 	};
 
 	const placeBet = async (numbers: number[][]) => {
@@ -103,7 +109,6 @@ const createLotto = () => {
 				value: utils.parseEther(String(value))
 			});
 
-			setStep(LottoSteps.CONFIRMING);
 			const tx = await transaction.wait(1);
 			setTxHash(tx.transactionHash);
 
@@ -116,7 +121,7 @@ const createLotto = () => {
 				currency: initialState.currency
 			};
 
-			fetch('/api/save-ticket', {
+			await fetch('/api/save-ticket', {
 				method: 'POST',
 				body: JSON.stringify({
 					transaction_id: tx.transactionHash,
@@ -125,12 +130,14 @@ const createLotto = () => {
 				})
 			});
 
-			fetch('/api/event', {
+			await fetch('/api/event', {
 				method: 'POST',
 				body: JSON.stringify({ event })
 			});
 
-			setStep(LottoSteps.CONFIRMED);
+			setTimeout(() => {
+				setStep(LottoSteps.CONFIRMED);
+			});
 		} catch (e) {
 			console.error(e);
 		}

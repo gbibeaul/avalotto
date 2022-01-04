@@ -38,8 +38,6 @@
 	$: {
 		hide = currentStep === LottoSteps.SELECT_PLAYS || currentStep === LottoSteps.CONFIRMED
 	}
-
-	console.log(currentStep === LottoSteps.SELECT_PLAYS)
 </script>
 
 <!-- outer component with gradient bg -->
