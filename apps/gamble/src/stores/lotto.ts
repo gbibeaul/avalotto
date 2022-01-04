@@ -117,7 +117,7 @@ const createLotto = () => {
 				method: 'POST',
 				body: JSON.stringify({
 					transaction_id: tx.transactionHash,
-					numbers: betsToBigNumbers,
+					numbers,
 					wallet_id: walletAddress
 				})
 			});

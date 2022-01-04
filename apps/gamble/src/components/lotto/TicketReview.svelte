@@ -6,21 +6,25 @@
 	import { walletStore } from '../../stores/wallet';
 	import { getShortenedAddress } from '../../helpers/display.helpers';
 
+	export let isViewOnly: boolean = false;
+
+	export let hash: string = $lottoStore.txHash;
+	export let plays: number[][] = $lottoStore.plays;
+	export let wallet: string = $walletStore.walletAddress
+	export let date: Date = new Date();
+
+	$: if(!isViewOnly) {
+		hash = $lottoStore.txHash;
+		plays = $lottoStore.plays;
+		wallet = $walletStore.walletAddress;
+	}
+
 	let currentStep: LottoSteps;
 	let jackpot: BigNumber;
-	let plays: number[][];
-	let wallet: string;
-	let hash: string;
 
 	lottoStore.subscribe((value) => {
 		currentStep = value.currentStep;
-		plays = value.plays;
 		jackpot = value.jackpot;
-		hash = value.txHash;
-	});
-
-	walletStore.subscribe((value) => {
-		wallet = value.walletAddress;
 	});
 
 	const formatNumber = (num: number): string => {
@@ -36,7 +40,7 @@
 </script>
 
 <!-- outer component with gradient bg -->
-<div class="justify-center flex lg:w-2/6" class:hide={currentStep === LottoSteps.SELECT_PLAYS}>
+<div class="justify-center flex lg:w-2/6" class:hide={currentStep === LottoSteps.SELECT_PLAYS && !isViewOnly }>
 	<!-- white card -->
 	<main class=" w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36 flex flex-row">
 		<!-- left portion of card -->
@@ -44,9 +48,9 @@
 			<!-- row with back arrow and inted -->
 			<div class="flex justify-between mb-8">
 				<button
-					class="h-10 w-8 mr-4"
+					class="h-10 w-8 mr-4 hide-big"
 					on:click={() => lottoStore.setStep(LottoSteps.SELECT_PLAYS)}
-					class:hide-big={currentStep === LottoSteps.SELECT_PLAYS}><FaLongArrowAltLeft /></button
+					class:hide={currentStep === LottoSteps.SELECT_PLAYS}><FaLongArrowAltLeft /></button
 				>
 				<span
 					class="w-5/6 lg:w-full border-solid border-2 border-black flex justify-center items-center font uppercase"
@@ -68,7 +72,7 @@
 				/>
 				<div class="space-y-2 flex flex-col">
 					<time class="font-bold uppercase text-lg flex justify-end"
-						>{format(new Date(), 'dd-MMM-yyyy')}</time
+						>{format(date, 'dd-MMM-yyyy')}</time
 					>
 					<span class="font-bold uppercase sm:text-5xl text-4xl lg:text-2xl"
 						>{utils.formatEther(jackpot)} AVAX</span
@@ -113,12 +117,13 @@
 				<div class="uppercase font-semibold text-lg">total cost:</div>
 				<div class="uppercase font-semibold text-lg">{plays.length} avax</div>
 			</div>
-
-			<div class="flex justify-center">
-				<button on:click={handleBuy} class="bg-avaloto w-80 bg-indigo-500 text-white rounded h-12"
-					>buy now</button
-				>
-			</div>
+			{#if !isViewOnly}
+				<div class="flex justify-center">
+					<button on:click={handleBuy} class="bg-avaloto w-80 bg-indigo-500 text-white rounded h-12"
+						>buy now</button
+					>
+				</div>
+			{/if}
 		</div>
 
 		<!-- right portion of card with ava loggo-->
