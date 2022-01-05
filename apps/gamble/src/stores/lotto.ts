@@ -45,6 +45,15 @@ const createLotto = () => {
 		update((s) => ({ ...s, plays }));
 	};
 
+	const resetState = () => {
+		const plays = [[getRandom(), getRandom(), getRandom()]];
+		const currentStep = LottoSteps.SELECT_PLAYS;
+		const transactionId = '';
+		const txHash = '';
+
+		update((s) => ({ ...s, plays, currentStep, transactionId, txHash }));
+	};
+
 	const requestAccount = () => {
 		window.ethereum
 			.request({ method: 'eth_requestAccounts' })
@@ -68,23 +77,23 @@ const createLotto = () => {
 	};
 
 	const updateJackpot = (jackpot: BigNumber) => {
-		update((s) => ({ ...s, jackpot}));
-	}
-		
+		update((s) => ({ ...s, jackpot }));
+	};
+
 	const updateNextDrawOn = (nextDrawOn: BigNumber) => {
-		update((s) => ({ ...s, nextDrawOn: nextDrawOn.toNumber()}))
-	}
+		update((s) => ({ ...s, nextDrawOn: nextDrawOn.toNumber() }));
+	};
 
 	const getInitialInfo = async () => {
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
-		updateJackpot(jackpot);
-
 		const nextDrawTime = await lotto.getNextDrawTime();
+
+		updateJackpot(jackpot);
 		updateNextDrawOn(nextDrawTime);
 
-		const betPrice = await lotto.getTicketPrice();
-		lotto.on('jackpotUpdated', updateJackpot);
+		lotto.on('jackpotUpdated', updateJackpot)
+
 	};
 
 	const placeBet = async (numbers: number[][]) => {
@@ -99,8 +108,7 @@ const createLotto = () => {
 			const transaction = await lotto.bet(betsToBigNumbers, {
 				value: utils.parseEther(String(value))
 			});
-			
-			setStep(LottoSteps.CONFIRMING);
+
 			const tx = await transaction.wait(1);
 			setTxHash(tx.transactionHash);
 
@@ -113,7 +121,7 @@ const createLotto = () => {
 				currency: initialState.currency
 			};
 
-			fetch('/api/save-ticket', {
+			await fetch('/api/save-ticket', {
 				method: 'POST',
 				body: JSON.stringify({
 					transaction_id: tx.transactionHash,
@@ -122,12 +130,14 @@ const createLotto = () => {
 				})
 			});
 
-			fetch('/api/event', {
+			await fetch('/api/event', {
 				method: 'POST',
 				body: JSON.stringify({ event })
 			});
 
-			setStep(LottoSteps.CONFIRMED);
+			setTimeout(() => {
+				setStep(LottoSteps.CONFIRMED);
+			});
 		} catch (e) {
 			console.error(e);
 		}
@@ -143,7 +153,8 @@ const createLotto = () => {
 		setTransactionId,
 		placeBet,
 		updateJackpot,
-		updateNextDrawOn
+		updateNextDrawOn,
+		resetState
 	};
 };
 

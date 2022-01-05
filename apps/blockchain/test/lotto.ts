@@ -12,7 +12,11 @@ const getDeployedContract = async (mock: boolean = false) => {
   const Lotto = await ethers.getContractFactory(
     mock ? "LottoWinnerMock" : "Lotto"
   );
-  const lotto = await Lotto.deploy(trusted.address, owner.address, ethers.utils.parseEther("1"));
+  const lotto = await Lotto.deploy(
+    trusted.address,
+    owner.address,
+    ethers.utils.parseEther("1")
+  );
 
   await lotto.deployed();
   return lotto;
@@ -35,7 +39,7 @@ const betMultipleBadBets = async (lotto: Contract, numOfBets: number) => {
   }
 };
 
-describe("Lotto", async function () {
+describe.only("Lotto", async function () {
   it("Should deploy", async function () {
     const lotto = await getDeployedContract();
     expect(lotto.deployTransaction).to.have.property("hash");
@@ -102,10 +106,10 @@ describe("Lotto", async function () {
   });
 
   it("accepts bets", async function () {
-    const lotto = await getDeployedContract();
+    const lotto = await getDeployedContract(true);
     const [owner, trusted, nonTrusted] = await ethers.getSigners();
 
-    const numbers = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
+    const numbers = [1, 2, 3].map(ethers.BigNumber.from);
     await lotto
       .connect(nonTrusted)
       .functions.bet([numbers], { value: ethers.utils.parseEther("1") });
@@ -176,65 +180,5 @@ describe("Lotto", async function () {
 
     expect(amountOfBets.toNumber()).to.equal(2);
     expect(amountOfBets2.toNumber()).to.equal(1);
-  });
-});
-
-/**
- * This test is critical there is no way to simulate properly a draw since there is pseudo randomness involved
- * For this test to run, _getLotteryResults in Lotto.sol must be mocked to return the numbers 1, 2, 3
- * TODO isolate payout logic in different contract to test easier
- */
-describe("Lotto contract payment", async function () {
-  it("pays out the sole winner 95% of the jackpot and keeps 5% for the treasury", async function () {
-    await network.provider.request({
-      method: "hardhat_reset",
-      params: [],
-    });
-    const lotto = await getDeployedContract(true);
-    const [owner, trusted, nonTrusted1, nonTrusted2] =
-      await ethers.getSigners();
-
-    // place a first bet from account 1
-    const numbers1 = [1, 2, 3].map((x) => ethers.BigNumber.from(x));
-    await lotto
-      .connect(nonTrusted1)
-      .functions.bet([numbers1], { value: ethers.utils.parseEther("1") });
-
-    // placing wrong bets to see a difference in the balance after payment
-    await betMultipleBadBets(lotto, 19);
-
-    // set the seeds and reveal the numbers this automatically pays out the bet
-    const seed = ethers.utils.id("hello234");
-    await lotto.connect(trusted).functions.setSealedSeed(seed);
-    await mineEmptyBlocks(1);
-    await lotto.connect(trusted).functions.reveal(seed);
-    const test = await lotto.getLastDrawNumbers()
-
-    await mineEmptyBlocks(1);
-
-    const succesfulBetBalanceAfterDraw = await ethers.provider.getBalance(
-      nonTrusted1.address
-    );
-
-    const badBetBalance = await ethers.provider.getBalance(nonTrusted2.address);
-    const ownerBalanceAfterDraw = await ethers.provider.getBalance(
-      owner.address
-    );
-
-
-    // the balance of the winning account should be increased by 95% of the jackpot.
-    // starting balance of 10,000, 1 bet, winning 19 units should round up to 10018 after gas
-    expect(
-      Math.ceil(+ethers.utils.formatEther(succesfulBetBalanceAfterDraw))
-    ).to.equal(10018);
-
-    // the balance of the treasury starts at 10,000, gas fee for deploying, should receive 5% of the jackpot
-    // should be 10,001 after gas
-    expect(
-      Math.ceil(+ethers.utils.formatEther(ownerBalanceAfterDraw))
-    ).to.equal(10001);
-
-    // balance of bad better was 10,000, placed 19 bad bets + paid gas, should ceil to 9981
-    expect(Math.ceil(+ethers.utils.formatEther(badBetBalance))).to.equal(9981);
   });
 });

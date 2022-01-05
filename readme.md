@@ -25,16 +25,32 @@ The player rewards and stakes yields are balanced by the protocol to insure the 
 
 ## Developer environment
 
+### Frontend against Fuji testnet
+---
 
-1. copy the content of .env.example to a .env file. Ask team members for supabase keys if they are relevant to your work. They probably are not.
+Fuji contracts should be stable but could be behind the local contracts.
 
-_N.B.: *If you are only doing ui work skip to step 4_
+1. copy the content of `.env.example` to a `.env` file. in the apps/gamble folder
+1. Make sure the env variable is properly set to fuji `VITE_AVALANCHE_NETWORK=Fuji`
+1. run `yarn dev:fuji`
 
-2. (If you are only doing ui work skip to step 4) Launch the test network `yarn start:chain`
+### Local blockchain
+---
+
+This is the latest unstable stuff
+
+1. copy the content of `.env.example` to a `.env` file. in the apps/gamble folder
+2. Launch the test network `yarn start:chain`
 3. add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
     - new RPC URL http://127.0.0.1:8545/
     - new network name "Hardhat test"
     - new network id "43112"
     - Currency Symbol(Optional) AVAX
-4. To work againts Fuji Testnet, run `yarn dev:fuji`, for the local network from a another terminal, deploy the contract to the test network `yarn dev`
+4. Run `yarn dev`. 
+
+Restarting your commands will require you to do the following:
+
+1. Kill the two terminal windows
+1. restart `yarn start:chain` and `yarn dev` in the respective windows.
+1. If you have submitted transactions, reset the hard hat accounts on metamask
 

@@ -3,7 +3,12 @@
  * This contract is never meant to be used in production, it is only meant to be used for testing purposes.
  */
 
+interface ITreasury {
+    function payWinnings(uint256 _amount, address payable _winner, string calldata _assetType) external returns (bool);
+}
 pragma solidity ^0.8.10;
+
+import "hardhat/console.sol";
 
 contract LottoWinnerMock {
     // administration
@@ -14,6 +19,7 @@ contract LottoWinnerMock {
     uint256 ticketValue;
     uint256 amountOfDraws = 0;
     uint256 nextDraw;
+    uint256 protocolFeePercen;
 
     // information about current state
     bytes32 sealedSeed;
@@ -39,12 +45,15 @@ contract LottoWinnerMock {
     constructor(
         address _trustedParty,
         address payable _treasury,
-        uint256 _ticketValue
+        uint256 _ticketValue,
+        uint256 _drawDaysInterval,
+        uint256 _protocolFeePercen
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
-        ticketValue = _ticketValue * 1 ether;
-        nextDraw = block.timestamp + 1 weeks;
+        ticketValue = _ticketValue;
+        nextDraw = block.timestamp + (_drawDaysInterval * 1 days);
+        protocolFeePercen = _protocolFeePercen;
     }
 
     /**
@@ -132,10 +141,9 @@ contract LottoWinnerMock {
     BETTING ACTIONS
     */
     function bet(uint256[][] memory _bets) public payable betsOpened {
-        
         require(
             msg.value / _bets.length == ticketValue,
-            "Bet not the right value"
+            "Bet not the right value avax"
         );
         // loop on each bet to validate it
         for (uint256 i = 0; i < _bets.length; i++) {
@@ -154,7 +162,9 @@ contract LottoWinnerMock {
             );
         }
 
-        jackpot += msg.value;
+        treasury.transfer(msg.value);
+        uint256 fee = msg.value * protocolFeePercen / 100;
+        jackpot += msg.value - fee;
 
         // loop on each bet to store it
         for (uint256 i = 0; i < _bets.length; i++) {
@@ -170,7 +180,11 @@ contract LottoWinnerMock {
 
     /**
     lOTTERY ACTRIONS
- */
+    */
+
+    function setProtocolFee(uint256 _feePercen) public onlyTrustedParty {
+        protocolFeePercen = _feePercen;
+    }
 
     /**
      * @dev Function that grabs mathematically a digit at index from a uint256.
@@ -221,6 +235,10 @@ contract LottoWinnerMock {
         require(storedBlockNumber < block.number);
         require(_seed == sealedSeed);
 
+        // uint256 random = uint256(
+        //     keccak256(abi.encodePacked(_seed, blockhash(storedBlockNumber)))
+        // );
+
         uint256[3] memory _drawNumbers = _getLotteryResults();
 
         previousDraws[amountOfDraws] = _drawNumbers;
@@ -231,11 +249,6 @@ contract LottoWinnerMock {
             bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))].length > 0;
 
         if (winnerFound) {
-            uint256 _amountForTreasury = jackpot / 20;
-
-            payTreasury(_amountForTreasury);
-            jackpot = jackpot - _amountForTreasury;
-
             uint256 _numberOfWinners = bets[
                 uint256(keccak256(abi.encodePacked(_drawNumbers)))
             ].length;
@@ -244,9 +257,14 @@ contract LottoWinnerMock {
             uint256 _amountForEachWinner = jackpot / _numberOfWinners;
 
             for (uint256 i = 0; i < _numberOfWinners; i++) {
-                payable(
-                    bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))][i]
-                ).transfer(_amountForEachWinner);
+                address winner = bets[
+                    uint256(keccak256(abi.encodePacked(_drawNumbers)))
+                ][i];
+                ITreasury(treasury).payWinnings(
+                    _amountForEachWinner,
+                    payable(winner),
+                    "AVAX"
+                );
             }
 
             jackpot = 0;
@@ -255,6 +273,7 @@ contract LottoWinnerMock {
 
         seedSet = false;
         betsClosed = false;
+        nextDraw = block.number + 1 weeks;
 
         return _drawNumbers;
     }

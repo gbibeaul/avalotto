@@ -23,6 +23,7 @@ const getDeployedContract = async (mock: boolean = false) => {
   const Gamble = await ethers.getContractFactory("GAMBLEToken");
   const Governance = await ethers.getContractFactory("GambleGovernance");
   const Treasury = await ethers.getContractFactory("Treasury");
+  const Lotto = await ethers.getContractFactory("LottoWinnerMock")
 
   // some type mismatch from libraries implenting the same. The code is correct actually
   const gamble = await upgrades
@@ -43,15 +44,15 @@ const getDeployedContract = async (mock: boolean = false) => {
   return { gamble, governance, treasury };
 };
 
-describe.only("Gamble Protocol", async function () {
+describe("Gamble Protocol", async function () {
   it("Should deploy", async function () {
     const { gamble } = await getDeployedContract();
     expect(gamble.deployTransaction).to.have.property("hash");
   });
 
-  it.only("allows transfers to the treasury", async function () {
+  it("allows transfers to the treasury", async function () {
     const { gamble, treasury } = await getDeployedContract();
-    const { owner, nonHolder1 } = await getSignerWithRoles();
+    const { owner } = await getSignerWithRoles();
 
     // transfer from original mint to a non holder
     await gamble
@@ -59,9 +60,23 @@ describe.only("Gamble Protocol", async function () {
       .connect(owner)
       .functions.transfer(treasury.address, ethers.BigNumber.from(10000000));
     const balance = await gamble.functions.balanceOf(treasury.address);
-    console.log(balance);
-    expect(1).to.equal(1);
+    expect(balance[0]).to.equal(ethers.BigNumber.from(10000000));
   });
 
-  it("Accepts proposals for transfers");
+  it.skip("Accepts proposals for transfers", async function() {
+    const { gamble, treasury } = await getDeployedContract();
+    const { owner } = await getSignerWithRoles()
+
+    const token = await ethers.getContractAt('GAMBLEToken', gamble.address)
+
+    await gamble
+      // @ts-ignore
+      .connect(owner)
+      .functions.transfer(treasury.address, ethers.BigNumber.from(10000000));
+
+      // @ts-ignore
+      const transferCalldata = gamble.interface.encodeFunctionData('transfer', [owner.address, ethers.BigNumber.from(100)]);
+
+
+  });
 });
