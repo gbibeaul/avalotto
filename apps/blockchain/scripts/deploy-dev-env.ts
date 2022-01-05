@@ -54,7 +54,9 @@ async function main() {
   const lotto = await Lotto.deploy(
     owner.address,
     treasury.address,
-    ethers.utils.parseEther("1")
+    ethers.utils.parseEther("1"),
+    ethers.BigNumber.from(1),
+    ethers.BigNumber.from(3)
   );
   await lotto.deployed();
   config.Local.contracts.LottoWinnerMock.address = lotto.address;

@@ -19,6 +19,7 @@ contract LottoWinnerMock {
     uint256 ticketValue;
     uint256 amountOfDraws = 0;
     uint256 nextDraw;
+    uint256 protocolFeePercen;
 
     // information about current state
     bytes32 sealedSeed;
@@ -44,12 +45,15 @@ contract LottoWinnerMock {
     constructor(
         address _trustedParty,
         address payable _treasury,
-        uint256 _ticketValue
+        uint256 _ticketValue,
+        uint256 _drawDaysInterval,
+        uint256 _protocolFeePercen
     ) {
         trustedParty = _trustedParty;
         treasury = _treasury;
         ticketValue = _ticketValue;
-        nextDraw = block.timestamp + 1 weeks;
+        nextDraw = block.timestamp + (_drawDaysInterval * 1 days);
+        protocolFeePercen = _protocolFeePercen;
     }
 
     /**
@@ -159,7 +163,8 @@ contract LottoWinnerMock {
         }
 
         treasury.transfer(msg.value);
-        jackpot += (msg.value - (msg.value / 30));
+        uint256 fee = msg.value * protocolFeePercen / 100;
+        jackpot += msg.value - fee;
 
         // loop on each bet to store it
         for (uint256 i = 0; i < _bets.length; i++) {
@@ -175,7 +180,11 @@ contract LottoWinnerMock {
 
     /**
     lOTTERY ACTRIONS
- */
+    */
+
+    function setProtocolFee(uint256 _feePercen) public onlyTrustedParty {
+        protocolFeePercen = _feePercen;
+    }
 
     /**
      * @dev Function that grabs mathematically a digit at index from a uint256.

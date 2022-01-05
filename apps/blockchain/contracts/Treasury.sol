@@ -16,7 +16,7 @@ contract Treasury {
     uint256 currentTransferProposal;
     uint256 currentUpgradeProposal;
     uint256 houseProfitRatio;
-    uint256 profitDistributionRatio;
+    uint256 profitDistributionPercen;
     mapping(address => bool) isCashier;
     mapping(address => bool) isCashierFlagged;
     mapping(uint256 => transferProposal) transferProposals;
