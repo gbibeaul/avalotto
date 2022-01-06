@@ -1,5 +1,6 @@
 <script context="module">
 	import { parseISO } from 'date-fns';
+	import { seo } from '../../stores/seo';
 
 	import TicketReview from '../../components/lotto/TicketReview.svelte';
 
@@ -12,6 +13,12 @@
 		if (res.ok) {
 			const data = await res.json();
 			const { numbers, wallet, createdAt } = data;
+
+			seo.update(() => ({
+				title: 'Ticket for Avvalotto',
+				description: `Ticket played by ${wallet} for numbers ${numbers}`
+			}));
+
 			return {
 				props: {
 					ticket: {
