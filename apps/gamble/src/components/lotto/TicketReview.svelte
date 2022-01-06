@@ -32,7 +32,7 @@
 	});
 
 	$: {
-		isTicketHidden = currentStep === LottoSteps.SELECT_PLAYS && !isViewOnly;
+		isTicketHidden = (currentStep === LottoSteps.SELECT_PLAYS || currentStep === LottoSteps.CONFIRMED) && !isViewOnly;
 		isGoBackLocked = currentStep === LottoSteps.SELECT_PLAYS;
 	}
 
@@ -46,6 +46,7 @@
 	const handleBuy = () => {
 		lottoStore.placeBet(plays);
 	};
+
 </script>
 
 <!-- outer component with gradient bg -->
@@ -84,7 +85,7 @@
 						>{format(date, 'dd-MMM-yyyy')}</time
 					>
 					<span class="font-bold uppercase sm:text-5xl text-4xl lg:text-2xl"
-						>{utils.formatEther(jackpot)} AVAX</span
+						>{(+utils.formatEther(jackpot)).toFixed(2)} AVAX</span
 					>
 				</div>
 			</div>

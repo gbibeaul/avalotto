@@ -70,7 +70,6 @@ const createState = () => {
       updateJackpot(jackpot);
       lotto.on("jackpotUpdated", updateJackpot);
     } catch (e) {
-      console.log(e);
       updateErrors(e);
     }
   };
