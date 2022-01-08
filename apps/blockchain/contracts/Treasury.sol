@@ -19,7 +19,7 @@ contract Treasury {
 
     modifier approvedGame() {
         require(
-            gambitAuth.isAuthoziedGame(msg.sender),
+            gambitAuth.isAuthorizedGame(msg.sender),
             "Only gamblefi approved games can use this action"
         );
         _;
@@ -90,7 +90,7 @@ contract Treasury {
     }
 }
 
-interface Itreasury {
+interface ITreasury {
     function getFundsAVAXAmount() external view returns (uint256);
 
     function sendAvax(

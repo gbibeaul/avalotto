@@ -4,11 +4,11 @@ import "./GambitAuthorizations.sol";
 import "./Treasury.sol";
 
 contract Game {
-    Itreasury treasury;
+    ITreasury treasury;
     address payable treasuryContract;
 
     constructor(address _treasury) {
-        treasury = Itreasury(_treasury);
+        treasury = ITreasury(_treasury);
         treasuryContract = payable(_treasury);
     }
 

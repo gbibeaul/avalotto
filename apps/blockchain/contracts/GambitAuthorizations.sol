@@ -6,8 +6,9 @@ contract GambitAuthorizations {
     mapping(address => bool) games;
     mapping(address => bool) rngAuthorized;
     mapping(address => bool) oracleAuthorized;
-    mapping(address => bool) isRngOracle;
     mapping(address => bool) isOracle;
+    address rngOracle;
+    address[] oracles;
 
     bool staffEnabled = true;
 
@@ -28,11 +29,17 @@ contract GambitAuthorizations {
     }
 
     modifier onlyStaffOrGovernance() {
-        require(
-            staff[msg.sender] || governance[msg.sender],
-            "Only staff or governance can call this function"
-        );
-        require(staffEnabled, "Staff is disabled");
+        if (staffEnabled) {
+            require(
+                staff[msg.sender] || governance[msg.sender],
+                "Only staff or governance can call this function"
+            );
+        } else {
+            require(
+                governance[msg.sender],
+                "Only governance can call this function"
+            );
+        }
         _;
     }
 
@@ -115,16 +122,14 @@ contract GambitAuthorizations {
         staffEnabled = true;
     }
 
-    function addRng(address _rng) public onlyStaffOrGovernance {
-        isRngOracle[_rng] = true;
-    }
-
-    function removeRng(address _rng) public onlyStaffOrGovernance {
-        isRngOracle[_rng] = false;
+    function changeRng(address _rng) public onlyStaffOrGovernance {
+        require(_rng != address(0), "RNG address cannot be 0x0");
+        rngOracle = _rng;
     }
 
     function addOracle(address _oracle) public onlyStaffOrGovernance {
         isOracle[_oracle] = true;
+        oracles.push(_oracle);
     }
 
     function removeOracle(address _oracle) public onlyStaffOrGovernance {
@@ -134,40 +139,6 @@ contract GambitAuthorizations {
     /**
         View Funcs
      */
-
-    /**
-        these functions are view functions that are called by thew different contracts to ensure they are authorized
-        for specific actions
-        true if the address is authorized to call the function 
-     */
-
-    function isAuthoziedGame(address _game) public view returns (bool) {
-        return games[_game];
-    }
-
-    function isAuthorizedRNG(address _rng) public view returns (bool) {
-        return rngAuthorized[_rng];
-    }
-
-    function isAuthorizedOracle(address _oracle) public view returns (bool) {
-        return oracleAuthorized[_oracle];
-    }
-
-    function isStaff(address _staff) public view returns (bool) {
-        return staff[_staff];
-    }
-
-    function isStaffEnabled() public view returns (bool) {
-        return staffEnabled;
-    }
-
-    function isOfficialRng(address _rng) public view returns (bool) {
-        return isRngOracle[_rng];
-    }
-
-    function isOfficialOracle(address _oracle) public view returns (bool) {
-        return isOracle[_oracle];
-    }
 
     function isStaffOrGovApproved(address _requester)
         public
@@ -183,7 +154,7 @@ contract GambitAuthorizations {
 }
 
 interface IGambitAuthorization {
-    function isAuthoziedGame(address _game) external view returns (bool);
+    function isAuthorizedGame(address _game) external view returns (bool);
 
     function isAuthorizedRNG(address _rng) external view returns (bool);
 
@@ -201,6 +172,4 @@ interface IGambitAuthorization {
         external
         view
         returns (bool);
-
-    
 }
