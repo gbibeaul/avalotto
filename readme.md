@@ -1,4 +1,4 @@
-# GameBit Token
+# GameBit
 
 The GameBit Token is a decentralized, open-source, peer-to-peer token that powers the planned GameBit Protocol. The token is a utility token that can be used to either participate in games, stake, & governance over the platform.
 
