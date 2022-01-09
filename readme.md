@@ -4,8 +4,8 @@ The GameBit Token is a decentralized, open-source, peer-to-peer token that power
 
 There are two ways to participate in the GameBit Protocol:
 
-- Offer to stake your GameBit tokens in the Protocol and receive additional tokens proportional to the total usage of the protocol.
-- Play the games, which gives you a chance to win, but also rewards additional GameBit tokens the more you play.
+- Offer to stake your GameBit tokens in the Protocol and receive additional tokens proportional to the total usage of the protocol
+- Play the games, which gives you a chance to win, but also rewards additional GameBit tokens the more you play
 
 The player rewards and staking yields are automatically rebalanced by the protocol to insure the long-term viability of the platform.
 
