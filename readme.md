@@ -12,8 +12,8 @@ The player rewards and staking yields are automatically rebalanced by the protoc
 ## Roadmap:
 
 1. Launch a test game (lottery) to test Avalanche's viability as a large-scale open gambling platform
-1. Establish yield and rewards comptroller for the protocol
-1. Launch the pre-sale and alpha of the protocol with two games: black jack and slots
+1. Establish a yield and rewards comptroller for the protocol
+1. Launch the pre-sale and alpha of the protocol with two games: Blackjack and slots
 1. Launch the beta of the protocol and additional games
 1. Launch the public release of the protocol with a decentralized governance system
 
