@@ -1,21 +1,21 @@
 # GameBit Token
 
-The GameBit Token is a decentralized, open-source, peer-to-peer token that powers the planned GameBit Protocol. The token is a utility token that can be used to either participate in games, stake, & governance.
+The GameBit Token is a decentralized, open-source, peer-to-peer token that powers the planned GameBit Protocol. The token is a utility token that can be used to either participate in games, stake, & governance over the platform.
 
 There are two ways to participate in the GameBit Protocol:
 
-- Offer to stake your GameBit tokens in the Protocol and receive additional tokens proportional to the global usage of the protocol.
-- Participate in the games gives you a chance of winning but also rewards you with additional GameBit tokens the more you play.
+- Offer to stake your GameBit tokens in the Protocol and receive additional tokens proportional to the total usage of the protocol.
+- Play the games, which gives you a chance to win, but also rewards additional GameBit tokens the more you play.
 
-The player rewards and stakes yields are balanced by the protocol to insure the viability of the platform.
+The player rewards and staking yields are automatically rebalanced by the protocol to insure the long-term viability of the platform.
 
 ## Roadmap:
 
-1. Launching a test game (lottery) to test Avalanche's viability as a large scale open gambling platform. 
-1. Establish yield and stake rewards comptroller for the protocol
-1. Launch the pre-sale and alpha of the protocol with two games: black jack and slots.
-1. Launch the beta of the protocol with the rest of the games.
-1. Launch the public release of the protocol and institue a decentralized governance system.
+1. Launch a test game (lottery) to test Avalanche's viability as a large-scale open gambling platform
+1. Establish yield and rewards comptroller for the protocol
+1. Launch the pre-sale and alpha of the protocol with two games: black jack and slots
+1. Launch the beta of the protocol and additional games
+1. Launch the public release of the protocol with a decentralized governance system
 
 ## Prerequesites
 
