@@ -7,7 +7,7 @@ There are two ways to participate in the GameBit Protocol:
 - Offer to stake your GameBit tokens in the Protocol and receive additional tokens proportional to the global usage of the protocol.
 - Participate in the games gives you a chance of winning but also rewards you with additional GameBit tokens the more you play.
 
-The player rewards and stakes yields are balanced by the protocol to insure the viability of the platform.
+The player rewards and stakes yields are automatically rebalanced by the protocol to insure the viability of the platform.
 
 ## Roadmap:
 
