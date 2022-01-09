@@ -1,11 +1,11 @@
-# Gamble Token
+# GameBit Token
 
-The Gamble Token is a decentralized, open-source, peer-to-peer token that powers the planned Gamble Protocol. The token is a utility token that can be used to either participate in gambling games or to stake and receive a yield.
+The GameBit Token is a decentralized, open-source, peer-to-peer token that powers the planned GameBit Protocol. The token is a utility token that can be used to either participate in games, stake, & governance.
 
-There are two ways to participate in the Gamble Protocol:
+There are two ways to participate in the GameBit Protocol:
 
-- Offer to stake your tokens in the Protocol and receive a yield proportional to the profits the protocol is making
-- participate in the games gives you a chance of winning but also rewards you with additional tokens the more you play.
+- Offer to stake your GameBit tokens in the Protocol and receive additional tokens proportional to the global usage of the protocol.
+- Participate in the games gives you a chance of winning but also rewards you with additional GameBit tokens the more you play.
 
 The player rewards and stakes yields are balanced by the protocol to insure the viability of the platform.
 
