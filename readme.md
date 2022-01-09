@@ -17,40 +17,41 @@ The player rewards and staking yields are automatically rebalanced by the protoc
 1. Launch the beta of the protocol and additional games
 1. Launch the public release of the protocol with a decentralized governance system
 
-## Prerequesites
+# Contributing
 
-1. install nodejs at this address https://nodejs.org/en/
-1. install yarn at this address https://yarnpkg.com/en/docs/install
-1. install the metamask extension at this address https://metamask.io/
+## Prerequisites
 
-## Developer environment
+1. Install [nodejs](https://nodejs.org/en/)
+1. Install [yarn](https://yarnpkg.com/en/docs/install)
+1. Install the [MetaMask chrome extension](https://metamask.io/)
+
+## Getting Started
 
 ### Frontend against Fuji testnet
 ---
 
-Fuji contracts should be stable but could be behind the local contracts.
+Deployed Fuji contracts should be stable but could be behind your local version
 
-1. copy the content of `.env.example` to a `.env` file. in the apps/gamble folder
-1. Make sure the env variable is properly set to fuji `VITE_AVALANCHE_NETWORK=Fuji`
-1. run `yarn dev:fuji`
+1. Copy the content of `.env.example` to a `.env` file in the apps/gamble folder
+1. Make sure the env variable is properly set to fuji: `VITE_AVALANCHE_NETWORK=Fuji`
+1. Run `yarn dev:fuji`
 
-### Local blockchain
+### Local Blockchain
 ---
 
 This is the latest unstable stuff
 
-1. copy the content of `.env.example` to a `.env` file. in the apps/gamble folder
-2. Launch the test network `yarn start:chain`
-3. add the test network to metamask https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC. Use these values:
-    - new RPC URL http://127.0.0.1:8545/
-    - new network name "Hardhat test"
-    - new network id "43112"
-    - Currency Symbol(Optional) AVAX
-4. Run `yarn dev`. 
+1. Copy the content of `.env.example` to a `.env` file in the apps/gamble folder
+1. Launch the test network by running `yarn start:chain`
+1. Add the [test network to MetaMask](https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC) using the following configuration:
+    - RPC URL: http://127.0.0.1:8545/
+    - Network Name: "Hardhat test"
+    - Network ID: "43112"
+    - Currency Symbol (optional): AVAX
+1. Run `yarn dev`
 
 Restarting your commands will require you to do the following:
 
 1. Kill the two terminal windows
-1. restart `yarn start:chain` and `yarn dev` in the respective windows.
-1. If you have submitted transactions, reset the hard hat accounts on metamask
-
+1. Restart `yarn start:chain` and `yarn dev` in the respective windows.
+1. If you have submitted transactions, reset the hardhat accounts on MetaMask
