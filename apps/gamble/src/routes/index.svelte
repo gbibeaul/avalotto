@@ -30,10 +30,10 @@
 						<span class="block">GameBit Protocol</span>
 					</h2>
 					<p class="mt-4 text-lg leading-6 text-indigo-200">
-						Gambit is a decentralized play & earn protocol built on Avalanche. Home to Snowy Palace Casino(❄️,🎰)
+						Gambit is a decentralized play & earn protocol built on Avalanche. Home to Snowy Palace(❄️,🎰)
 					</p>
 					<p class="flex mt-2">
-						<a href="https://twitter.com/gamble_fi" target="_blank" class="text-gray-400 hover:text-gray-500">
+						<a href="https://twitter.com/GameBitAVAX" target="_blank" class="text-gray-400 hover:text-gray-500">
 							<span class="sr-only">Twitter</span>
 							<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 								<path
