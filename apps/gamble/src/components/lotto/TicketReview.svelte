@@ -116,9 +116,9 @@
 			<div class="flex justify-evenly items-center mb-6">
 				<div class="uppercase font-semibold text-lg">evening</div>
 				<div class="bg-black text-white uppercase rounded-md p-px text-bold">
-					<div>gamblefi</div>
-					<div>gamblefi</div>
-					<div>gamblefi</div>
+					<div>gamebit</div>
+					<div>gamebit</div>
+					<div>gamebit</div>
 				</div>
 				<div class="uppercase font-semibold text-lg">played</div>
 			</div>

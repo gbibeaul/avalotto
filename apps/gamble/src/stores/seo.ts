@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
 export const seo = writable({
-	title: 'Gamblefi.xyz', 
-	description: 'The Gambling protocol on Avalanche'
+	title: 'Gamebit.app', 
+	description: 'Gambit is a decentralized play & earn protocol built on Avalanche. Home to Snowy Palace Casino(❄️,🎰)'
 });
