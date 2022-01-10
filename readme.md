@@ -23,11 +23,11 @@ The player rewards and staking yields are automatically rebalanced by the protoc
 
 1. Install [nodejs](https://nodejs.org/en/)
 1. Install [yarn](https://yarnpkg.com/en/docs/install)
-1. Install the [MetaMask chrome extension](https://metamask.io/)
+1. Install the [MetaMask Chrome extension](https://metamask.io/)
 
 ## Getting Started
 
-### Frontend against Fuji testnet
+### Run the Frontend against Fuji testnet
 ---
 
 Deployed Fuji contracts should be stable but could be behind your local version
