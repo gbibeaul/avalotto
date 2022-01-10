@@ -5,22 +5,56 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./GambitAuthorizations.sol";
 
 contract Treasury {
-    uint256 houseProfitRatio;
-    uint256 profitDistributionPercen;
+    uint256 rngFee;
+    uint256 treasuryFunds;
     IGambitAuthorization gambitAuth;
-    mapping(string => bool) approvedAssets;
     mapping(address => bool) authorizedGames;
-    event avaxFundChanged(uint256);
+    mapping(address => uint256) authorizedGameFunds;
+    event GameFundsReceived(address _game, uint256 _amount);
+    event GameBalanceChanged(address _game, uint256 _amount);
+    event ProfitTaken(ProfitType _type, uint256 _amount, address _game);
 
-    constructor(address _gambitAuthorizations) {
-        approvedAssets["AVAX"] = true;
+    /**
+        RNG => simple fee for requesting an RNG
+        ORACLE => fee for requesting an oracle API call
+        GAME_SESSION_FEE => Good for games session like poker hands, dice, etc. Game fee is paid at the end of the session.
+        PLAY_FEE => Fee for a 1 time action in a game, attack, buy lotto ticket, NFT scratch etc.
+        PROTOCOL_FEE => Fee for adding games or such to the protocol. Misc fee.
+     */
+
+    enum ProfitType {
+        RNG_FEE,
+        ORACLE_FEE,
+        GAME_SESSION_FEE,
+        PLAY_FEE,
+        PROTOCOL_FEE
+    }
+
+    constructor(address _gambitAuthorizations, uint256 _rngFee) {
+        rngFee = _rngFee;
         gambitAuth = IGambitAuthorization(_gambitAuthorizations);
     }
 
     modifier approvedGame() {
         require(
             gambitAuth.isAuthorizedGame(msg.sender),
-            "Only gamblefi approved games can use this action"
+            "Only Gamebit approved contract can use this action"
+        );
+        _;
+    }
+
+    modifier authForPlay() {
+        require(
+            gambitAuth.isGamePlayProfitAuthorized(msg.sender),
+            "This contract is not authorized to accept plays"
+        );
+        _;
+    }
+
+    modifier authForGameSession() {
+        require(
+            gambitAuth.isGameGameProfitAuthorized(msg.sender),
+            "This contract is not authorized to start game sessions"
         );
         _;
     }
@@ -33,60 +67,117 @@ contract Treasury {
         _;
     }
 
-    modifier approvedAsset(string calldata _assetType) {
-        require(approvedAssets[_assetType] == true);
+    modifier enoughGameFunds(uint256 _amount) {
+        require(
+            authorizedGameFunds[msg.sender] >= _amount,
+            "This game does not have enough funds"
+        );
         _;
     }
 
-    function getFundsAVAXAmount() public view returns (uint256) {
+    modifier meetsProfiThreshold(uint256 _amount) {
+        require(
+            gambitAuth.isAmountEnoughProfit(msg.sender, _amount),
+            "This profit does not meet the threshold agreed upon"
+        );
+        _;
+    }
+
+    modifier msgValue(uint256 _amount) {
+        require(msg.value >= _amount, "Not enough funds");
+        _;
+    }
+
+    function getFunds() public view returns (uint256) {
         return address(this).balance;
     }
 
-    /**
-        TREASURY ACTIONS
-     */
-
-    /**
-        @dev allows the treasury to receive funds
-     */
-    receive() external payable {}
+    // STAFF FUNCTIONS
 
     /**
         @dev allows the treasury to initiate an external payment when initiated by the staff or governance
      */
-    function sendAvax(
-        uint256 _amount,
-        address payable _sendTo,
-        string calldata _assetType
-    ) public staffOrGovernance returns (bool) {
-        require(_amount > 0, "Proposed amount must be over 0");
-        if (
-            keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
-        ) {
-            _sendTo.transfer(_amount);
-            emit avaxFundChanged(address(this).balance);
-            return true;
-        }
+    function pay(uint256 _amount, address payable _sendTo)
+        public
+        staffOrGovernance
+        returns (bool)
+    {
+        require(_amount > 0, "amount must be over 0");
+        _sendTo.transfer(_amount);
+        return true;
+    }
 
-        return false;
+    // GAME FUNCTIONS
+
+    /**
+        This allows a contract to distribute the profits from a play session. The contract will have to pay dues to the treasury
+        @notice The games need to be previously authorized to act on behalf of the treasury
+
+     */
+    function payGameSessionWinnings(
+        uint256 _winning,
+        uint256 _profits,
+        address payable _winner
+    )
+        public
+        payable
+        authForGameSession
+        approvedGame
+        enoughGameFunds(_winning + _profits)
+        meetsProfiThreshold(_profits)
+        msgValue(_winning + _profits)
+    {
+        treasuryFunds += _profits;
+        _winner.transfer(_winning);
+        authorizedGameFunds[msg.sender] -= _winning + _profits;
+        emit ProfitTaken(ProfitType.GAME_SESSION_FEE, _profits, msg.sender);
     }
 
     /**
-        @dev allows the treasury to initiate an external when an authorized games requests it
+        This allows a contract to send a play/bet to the treasury. 
+        @notice The profits are taken on the bet, not on the jackpot of a session. Contracts call distributePlayWinnings to pay winners
      */
-    function payWinnings(
-        uint256 _amount,
-        address payable _winner,
-        string calldata _assetType
-    ) public approvedGame approvedAsset(_assetType) returns (bool) {
-        if (
-            keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
-        ) {
-            _winner.transfer(_amount);
-            emit avaxFundChanged(address(this).balance);
-            return true;
-        }
-        return false;
+    function acceptPlay(uint256 _amount, uint256 _profits)
+        public
+        payable
+        authForPlay
+        approvedGame
+        meetsProfiThreshold(_amount)
+        msgValue(_amount)
+    {
+        treasuryFunds += _profits;
+        authorizedGameFunds[msg.sender] += _amount;
+        emit ProfitTaken(ProfitType.PLAY_FEE, _profits, msg.sender);
+    }
+
+    /**
+        This allows a contract to distribute the winnings of a single bet
+        @notice The games need to be previously authorized to act on behalf of the treasury. Treasury profits were taken on acceptPlay
+     */
+    function distributePlayWinnings(uint256 _winning, address payable _winner)
+        public
+        authForPlay
+        approvedGame
+        enoughGameFunds(_winning)
+    {
+        _winner.transfer(_winning);
+        authorizedGameFunds[msg.sender] -= _winning;
+    }
+
+    // GAMEBIT FUNCTIONS 
+
+    /**
+        @dev This will allow the infrastructure to pay the treasury for oracle and rng requests
+     */
+
+    function receiveRngPayment(address _game) public payable {
+        treasuryFunds += rngFee;
+        emit ProfitTaken(ProfitType.RNG_FEE, rngFee, _game);
+    }
+
+    function receiveOraclePayment(address _game) public payable {
+        treasuryFunds += rngFee;
+        emit ProfitTaken(ProfitType.ORACLE_FEE, rngFee, _game);
     }
 }
 
@@ -99,9 +190,18 @@ interface ITreasury {
         string calldata _assetType
     ) external returns (bool);
 
-    function payWinnings(
-        uint256 _amount,
-        address payable _winner,
-        string calldata _assetType
-    ) external returns (bool);
+    function payGameSessionWinnings(
+        uint256 _winning,
+        uint256 _profits,
+        address payable _winner
+    ) external payable returns (bool);
+
+    function acceptPlay(uint256 _amount, uint256 _profits)
+        external
+        payable
+        returns (bool);
+
+    function distributePlayWinnings(uint256 _winning, address payable _winner)
+        external
+        returns (bool);
 }

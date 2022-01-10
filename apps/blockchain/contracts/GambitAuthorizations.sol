@@ -6,6 +6,9 @@ contract GambitAuthorizations {
     mapping(address => bool) games;
     mapping(address => bool) rngAuthorized;
     mapping(address => bool) oracleAuthorized;
+    mapping(address => bool) playProfitAuthorized;
+    mapping(address => bool) gameProfitAuthorized;
+    mapping(address => uint256) minGameProfit;
     mapping(address => bool) isOracle;
     address rngOracle;
     address[] oracles;
@@ -70,42 +73,74 @@ contract GambitAuthorizations {
 
     /**
         add a game to the authorized games list. This gives access to the treasury and paying winners
-        @param _game Address of the game to add
      */
-    function addAuthorizedGame(address _game) public onlyStaffOrGovernance {
+    function addAuthorizedGame(address _game, uint256 _minGameProfit)
+        public
+        onlyStaffOrGovernance
+    {
         games[_game] = true;
+        minGameProfit[_game] = _minGameProfit;
+    }
+
+    /**
+        Update the minimum amount of profit the treasury takes on a game.
+     */
+    function updateGameMinProfit(address _game, uint256 _minGameProfit)
+        public
+        onlyStaffOrGovernance
+    {
+        minGameProfit[_game] = _minGameProfit;
     }
 
     /**
         remove a game from the authorized games list. This removes access to the treasury and paying winners
-        @param _game Address of the game to remove
      */
     function removeAuthorizedGame(address _game) public onlyStaffOrGovernance {
         games[_game] = false;
     }
 
     /** 
-        Allow a game to call oracle RNGs this means the games will be required to pay the oracle to the treasury
-        @param _game Address of the game to add
+        Allow/Block a game to call oracle RNGs this means the games will be required to pay the oracle to the treasury
      */
-    function addGameToRng(address _game)
+    function editGameRngAuth(address _game, bool _auth)
         public
         onlyStaffOrGovernance
         authorizedGame(_game)
     {
-        rngAuthorized[_game] = true;
+        rngAuthorized[_game] = _auth;
     }
 
     /**
-        Allow a game to call other oracles this means the games will be required to pay the oracle to the treasury
-        @param _game Address of the game to add
+        Allow/Block a game to call other oracles this means the games will be required to pay the oracle to the treasury
      */
-    function addGameToOracle(address _game)
+    function editGameOracleAuth(address _game, bool _auth)
         public
         onlyStaffOrGovernance
         authorizedGame(_game)
     {
-        oracleAuthorized[_game] = true;
+        oracleAuthorized[_game] = _auth;
+    }
+
+    /**
+        Allow/Block a game to pay a winner from the treasury that has placed a bet/play for ex: (buy lottery ticket, NFT scratch card)
+     */
+    function editGamePlayProfitAuth(address _game, bool _auth)
+        public
+        onlyStaffOrGovernance
+        authorizedGame(_game)
+    {
+        playProfitAuthorized[_game] = _auth;
+    }
+
+    /**
+        Allow/Block a game to pay a winner of a game session (blackjack session, roulette session)
+     */
+    function editGameGameProfitAuth(address _game, bool _auth)
+        public
+        onlyStaffOrGovernance
+        authorizedGame(_game)
+    {
+        gameProfitAuthorized[_game] = _auth;
     }
 
     /**
@@ -151,12 +186,58 @@ contract GambitAuthorizations {
             return governance[_requester];
         }
     }
+
+    function isGameAuthorized(address _game) public view returns (bool) {
+        return games[_game];
+    }
+
+    function isGameRngAuthorized(address _game) public view returns (bool) {
+        return rngAuthorized[_game];
+    }
+
+    function isGameOracleAuthorized(address _game) public view returns (bool) {
+        return oracleAuthorized[_game];
+    }
+
+    function isGamePlayProfitAuthorized(address _game)
+        public
+        view
+        returns (bool)
+    {
+        return playProfitAuthorized[_game];
+    }
+
+    function isGameGameProfitAuthorized(address _game)
+        public
+        view
+        returns (bool)
+    {
+        return gameProfitAuthorized[_game];
+    }
+
+    function isAmountEnoughProfit(address _game, uint256 _amount)
+        public
+        view
+        returns (bool)
+    {
+        return minGameProfit[_game] <= _amount;
+    }
 }
 
 interface IGambitAuthorization {
     function isAuthorizedGame(address _game) external view returns (bool);
 
     function isAuthorizedRNG(address _rng) external view returns (bool);
+
+    function isGamePlayProfitAuthorized(address _game)
+        external
+        view
+        returns (bool);
+
+    function isGameGameProfitAuthorized(address _game)
+        external
+        view
+        returns (bool);
 
     function isAuthorizedOracle(address _oracle) external view returns (bool);
 
@@ -169,6 +250,11 @@ interface IGambitAuthorization {
     function isOfficialOracle(address _oracle) external view returns (bool);
 
     function isStaffOrGovApproved(address _requester)
+        external
+        view
+        returns (bool);
+
+    function isAmountEnoughProfit(address _game, uint256 _amount)
         external
         view
         returns (bool);
