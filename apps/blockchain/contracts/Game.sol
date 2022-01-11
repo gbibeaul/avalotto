@@ -14,15 +14,17 @@ import "./Infra.sol";
 contract Game {
     ITreasury treasury;
     IGamebitAuthorization gamebitAuth;
+    IInfrastructure infra;
     address payable treasuryContract;
     uint256 contractTreasuryAccount = 0;
     event RngReceived(string);
     event RngRequested(uint256);
 
-    constructor(address _treasury, address _gamitAuth) {
+    constructor(address _treasury, address _gamitAuth, address _gamebitInfra) {
         treasury = ITreasury(_treasury);
         treasuryContract = payable(_treasury);
         gamebitAuth = IGamebitAuthorization(_gamitAuth);
+        infra = IInfrastructure(_gamebitInfra);
     }
 
     modifier onlyInfra() {
@@ -60,6 +62,11 @@ contract Game {
         address payable _winner
     ) internal {
         treasury.payGameSessionWinnings(_amount, _profits, _winner);
+    }
+
+    function requestRng() internal {
+        infra.requestRng();
+        treasury.receiveRngPayment();
     }
 
     function consumeRng(uint256 _index, uint256 _rng) public onlyInfra {}
