@@ -92,6 +92,11 @@ contract Treasury {
         return address(this).balance;
     }
 
+    // INTERNAL FUNCTIONS
+
+    // todo hook up games sending the token to players on plays and game sessions
+    function distributeGamingIncentive() internal {}
+
     // STAFF FUNCTIONS
 
     /**
@@ -109,8 +114,50 @@ contract Treasury {
 
     // GAME FUNCTIONS
 
+
+
     /**
-        This allows a contract to distribute the profits from a play session. The contract will have to pay dues to the treasury
+        This allows a contract to send a play/bet to the treasury. 
+        @notice The profits are taken on the bet, not on the jackpot of a session. Contracts call distributePlayWinnings to pay winners
+     */
+    function acceptPlay(uint256 _amount, uint256 _profits)
+        public
+        payable
+        authForPlay
+        approvedGame
+        meetsProfiThreshold(_amount)
+        msgValue(_amount)
+    {
+        treasuryFunds += _profits;
+        authorizedGameFunds[msg.sender] += _amount;
+        emit ProfitTaken(ProfitType.PLAY_FEE, _profits, msg.sender);
+        // todo call distributeGamingIncentive
+    }
+
+    /**
+        This allows a contract to distribute the winnings of a single bet
+        @notice The games need to be previously authorized to act on behalf of the treasury. Treasury profits were taken on acceptPlay
+     */
+    function distributePlayWinnings(uint256 _winning, address payable _winner)
+        public
+        authForPlay
+        approvedGame
+        enoughGameFunds(_winning)
+    {
+        _winner.transfer(_winning);
+        authorizedGameFunds[msg.sender] -= _winning;
+    }
+
+    /**
+        Allows a game to send funds when it's in a session. Profits are sent the session ends.
+        @notice this is a security risk. We'll need to implement security in the infra to limit game sessions to a time limit or something.
+     */
+    function takeGameSessionBet(uint256 _bet) public payable authForGameSession approvedGame msgValue(_bet) {
+        authorizedGameFunds[msg.sender] += _bet;
+    }
+
+        /**
+        This allows a contract to distribute the profits from a play session. 
         @notice The games need to be previously authorized to act on behalf of the treasury
 
      */
@@ -130,38 +177,8 @@ contract Treasury {
         treasuryFunds += _profits;
         _winner.transfer(_winning);
         authorizedGameFunds[msg.sender] -= _winning + _profits;
+        // todo call distributeGamingIncentive
         emit ProfitTaken(ProfitType.GAME_SESSION_FEE, _profits, msg.sender);
-    }
-
-    /**
-        This allows a contract to send a play/bet to the treasury. 
-        @notice The profits are taken on the bet, not on the jackpot of a session. Contracts call distributePlayWinnings to pay winners
-     */
-    function acceptPlay(uint256 _amount, uint256 _profits)
-        public
-        payable
-        authForPlay
-        approvedGame
-        meetsProfiThreshold(_amount)
-        msgValue(_amount)
-    {
-        treasuryFunds += _profits;
-        authorizedGameFunds[msg.sender] += _amount;
-        emit ProfitTaken(ProfitType.PLAY_FEE, _profits, msg.sender);
-    }
-
-    /**
-        This allows a contract to distribute the winnings of a single bet
-        @notice The games need to be previously authorized to act on behalf of the treasury. Treasury profits were taken on acceptPlay
-     */
-    function distributePlayWinnings(uint256 _winning, address payable _winner)
-        public
-        authForPlay
-        approvedGame
-        enoughGameFunds(_winning)
-    {
-        _winner.transfer(_winning);
-        authorizedGameFunds[msg.sender] -= _winning;
     }
 
     // GAMEBIT FUNCTIONS 
@@ -189,6 +206,8 @@ interface ITreasury {
         address payable _sendTo,
         string calldata _assetType
     ) external returns (bool);
+
+    function takeGameSessionBet(uint256 _bet) external payable;
 
     function payGameSessionWinnings(
         uint256 _winning,
