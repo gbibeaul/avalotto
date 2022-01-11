@@ -2,10 +2,12 @@ pragma solidity ^0.8.10;
 
 import "hardhat/console.sol";
 
+
 interface ITreasury {
     function payWinnings(uint256 _amount, address payable _winner, string calldata _assetType) external returns (bool);
 }
 
+// todo rewrite with treasury infra and oracle + overload winner functions in the mock
 contract Lotto {
     // administration
     address trustedParty;
