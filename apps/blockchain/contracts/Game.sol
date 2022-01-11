@@ -1,8 +1,8 @@
 pragma solidity ^0.8.10;
 
-import "./GambitAuthorizations.sol";
 import "./Treasury.sol";
-import "./GambitAuthorizations.sol";
+import "./GamebitAuthorizations.sol";
+import "./Infra.sol";
 
 /**
     This is a contract to allow games to be created and played on the gamebit protocol.
@@ -13,14 +13,24 @@ import "./GambitAuthorizations.sol";
  */
 contract Game {
     ITreasury treasury;
+    IGamebitAuthorization gamebitAuth;
     address payable treasuryContract;
     uint256 contractTreasuryAccount = 0;
     event RngReceived(string);
     event RngRequested(uint256);
 
-    constructor(address _treasury) {
+    constructor(address _treasury, address _gamitAuth) {
         treasury = ITreasury(_treasury);
         treasuryContract = payable(_treasury);
+        gamebitAuth = IGamebitAuthorization(_gamitAuth);
+    }
+
+    modifier onlyInfra() {
+        require(
+            gamebitAuth.isOfficialInfra(msg.sender),
+            "Only official infra can call this function"
+        );
+        _;
     }
 
     // single plays methods (i.e. moves, scratch cards, etc)
@@ -51,4 +61,10 @@ contract Game {
     ) internal {
         treasury.payGameSessionWinnings(_amount, _profits, _winner);
     }
+
+    function consumeRng(uint256 _index, uint256 _rng) public onlyInfra {}
+}
+
+interface IGame {
+    function consumeRng(uint256 _index, uint256 _rng) external;
 }

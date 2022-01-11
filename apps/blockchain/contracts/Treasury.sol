@@ -2,12 +2,12 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "./GambitAuthorizations.sol";
+import "./GamebitAuthorizations.sol";
 
 contract Treasury {
     uint256 rngFee;
     uint256 treasuryFunds;
-    IGambitAuthorization gambitAuth;
+    IGamebitAuthorization gamebitAuth;
     mapping(address => bool) authorizedGames;
     mapping(address => uint256) authorizedGameFunds;
     event GameFundsReceived(address _game, uint256 _amount);
@@ -30,14 +30,14 @@ contract Treasury {
         PROTOCOL_FEE
     }
 
-    constructor(address _gambitAuthorizations, uint256 _rngFee) {
+    constructor(address _gamebitAuthorizations, uint256 _rngFee) {
         rngFee = _rngFee;
-        gambitAuth = IGambitAuthorization(_gambitAuthorizations);
+        gamebitAuth = IGamebitAuthorization(_gamebitAuthorizations);
     }
 
     modifier approvedGame() {
         require(
-            gambitAuth.isAuthorizedGame(msg.sender),
+            gamebitAuth.isAuthorizedGame(msg.sender),
             "Only Gamebit approved contract can use this action"
         );
         _;
@@ -45,7 +45,7 @@ contract Treasury {
 
     modifier authForPlay() {
         require(
-            gambitAuth.isGamePlayProfitAuthorized(msg.sender),
+            gamebitAuth.isGamePlayProfitAuthorized(msg.sender),
             "This contract is not authorized to accept plays"
         );
         _;
@@ -53,7 +53,7 @@ contract Treasury {
 
     modifier authForGameSession() {
         require(
-            gambitAuth.isGameGameProfitAuthorized(msg.sender),
+            gamebitAuth.isGameGameProfitAuthorized(msg.sender),
             "This contract is not authorized to start game sessions"
         );
         _;
@@ -61,7 +61,7 @@ contract Treasury {
 
     modifier staffOrGovernance() {
         require(
-            gambitAuth.isStaffOrGovApproved(msg.sender),
+            gamebitAuth.isStaffOrGovApproved(msg.sender),
             "Only staff or governance can use this action"
         );
         _;
@@ -77,7 +77,7 @@ contract Treasury {
 
     modifier meetsProfiThreshold(uint256 _amount) {
         require(
-            gambitAuth.isAmountEnoughProfit(msg.sender, _amount),
+            gamebitAuth.isAmountEnoughProfit(msg.sender, _amount),
             "This profit does not meet the threshold agreed upon"
         );
         _;
@@ -187,9 +187,9 @@ contract Treasury {
         @dev This will allow the infrastructure to pay the treasury for oracle and rng requests
      */
 
-    function receiveRngPayment(address _game) public payable {
+    function receiveRngPayment() public payable approvedGame {
         treasuryFunds += rngFee;
-        emit ProfitTaken(ProfitType.RNG_FEE, rngFee, _game);
+        emit ProfitTaken(ProfitType.RNG_FEE, rngFee, msg.sender);
     }
 
     function receiveOraclePayment(address _game) public payable {
@@ -200,6 +200,8 @@ contract Treasury {
 
 interface ITreasury {
     function getFundsAVAXAmount() external view returns (uint256);
+
+    function receiveRngPayment() external payable;
 
     function sendAvax(
         uint256 _amount,

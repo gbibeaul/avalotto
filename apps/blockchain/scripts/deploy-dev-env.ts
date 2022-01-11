@@ -20,7 +20,7 @@ async function main() {
   const Governance = await ethers.getContractFactory("GambleGovernance");
   const Treasury = await ethers.getContractFactory("Treasury");
   const Lotto = await ethers.getContractFactory("LottoWinnerMock");
-  const GambitAuthorization = await ethers.getContractFactory("GambitAuthorization");
+  const GamebitAuthorization = await ethers.getContractFactory("GamebitAuthorization");
 
   /** deploy the token and update config
    *  constructor args: supply, operators
@@ -41,15 +41,15 @@ async function main() {
   config.Local.contracts.Governance.owner = owner.address;
   config.Local.contracts.Governance.address = gamble.address;
 
-  const gambitAuthorization = await GambitAuthorization.deploy(governance.address);
-  await gambitAuthorization.deployed();
-  config.Local.contracts.GambitAuthorization.owner = owner.address;
-  config.Local.contracts.GambitAuthorization.address = gambitAuthorization.address;
+  const gamebitAuthorization = await GamebitAuthorization.deploy(governance.address);
+  await gamebitAuthorization.deployed();
+  config.Local.contracts.GamebitAuthorization.owner = owner.address;
+  config.Local.contracts.GamebitAuthorization.address = gamebitAuthorization.address;
 
   /** deploy treasury
    *  contrustor args: cashiers address array, governance address
    */
-  const treasury = await Treasury.deploy(gambitAuthorization.address);
+  const treasury = await Treasury.deploy(gamebitAuthorization.address);
   await treasury.deployed();
   config.Local.contracts.Treasury.owner = owner.address;
   config.Local.contracts.Treasury.address = gamble.address;

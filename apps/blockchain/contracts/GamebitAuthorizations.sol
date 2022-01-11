@@ -1,6 +1,6 @@
 pragma solidity ^0.8.10;
 
-contract GambitAuthorizations {
+contract GamebitAuthorizations {
     mapping(address => bool) staff;
     mapping(address => bool) governance;
     mapping(address => bool) games;
@@ -12,12 +12,14 @@ contract GambitAuthorizations {
     mapping(address => bool) isOracle;
     address rngOracle;
     address[] oracles;
+    address GamebitInfra;
 
     bool staffEnabled = true;
 
-    constructor(address _governance) {
+    constructor(address _governance, address _GamebitInfra) {
         staff[msg.sender] = true;
         governance[_governance] = true;
+        GamebitInfra = _GamebitInfra;
     }
 
     /**
@@ -90,6 +92,10 @@ contract GambitAuthorizations {
         onlyStaffOrGovernance
     {
         minGameProfit[_game] = _minGameProfit;
+    }
+
+    function updateInfraAddress(address _infra) public onlyStaffOrGovernance {
+        GamebitInfra = _infra;
     }
 
     /**
@@ -199,6 +205,14 @@ contract GambitAuthorizations {
         return oracleAuthorized[_game];
     }
 
+    function isOfficialRng(address _rng) public view returns (bool) {
+        return rngOracle == _rng;
+    }
+
+    function isOfficialInfra(address _infra) public view returns (bool) {
+        return GamebitInfra == _infra;
+    }
+
     function isGamePlayProfitAuthorized(address _game)
         public
         view
@@ -224,7 +238,7 @@ contract GambitAuthorizations {
     }
 }
 
-interface IGambitAuthorization {
+interface IGamebitAuthorization {
     function isAuthorizedGame(address _game) external view returns (bool);
 
     function isAuthorizedRNG(address _rng) external view returns (bool);
@@ -238,6 +252,10 @@ interface IGambitAuthorization {
         external
         view
         returns (bool);
+
+    function updateInfraAddress(address _infra) external;
+
+    function isOfficialInfra(address _infra) external view returns (bool);
 
     function isAuthorizedOracle(address _oracle) external view returns (bool);
 
