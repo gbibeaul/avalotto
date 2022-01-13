@@ -11,7 +11,7 @@ import "./Infra.sol";
      - Sessions: A time period where the game is played and the winnings are payed at the end
      - Plays/Bets: A game where there each move/bet is a separate instance of the game. (think slots, scratch cards, combat games).
  */
-contract Game {
+abstract contract Game {
     ITreasury treasury;
     IGamebitAuthorization gamebitAuth;
     IInfrastructure infra;
@@ -69,9 +69,16 @@ contract Game {
         treasury.receiveRngPayment();
     }
 
-    function consumeRng(uint256 _index, uint256 _rng) public onlyInfra {}
+    function validateRng(uint256 _index, uint256 _rng, uint256 _commit) public onlyInfra {
+        require(infra.validateCommit(_index, _commit), "Invalid commit");
+        consumeRng(_rng);
+    }
+
+    function consumeRng(uint256 _rng) public {
+        
+    }
 }
 
 interface IGame {
-    function consumeRng(uint256 _index, uint256 _rng) external;
+    function validateRng(uint256 _index, uint256 _rng, uint256 _commit) external;
 }
