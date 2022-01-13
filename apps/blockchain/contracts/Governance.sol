@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 
-contract GambleGovernance is
+contract GamebitGovernance is
     Governor,
     GovernorSettings,
     GovernorCountingSimple,
@@ -15,10 +15,11 @@ contract GambleGovernance is
     GovernorVotesQuorumFraction
 {
     constructor(ERC20Votes _token)
-        Governor("GambleGovernance")
+        Governor("GamebitGovernance")
+
         GovernorSettings(
-            1, /* 1 block */
-            60480, /* 1 week */
+            1, 
+            60480, 
             10000e18
         )
         GovernorVotes(_token)

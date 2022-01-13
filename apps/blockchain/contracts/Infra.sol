@@ -4,7 +4,7 @@ import "./GamebitAuthorizations.sol";
 import "./Game.sol";
 
 // todo is this it's own deployed contract or a inheritable contract?
-contract Infrastructure {
+contract GamebitInfra {
     IGamebitAuthorization gamebitAuth;
     uint256 rngRequestIndex = 1;
     mapping(uint256 => RNGRequest) rngRequests;

@@ -40,6 +40,7 @@
         "test": "hardhat test",
         "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
         "deliver": "ts-node scripts/deliver-contract.ts",
-        "deploy:dev": "hardhat run --network localhost scripts/deploy-dev-env.ts"
+        "deploy:dev": "hardhat run --network localhost scripts/deploy-dev-env.ts",
+        "deploy:dev:gamebit": "hardhat run --network localhost scripts/deploy-gamebit-local.ts"
     }
 }

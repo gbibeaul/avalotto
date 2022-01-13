@@ -16,6 +16,11 @@
         "owner": "0x0",
         "address": "0x0"
       },
+      "Infra": {
+        "name": "Infra",
+        "owner": "0x0",
+        "address": "0x0"
+      },
       "Treasury": {
         "name": "Treasury",
         "owner": "0x0",
@@ -48,6 +53,11 @@
       },
       "Treasury": {
         "name": "Treasury",
+        "owner": "0x0",
+        "address": "0x0"
+      },
+      "Infra": {
+        "name": "Infra",
         "owner": "0x0",
         "address": "0x0"
       },
@@ -84,6 +94,11 @@
       },
       "Treasury": {
         "name": "Treasury",
+        "owner": "0x0",
+        "address": "0x0"
+      },
+      "Infra": {
+        "name": "Infra",
         "owner": "0x0",
         "address": "0x0"
       },

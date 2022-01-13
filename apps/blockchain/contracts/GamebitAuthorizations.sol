@@ -2,7 +2,6 @@ pragma solidity ^0.8.10;
 
 contract GamebitAuthorizations {
     mapping(address => bool) staff;
-    mapping(address => bool) governance;
     mapping(address => bool) games;
     mapping(address => bool) rngAuthorized;
     mapping(address => bool) oracleAuthorized;
@@ -11,15 +10,15 @@ contract GamebitAuthorizations {
     mapping(address => uint256) minGameProfit;
     mapping(address => bool) isOracle;
     address rngOracle;
+    address governance;
     address[] oracles;
     address GamebitInfra;
 
     bool staffEnabled = true;
 
-    constructor(address _governance, address _GamebitInfra) {
+    constructor(address _governance) {
         staff[msg.sender] = true;
-        governance[_governance] = true;
-        GamebitInfra = _GamebitInfra;
+        governance = _governance;
     }
 
     /**
@@ -27,7 +26,7 @@ contract GamebitAuthorizations {
      */
     modifier onlyGovernance() {
         require(
-            governance[msg.sender],
+            governance == msg.sender,
             "Only governance can call this function"
         );
         _;
@@ -36,12 +35,12 @@ contract GamebitAuthorizations {
     modifier onlyStaffOrGovernance() {
         if (staffEnabled) {
             require(
-                staff[msg.sender] || governance[msg.sender],
+                staff[msg.sender] || governance == msg.sender,
                 "Only staff or governance can call this function"
             );
         } else {
             require(
-                governance[msg.sender],
+                governance == msg.sender,
                 "Only governance can call this function"
             );
         }
@@ -187,9 +186,9 @@ contract GamebitAuthorizations {
         returns (bool)
     {
         if (staffEnabled) {
-            return staff[_requester] || governance[_requester];
+            return staff[_requester] || governance == _requester;
         } else {
-            return governance[_requester];
+            return governance == _requester;
         }
     }
 
