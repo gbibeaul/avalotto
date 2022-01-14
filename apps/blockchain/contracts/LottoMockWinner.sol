@@ -9,7 +9,6 @@ contract LottoGamebit is Game {
     uint256 ticketValue;
     uint256 amountOfDraws = 0;
     uint256 nextDraw;
-    uint256 protocolFeePercen;
 
     bool betsClosed = false;
     bool winnerFound = false;
@@ -30,13 +29,11 @@ contract LottoGamebit is Game {
         address _gamebitInfra,
         address _trustedParty,
         uint256 _ticketValue,
-        uint256 _drawDaysInterval,
-        uint256 _protocolFeePercen
+        uint256 _drawDaysInterval
     ) Game(_treasury, _gamitAuth, _gamebitInfra) {
         trustedParty = _trustedParty;
         ticketValue = _ticketValue;
         nextDraw = block.timestamp + (_drawDaysInterval * 1 days);
-        protocolFeePercen = _protocolFeePercen;
     }
 
     modifier onlyTrustedParty() {
@@ -97,8 +94,8 @@ contract LottoGamebit is Game {
     }
 
     /**
-     * BETTING ACTIONS
-     */
+    *BETTING ACTIONS
+    */
     function bet(uint256[][] memory _bets) public payable betsOpened {
         require(
             msg.value / _bets.length == ticketValue,
@@ -121,9 +118,10 @@ contract LottoGamebit is Game {
             );
         }
 
-        treasury.transfer(msg.value);
-        uint256 fee = (msg.value * protocolFeePercen) / 100;
-        jackpot += msg.value - fee;
+        uint256 _fee = _bets.length * 0.05 ether;
+
+        jackpot += msg.value - _fee;
+        acceptPlay(msg.value - _fee, _fee);
 
         // loop on each bet to store it
         for (uint256 i = 0; i < _bets.length; i++) {

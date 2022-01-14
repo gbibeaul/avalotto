@@ -10,7 +10,6 @@
     "test:blockchain": "yarn turbo run test --scope=*blockchain*",
     "deliver": "yarn turbo run deliver",
     "deploy:dev": "yarn workspace @gamble/blockchain run deploy:dev",
-    "deploy:dev:gamebit": "yarn workspace @gamble/blockchain run deploy:dev:gamebit",
     "start:admin": "yarn workspace @gamble/admin run dev",
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
     "dev": "yarn deploy:dev && yarn workspace gamble run dev",
@@ -31,12 +30,12 @@
       },
       "test": {
         "dependsOn": [
-          "^test" 
+          "^test"
         ]
       },
       "deliver": {
         "dependsOn": [
-          "^deliver" 
+          "^deliver"
         ]
       }
     }

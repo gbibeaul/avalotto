@@ -238,7 +238,7 @@ contract GamebitAuthorizations {
 }
 
 interface IGamebitAuthorization {
-    function isAuthorizedGame(address _game) external view returns (bool);
+    function isGameAuthorized(address _game) external view returns (bool);
 
     function isAuthorizedRNG(address _rng) external view returns (bool);
 

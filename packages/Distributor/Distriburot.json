@@ -1,0 +1,16 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Distriburot",
+  "sourceName": "contracts/Distributor.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212205fe3d29698ebb59b5691408194746884320194dfa7f3c86f227e341534111a9e64736f6c634300080a0033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212205fe3d29698ebb59b5691408194746884320194dfa7f3c86f227e341534111a9e64736f6c634300080a0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

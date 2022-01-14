@@ -37,7 +37,7 @@ contract GamebitTreasury {
 
     modifier approvedGame() {
         require(
-            gamebitAuth.isAuthorizedGame(msg.sender),
+            gamebitAuth.isGameAuthorized(msg.sender),
             "Only Gamebit approved contract can use this action"
         );
         _;
@@ -84,7 +84,7 @@ contract GamebitTreasury {
     }
 
     modifier msgValue(uint256 _amount) {
-        require(msg.value >= _amount, "Not enough funds");
+        require(msg.value < _amount, "Not enough funds");
         _;
     }
 
@@ -114,7 +114,8 @@ contract GamebitTreasury {
 
     // GAME FUNCTIONS
 
-
+    // authForPlay
+    // approvedGame
 
     /**
         This allows a contract to send a play/bet to the treasury. 
@@ -126,11 +127,13 @@ contract GamebitTreasury {
         authForPlay
         approvedGame
         meetsProfiThreshold(_amount)
-        msgValue(_amount)
+        msgValue(_amount + _profits)
+        returns (bool)
     {
         treasuryFunds += _profits;
         authorizedGameFunds[msg.sender] += _amount;
         emit ProfitTaken(ProfitType.PLAY_FEE, _profits, msg.sender);
+        return true;
         // todo call distributeGamingIncentive
     }
 
@@ -152,11 +155,17 @@ contract GamebitTreasury {
         Allows a game to send funds when it's in a session. Profits are sent the session ends.
         @notice this is a security risk. We'll need to implement security in the infra to limit game sessions to a time limit or something.
      */
-    function takeGameSessionBet(uint256 _bet) public payable authForGameSession approvedGame msgValue(_bet) {
+    function takeGameSessionBet(uint256 _bet)
+        public
+        payable
+        authForGameSession
+        approvedGame
+        msgValue(_bet)
+    {
         authorizedGameFunds[msg.sender] += _bet;
     }
 
-        /**
+    /**
         This allows a contract to distribute the profits from a play session. 
         @notice The games need to be previously authorized to act on behalf of the treasury
 
@@ -181,7 +190,7 @@ contract GamebitTreasury {
         emit ProfitTaken(ProfitType.GAME_SESSION_FEE, _profits, msg.sender);
     }
 
-    // GAMEBIT FUNCTIONS 
+    // GAMEBIT FUNCTIONS
 
     /**
         @dev This will allow the infrastructure to pay the treasury for oracle and rng requests

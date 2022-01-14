@@ -37,9 +37,10 @@ abstract contract Game {
 
     // single plays methods (i.e. moves, scratch cards, etc)
 
-    function acceptPlay(uint256 _amount, uint256 _profit) internal {
+    function acceptPlay(uint256 _amount, uint256 _profit) internal returns (bool) {
         contractTreasuryAccount += _amount;
         treasury.acceptPlay(_amount, _profit);
+        return true;
     }
 
     function distributePlayWinnings(uint256 _amount, address payable _winner)
@@ -61,7 +62,7 @@ abstract contract Game {
         uint256 _profits,
         address payable _winner
     ) internal {
-        treasury.payGameSessionWinnings(_amount, _profits, _winner);
+        treasury.payGameSessionWinnings{value: msg.value}(_amount, _profits, _winner);
     }
 
     function requestRng() internal {

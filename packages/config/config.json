@@ -1,8 +1,8 @@
 {
   "Avalanche": {
     "contracts": {
-      "Gamble": {
-        "name": "Gamble",
+      "GMBT": {
+        "name": "GMBT",
         "owner": "0x0",
         "address": "0x0"
       },
@@ -36,8 +36,8 @@
   },
   "Fuji": {
     "contracts": {
-      "Gamble": {
-        "name": "Gamble",
+      "GMBT": {
+        "name": "GMBT",
         "owner": "0x0",
         "address": "0x0"
       },
@@ -77,30 +77,30 @@
   },
   "Local": {
     "contracts": {
-      "Gamble": {
-        "name": "Gamble",
-        "owner": "0x0",
-        "address": "0x0"
+      "GMBT": {
+        "name": "GMBT",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
-        "owner": "0x0",
-        "address": "0x0"
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
       },
       "Governance": {
         "name": "Governance",
-        "owner": "0x0",
-        "address": "0x0"
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
       },
       "Treasury": {
         "name": "Treasury",
-        "owner": "0x0",
-        "address": "0x0"
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
       },
       "Infra": {
         "name": "Infra",
-        "owner": "0x0",
-        "address": "0x0"
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F"
       },
       "Lotto": {
         "name": "Lotto",
@@ -110,7 +110,8 @@
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+        "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+        "trustedParty": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
       }
     }
   }
