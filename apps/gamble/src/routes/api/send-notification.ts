@@ -31,7 +31,7 @@ export async function post(request) {
 			text
 		};
 
-		emailProvider.sendMail(mailOptions);
+		await emailProvider.sendMail(mailOptions);
 
 		return {
 			success: true
