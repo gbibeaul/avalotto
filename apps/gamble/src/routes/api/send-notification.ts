@@ -1,7 +1,6 @@
 import { supabase } from '../../transport/supabase';
 import { emailProvider } from '../../transport/email';
-import { parseBearer as isBearerValid } from '../../helpers/parseBearer.helpers'
-
+import { parseBearer as isBearerValid } from '../../helpers/parseBearer.helpers';
 
 /** */
 /** @type {import('@sveltejs/kit').RequestHandler} */
@@ -13,13 +12,13 @@ export async function post(request) {
 			throw 'originating email address not set in env vars';
 		}
 
-		const apiKey = await supabase.from('api_keys').select('value').eq('id', 1).limit(1)
-		
-		if(!isBearerValid(request.headers.authorization, apiKey.data[0])) {
+		const apiKey = await supabase.from('api_keys').select('value').eq('id', 1).limit(1);
+
+		if (!isBearerValid(request.headers.authorization, apiKey.data[0])) {
 			return {
 				message: 'not authorized',
 				status: 403
-			}
+			};
 		}
 
 		const { email = '', subject, text } = request.body;
@@ -31,7 +30,17 @@ export async function post(request) {
 			text
 		};
 
-		await emailProvider.sendMail(mailOptions);
+		await new Promise((resolve, reject) => {
+			emailProvider.sendMail(mailOptions, (err, info) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					console.log(info);
+					resolve(info);
+				}
+			});
+		});
 
 		return {
 			success: true
