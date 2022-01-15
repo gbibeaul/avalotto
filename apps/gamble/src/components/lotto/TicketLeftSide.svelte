@@ -2,6 +2,7 @@
 	import { BigNumber, utils } from 'ethers';
 	import Play from './Play.svelte';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
+	import { walletStore } from '../../stores/wallet';
 	import { withPrevious } from '../../helpers/withPrevious.helpers';
 
 	let jackpot: BigNumber;
@@ -35,6 +36,11 @@
 	$: if ($currentStep === LottoSteps.CONFIRMED) {
 		plays = [[getRandom(), getRandom(), getRandom()]]
 	}
+	$: {
+		console.log($walletStore.metamaskDetected)
+
+	}
+
 
 </script>
 
