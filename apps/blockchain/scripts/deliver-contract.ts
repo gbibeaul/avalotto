@@ -4,7 +4,17 @@ import fs from "fs-extra";
  * Delivers the compiled contract code to the yarn workspace of the same name
  */
 async function main() {
-  const contracts = await fs.readdir("./contracts/");
+  // const contracts = await fs.readdir("./contracts/");
+
+  const contracts = [
+    "Token.sol",
+    "Treasury.sol",
+    "Infra.sol",
+    "Governance.sol",
+    "GamebitAuthorizations.sol",
+    "Lotto.sol",
+    "LottoMockWinner.sol",
+  ];
 
   await Promise.all(
     contracts.map(async (contract) => {

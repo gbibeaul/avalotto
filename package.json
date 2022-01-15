@@ -30,12 +30,12 @@
       },
       "test": {
         "dependsOn": [
-          "^test" 
+          "^test"
         ]
       },
       "deliver": {
         "dependsOn": [
-          "^deliver" 
+          "^deliver"
         ]
       }
     }

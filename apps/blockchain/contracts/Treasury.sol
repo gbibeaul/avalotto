@@ -2,216 +2,236 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "hardhat/console.sol";
+import "./GamebitAuthorizations.sol";
 
-/**
- * This contract contains a UUPS upgradable treasury to allowa cashier system to be implemented.
- * The treasury holds the protocol's funds. The staffing system will be gradually deprecated in favor of
- * automated protocol actions approved by the DAO as the ecosystem matures.
- */
-contract Treasury {
-    address public theHouse;
-    address public governance;
-    uint256 cashierCount;
-    uint256 currentTransferProposal;
-    uint256 currentUpgradeProposal;
-    uint256 houseProfitRatio;
-    uint256 profitDistributionPercen;
-    mapping(address => bool) isCashier;
-    mapping(address => bool) isCashierFlagged;
-    mapping(uint256 => transferProposal) transferProposals;
-    mapping(uint256 => upgradeProposal) upgradeProposals;
-    mapping(string => bool) approvedAssets;
+contract GamebitTreasury {
+    uint256 rngFee;
+    uint256 treasuryFunds;
+    IGamebitAuthorization gamebitAuth;
     mapping(address => bool) authorizedGames;
-    event avaxFundChanged(uint256);
+    mapping(address => uint256) authorizedGameFunds;
+    event GameFundsReceived(address _game, uint256 _amount);
+    event GameBalanceChanged(address _game, uint256 _amount);
+    event ProfitTaken(ProfitType _type, uint256 _amount, address _game);
 
-    struct transferProposal {
-        uint256 amount;
-        address payable sendTo;
-        address proposer;
-        address[] approvedBy;
+    /**
+        RNG => simple fee for requesting an RNG
+        ORACLE => fee for requesting an oracle API call
+        GAME_SESSION_FEE => Good for games session like poker hands, dice, etc. Game fee is paid at the end of the session.
+        PLAY_FEE => Fee for a 1 time action in a game, attack, buy lotto ticket, NFT scratch etc.
+        PROTOCOL_FEE => Fee for adding games or such to the protocol. Misc fee.
+     */
+
+    enum ProfitType {
+        RNG_FEE,
+        ORACLE_FEE,
+        GAME_SESSION_FEE,
+        PLAY_FEE,
+        PROTOCOL_FEE
     }
 
-    struct replaceTheHouseProposal {
-        address newHouse;
-        address proposer;
-        address[] approvedBy;
-    }
-
-    struct upgradeProposal {
-        mapping(address => bool) approvals;
-    }
-
-    struct overrideTheHouseProposal {
-        address unbanCashier;
-        mapping(address => bool) approvals;
-    }
-
-    constructor(address[] memory _cashiers, address _governance) {
-        approvedAssets["AVAX"] = true;
-        governance = _governance;
-        theHouse = msg.sender;
-        // loop on _cashiers and add them to the mapping
-        for (uint256 i = 0; i < _cashiers.length; i++) {
-            isCashier[_cashiers[i]] = true;
-        }
-        cashierCount = _cashiers.length;
-        currentTransferProposal = 0;
-        currentUpgradeProposal = 0;
-    }
-
-    modifier onlyTheHouse() {
-        require(msg.sender == theHouse);
-        _;
-    }
-
-    modifier onlyCashier() {
-        require(isCashier[msg.sender] == true);
-        require(isCashierFlagged[msg.sender] == false);
-        _;
-    }
-
-    modifier notProposer() {
-        require(
-            transferProposals[currentTransferProposal].proposer != msg.sender,
-            "You can't approve a transfer you proposed"
-        );
-        _;
+    constructor(address _gamebitAuthorizations, uint256 _rngFee) {
+        rngFee = _rngFee;
+        gamebitAuth = IGamebitAuthorization(_gamebitAuthorizations);
     }
 
     modifier approvedGame() {
         require(
-            authorizedGames[msg.sender] == true,
-            "Only gamblefi approved games can use this action"
+            gamebitAuth.isGameAuthorized(msg.sender),
+            "Only Gamebit approved contract can use this action"
         );
         _;
     }
 
-    modifier governanceApproved() {
+    modifier authForPlay() {
         require(
-            msg.sender == governance,
-            "Only the governance can execute this action"
+            gamebitAuth.isGamePlayProfitAuthorized(msg.sender),
+            "This contract is not authorized to accept plays"
         );
         _;
     }
 
-    modifier approvedAsset(string calldata _assetType) {
-        require(approvedAssets[_assetType] == true);
+    modifier authForGameSession() {
+        require(
+            gamebitAuth.isGameGameProfitAuthorized(msg.sender),
+            "This contract is not authorized to start game sessions"
+        );
         _;
     }
 
-    receive() external payable {}
-    /**
-        VIEW GETTERS
-     */
+    modifier staffOrGovernance() {
+        require(
+            gamebitAuth.isStaffOrGovApproved(msg.sender),
+            "Only staff or governance can use this action"
+        );
+        _;
+    }
 
-    function getFundsAVAXAmount() public view returns (uint256) {
+    modifier enoughGameFunds(uint256 _amount) {
+        require(
+            authorizedGameFunds[msg.sender] >= _amount,
+            "This game does not have enough funds"
+        );
+        _;
+    }
+
+    modifier meetsProfiThreshold(uint256 _amount) {
+        require(
+            gamebitAuth.isAmountEnoughProfit(msg.sender, _amount),
+            "This profit does not meet the threshold agreed upon"
+        );
+        _;
+    }
+
+    modifier msgValue(uint256 _amount) {
+        require(msg.value < _amount, "Not enough funds");
+        _;
+    }
+
+    function getFunds() public view returns (uint256) {
         return address(this).balance;
     }
 
-    // House functions. The house is a representative of the GAMBLE token holders.
-    // The house is a delegator of the GAMBLE token holders. He can be revoked by a governance vote.
-    // The house appoints cashiers to the treasury but can't propose transfers.
-    function setTheHouse(address _newHouse) public onlyTheHouse {
-        theHouse = _newHouse;
-    }
+    // INTERNAL FUNCTIONS
 
-    function addCashier(address _newCashier) public onlyTheHouse {
-        isCashier[_newCashier] = true;
-        isCashierFlagged[_newCashier] = false;
-    }
+    // todo hook up games sending the token to players on plays and game sessions
+    function distributeGamingIncentive() internal {}
 
-    function flagCashier(address _shittyCashier) public onlyTheHouse {
-        isCashierFlagged[_shittyCashier] = true;
-    }
+    // STAFF FUNCTIONS
 
-    function unFlagCashier(address _shittyCashier) public onlyTheHouse {
-        isCashierFlagged[_shittyCashier] = false;
-    }
-
-    // cashier actions
-    function proposeTransfer(uint256 _amount, address payable _sendTo)
+    /**
+        @dev allows the treasury to initiate an external payment when initiated by the staff or governance
+     */
+    function pay(uint256 _amount, address payable _sendTo)
         public
-        onlyCashier
+        staffOrGovernance
+        returns (bool)
     {
-        require(_amount > 0, "Proposed amount must be over 0");
-
-        transferProposals[currentTransferProposal] = transferProposal(
-            _amount,
-            _sendTo,
-            msg.sender,
-            new address[](0)
-        );
+        require(_amount > 0, "amount must be over 0");
+        _sendTo.transfer(_amount);
+        return true;
     }
 
-    function approveTransfer() public onlyCashier notProposer {
-        // loop on all approvals to ensure msg.sender is not in
-        for (
-            uint256 i = 0;
-            i < transferProposals[currentTransferProposal].approvedBy.length;
-            i++
-        ) {
-            if (
-                transferProposals[currentTransferProposal].approvedBy[i] ==
-                msg.sender
-            ) {
-                revert("You have already approved this transfer");
-            }
-        }
+    // GAME FUNCTIONS
 
-        transferProposals[currentTransferProposal].approvedBy.push(msg.sender);
-        // if half of the cashiers have approved, then execute the transfer
-        if (
-            transferProposals[currentTransferProposal].approvedBy.length >=
-            cashierCount / 2
-        ) {
-            transferProposals[currentTransferProposal].sendTo.transfer(
-                transferProposals[currentTransferProposal].amount
-            );
+    // authForPlay
+    // approvedGame
 
-            // free up storage
-            delete transferProposals[currentTransferProposal];
-            currentTransferProposal++;
-        }
+    /**
+        This allows a contract to send a play/bet to the treasury. 
+        @notice The profits are taken on the bet, not on the jackpot of a session. Contracts call distributePlayWinnings to pay winners
+     */
+    function acceptPlay(uint256 _amount, uint256 _profits)
+        public
+        payable
+        authForPlay
+        approvedGame
+        meetsProfiThreshold(_amount)
+        msgValue(_amount + _profits)
+        returns (bool)
+    {
+        treasuryFunds += _profits;
+        authorizedGameFunds[msg.sender] += _amount;
+        emit ProfitTaken(ProfitType.PLAY_FEE, _profits, msg.sender);
+        return true;
+        // todo call distributeGamingIncentive
     }
 
     /**
-     * @dev a rejected transfer proposal should be a rare occurence.
+        This allows a contract to distribute the winnings of a single bet
+        @notice The games need to be previously authorized to act on behalf of the treasury. Treasury profits were taken on acceptPlay
      */
-    function rejectTransfer() public onlyCashier notProposer {
-        delete transferProposals[currentTransferProposal];
-        currentTransferProposal++;
+    function distributePlayWinnings(uint256 _winning, address payable _winner)
+        public
+        authForPlay
+        approvedGame
+        enoughGameFunds(_winning)
+    {
+        _winner.transfer(_winning);
+        authorizedGameFunds[msg.sender] -= _winning;
     }
 
-    function governanceSendAvax(
+    /**
+        Allows a game to send funds when it's in a session. Profits are sent the session ends.
+        @notice this is a security risk. We'll need to implement security in the infra to limit game sessions to a time limit or something.
+     */
+    function takeGameSessionBet(uint256 _bet)
+        public
+        payable
+        authForGameSession
+        approvedGame
+        msgValue(_bet)
+    {
+        authorizedGameFunds[msg.sender] += _bet;
+    }
+
+    /**
+        This allows a contract to distribute the profits from a play session. 
+        @notice The games need to be previously authorized to act on behalf of the treasury
+
+     */
+    function payGameSessionWinnings(
+        uint256 _winning,
+        uint256 _profits,
+        address payable _winner
+    )
+        public
+        payable
+        authForGameSession
+        approvedGame
+        enoughGameFunds(_winning + _profits)
+        meetsProfiThreshold(_profits)
+        msgValue(_winning + _profits)
+    {
+        treasuryFunds += _profits;
+        _winner.transfer(_winning);
+        authorizedGameFunds[msg.sender] -= _winning + _profits;
+        // todo call distributeGamingIncentive
+        emit ProfitTaken(ProfitType.GAME_SESSION_FEE, _profits, msg.sender);
+    }
+
+    // GAMEBIT FUNCTIONS
+
+    /**
+        @dev This will allow the infrastructure to pay the treasury for oracle and rng requests
+     */
+
+    function receiveRngPayment() public payable approvedGame {
+        treasuryFunds += rngFee;
+        emit ProfitTaken(ProfitType.RNG_FEE, rngFee, msg.sender);
+    }
+
+    function receiveOraclePayment(address _game) public payable {
+        treasuryFunds += rngFee;
+        emit ProfitTaken(ProfitType.ORACLE_FEE, rngFee, _game);
+    }
+}
+
+interface ITreasury {
+    function getFundsAVAXAmount() external view returns (uint256);
+
+    function receiveRngPayment() external payable;
+
+    function sendAvax(
         uint256 _amount,
         address payable _sendTo,
         string calldata _assetType
-    ) public governanceApproved returns (bool) {
-        require(_amount > 0, "Proposed amount must be over 0");
-        if (
-            keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
-        ) {
-            _sendTo.transfer(_amount);
-            emit avaxFundChanged(address(this).balance);
-            return true;
-        }
+    ) external returns (bool);
 
-        return false;
-    }
+    function takeGameSessionBet(uint256 _bet) external payable;
 
-    function payWinnings(
-        uint256 _amount,
-        address payable _winner,
-        string calldata _assetType
-    ) public approvedGame approvedAsset(_assetType) returns (bool) {
-        if (
-            keccak256(abi.encode(_assetType)) == keccak256(abi.encode("AVAX"))
-        ) {
-            _winner.transfer(_amount);
-            emit avaxFundChanged(address(this).balance);
-            return true;
-        }
-        return false;
-    }
+    function payGameSessionWinnings(
+        uint256 _winning,
+        uint256 _profits,
+        address payable _winner
+    ) external payable returns (bool);
+
+    function acceptPlay(uint256 _amount, uint256 _profits)
+        external
+        payable
+        returns (bool);
+
+    function distributePlayWinnings(uint256 _winning, address payable _winner)
+        external
+        returns (bool);
 }
