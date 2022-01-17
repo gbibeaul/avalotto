@@ -3,12 +3,10 @@ import { isClientEthInjected } from '../helpers/ssr.helpers';
 
 type WalletState = {
 	walletAddress: string;
-	metamaskDetected: boolean;
 };
 
 const initialState: WalletState = {
 	walletAddress: '',
-	metamaskDetected: false
 };
 
 const createWallet = () => {
@@ -33,10 +31,9 @@ const createWallet = () => {
 
 	const init = () => {
 		if (isClientEthInjected()) {
-			wallet.update((s) => ({ ...s, metamaskDetected: true }));
+			window.ethereum.request({ method: 'eth_requestAccounts' }).then(updateWalletAddress);
 			window.ethereum.on('accountsChanged', updateWalletAddress);
 		} else {
-			wallet.update((s) => ({ ...s, metamaskDetected: false }));
 			fetch('/api/remove-metamask');
 		}
 	};

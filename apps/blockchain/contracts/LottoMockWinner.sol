@@ -94,8 +94,8 @@ contract LottoGamebit is Game {
     }
 
     /**
-    *BETTING ACTIONS
-    */
+     *BETTING ACTIONS
+     */
     function bet(uint256[][] memory _bets) public payable betsOpened {
         require(
             msg.value / _bets.length == ticketValue,
@@ -134,4 +134,30 @@ contract LottoGamebit is Game {
 
         emit jackpotUpdated(jackpot);
     }
+
+    /**
+     * @dev Function that grabs mathematically a digit at index from a uint256.
+     * @param _number _number The value to grab the digit from
+     * @param _index _index The index of the digit to grab
+     * @return uint256 The digit at index
+     * @notice This function is a helper to generate loto numbers
+     */
+    function getDigit(uint256 _number, uint256 _index)
+        private
+        pure
+        returns (uint256)
+    {
+        if (_index == 0) {
+            return _number % 10;
+        }
+        return ((_number % 10**(_index + 1)) / (10**_index)) | 0;
+    }
+
+    function setSealedSeed() public onlyTrustedParty {
+        require(!betsClosed);
+        betsClosed = true;
+        requestRng();
+    }
+
+    function consumeRng(uint256 _rng) public override {}
 }
