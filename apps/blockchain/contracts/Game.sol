@@ -75,7 +75,7 @@ abstract contract Game {
         consumeRng(_rng);
     }
 
-    function consumeRng(uint256 _rng) public {}
+    function consumeRng(uint256 _rng) public virtual onlyInfra {}
 }
 
 interface IGame {
