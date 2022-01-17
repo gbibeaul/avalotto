@@ -1,31 +1,17 @@
 pragma solidity ^0.8.10;
 
-import "hardhat/console.sol";
+import "./Infra.sol";
+import "./Game.sol";
 
-
-interface ITreasury {
-    function payWinnings(uint256 _amount, address payable _winner, string calldata _assetType) external returns (bool);
-}
-
-// todo rewrite with treasury infra and oracle + overload winner functions in the mock
-contract Lotto {
-    // administration
+contract LottoGamebit is Game {
     address trustedParty;
-    address payable treasury;
-
     uint256 jackpot;
     uint256 ticketValue;
     uint256 amountOfDraws = 0;
     uint256 nextDraw;
-    uint256 protocolFeePercen;
 
-    // information about current state
-    bytes32 sealedSeed;
-    bool seedSet = false;
     bool betsClosed = false;
     bool winnerFound = false;
-
-    uint256 storedBlockNumber;
 
     // bets are stored as the uint256 representation of their keccak256 uint256(keccak256(abi.encodePacked(_numbers)))
     mapping(uint256 => address[]) bets;
@@ -37,27 +23,19 @@ contract Lotto {
     event Draw(uint256[3] numbers);
     event jackpotUpdated(uint256 jackpot);
 
-    /**
-     * @dev Sets who is the initial trusted party. This is the party responsible for placing the seed. They are not able to bet for draws.
-     */
     constructor(
+        address _treasury,
+        address _gamitAuth,
+        address _gamebitInfra,
         address _trustedParty,
-        address payable _treasury,
         uint256 _ticketValue,
-        uint256 _drawDaysInterval,
-        uint256 _protocolFeePercen
-
-    ) {
+        uint256 _drawDaysInterval
+    ) Game(_treasury, _gamitAuth, _gamebitInfra) {
         trustedParty = _trustedParty;
-        treasury = _treasury;
         ticketValue = _ticketValue;
         nextDraw = block.timestamp + (_drawDaysInterval * 1 days);
-        protocolFeePercen = _protocolFeePercen;
     }
 
-    /**
-     * @dev Modifier used to ensure actions are taken by the trusted party
-     */
     modifier onlyTrustedParty() {
         require(msg.sender == trustedParty);
         _;
@@ -85,8 +63,8 @@ contract Lotto {
     }
 
     /**
-  PUBLIC GETTERS
-  */
+     * PUBLIC GETTERS
+     */
     function getLastDrawNumbers() public view returns (uint256[3] memory) {
         return previousDraws[amountOfDraws - 1];
     }
@@ -116,8 +94,8 @@ contract Lotto {
     }
 
     /**
-    BETTING ACTIONS
- */
+     *BETTING ACTIONS
+     */
     function bet(uint256[][] memory _bets) public payable betsOpened {
         require(
             msg.value / _bets.length == ticketValue,
@@ -140,9 +118,10 @@ contract Lotto {
             );
         }
 
-        treasury.transfer(msg.value);
-        uint256 fee = msg.value * protocolFeePercen / 100;
-        jackpot += msg.value - fee;
+        uint256 _fee = _bets.length * 0.05 ether;
+
+        jackpot += msg.value - _fee;
+        acceptPlay(msg.value - _fee, _fee);
 
         // loop on each bet to store it
         for (uint256 i = 0; i < _bets.length; i++) {
@@ -154,131 +133,5 @@ contract Lotto {
         }
 
         emit jackpotUpdated(jackpot);
-    }
-
-    /**
-    lOTTERY ACTRIONS
-    */
-
-    function setProtocolFee(uint256 _feePercen) public onlyTrustedParty {
-        protocolFeePercen = _feePercen;
-    }
-
-    /**
-     * @dev Function that grabs mathematically a digit at index from a uint256.
-     * @param _number _number The value to grab the digit from
-     * @param _index _index The index of the digit to grab
-     * @return uint256 The digit at index
-     * @notice This function is a helper to generate loto numbers
-     */
-    function getDigit(uint256 _number, uint256 _index)
-        private
-        pure
-        returns (uint256)
-    {
-        if (_index == 0) {
-            return _number % 10;
-        }
-        return ((_number % 10**(_index + 1)) / (10**_index)) | 0;
-    }
-
-    /**
-     * @param _sealedSeed The seed to use for the next draw
-     * @notice This function is used to set the seed for the next draw. It is only available to the trusted party.
-     * once the seed is set, bets are closed to ensure fairness. We store the block number + one as later we will use this block's hash to generate pseudo random numbers.
-     * block number + 1 ensures is used as a level of enthropy, ensuring the trusted party can't predict the next draw.
-     */
-    function setSealedSeed(bytes32 _sealedSeed) public onlyTrustedParty {
-        require(!seedSet);
-        require(!betsClosed);
-        betsClosed = true;
-        sealedSeed = _sealedSeed;
-        storedBlockNumber = block.number + 1;
-        seedSet = true;
-    }
-
-    /**
-     * @dev ENSURE THIS FUNCTION IS NOT RETURNING [uint256(1), uint256(2), uint256(3)]
-     *  if that's the case you are coding in the test contract
-     */
-    function _getLotteryResults(uint256 _random)
-        private
-        pure
-        returns (uint256[3] memory)
-    {
-        uint256 _currentIndex = 0;
-
-        uint256 _num1 = (getDigit(_random, _currentIndex) * 10) +
-            getDigit(_random, _currentIndex + 1);
-        _currentIndex += 2;
-        uint256 _num2 = (getDigit(_random, _currentIndex) * 10) +
-            getDigit(_random, _currentIndex + 1);
-        _currentIndex += 2;
-        while (_num1 == _num2) {
-            _num2 =
-                (getDigit(_random, _currentIndex) * 10) +
-                getDigit(_random, _currentIndex + 1);
-            _currentIndex += 2;
-        }
-        uint256 _num3 = (getDigit(_random, _currentIndex) * 10) +
-            getDigit(_random, _currentIndex + 1);
-        while (_num3 == _num1 || _num3 == _num2) {
-            _num3 =
-                (getDigit(_random, _currentIndex) * 10) +
-                getDigit(_random, _currentIndex + 1);
-        }
-        return [_num1, _num2, _num3];
-    }
-
-    function reveal(bytes32 _seed)
-        public
-        onlyTrustedParty
-        returns (uint256[3] memory)
-    {
-        require(seedSet);
-        require(storedBlockNumber < block.number);
-        require(_seed == sealedSeed);
-
-        uint256 random = uint256(
-            keccak256(abi.encodePacked(_seed, blockhash(storedBlockNumber)))
-        );
-
-        uint256[3] memory _drawNumbers = _getLotteryResults(random);
-
-        previousDraws[amountOfDraws] = _drawNumbers;
-        amountOfDraws++;
-        emit Draw(_drawNumbers);
-
-        winnerFound =
-            bets[uint256(keccak256(abi.encodePacked(_drawNumbers)))].length > 0;
-
-        if (winnerFound) {
-            uint256 _numberOfWinners = bets[
-                uint256(keccak256(abi.encodePacked(_drawNumbers)))
-            ].length;
-
-            // the rest of the jackpot is divided equally among the winners
-            uint256 _amountForEachWinner = jackpot / _numberOfWinners;
-
-            for (uint256 i = 0; i < _numberOfWinners; i++) {
-                address winner = bets[
-                    uint256(keccak256(abi.encodePacked(_drawNumbers)))
-                ][i];
-                ITreasury(treasury).payWinnings(
-                    _amountForEachWinner,
-                    payable(winner),
-                    "AVAX"
-                );
-            }
-
-            jackpot = 0;
-            return _drawNumbers;
-        }
-
-        seedSet = false;
-        betsClosed = false;
-        nextDraw = block.number + 1 weeks;
-
-        return _drawNumbers;
     }
 }
