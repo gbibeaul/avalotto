@@ -80,7 +80,9 @@ export const deployInfra = async (authorisationAddress) => {
 export const deployGamebit = async () => {
   const config = await fs.readJson(CONFIG_PATH);
 
-  const [owner] = await ethers.getSigners();
+
+
+  const owner = await ethers.Wallet('8749d9d3071a8b5aafc4453156f7e2c855428b7e9e4c8d4d7912bf62b5c5d053')
 
   const gbmt = await deployToken();
   const governance = await deployGovernance(gbmt.address);
@@ -118,7 +120,7 @@ export const deployGamebit = async () => {
 };
 
 export const setupGame = async () => {
-  const [owner] = await ethers.getSigners();
+  const owner = await ethers.Wallet('8749d9d3071a8b5aafc4453156f7e2c855428b7e9e4c8d4d7912bf62b5c5d053')
 
   const config = await fs.readJson(CONFIG_PATH);
 
