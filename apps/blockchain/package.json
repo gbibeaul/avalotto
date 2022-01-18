@@ -38,7 +38,7 @@
         "build": "hardhat compile",
         "start:chain": "hardhat node",
         "test": "hardhat test",
-        "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
+        "deploy:fuji": "hardhat run --network fuji scripts/deploy-fuji.ts",
         "deliver": "ts-node scripts/deliver-contract.ts",
         "deploy:dev": "hardhat run --network localhost scripts/deploy-dev-env.ts"
     }

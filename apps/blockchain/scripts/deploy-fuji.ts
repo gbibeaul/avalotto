@@ -13,13 +13,11 @@ const mineEmptyBlocks = async (numberOfBlocks: number) => {
 export const deployToken = async () => {
   const GMBT = await ethers.getContractFactory("GamebitToken");
 
-  /** deploy the token and update config
-   *  constructor args: supply, operators
+  /** deploy the token
+   *  constructor args: supply
    */
-  const gmbt = await upgrades.deployProxy(GMBT, [
-    ethers.BigNumber.from(10000000),
-    [],
-  ]);
+
+  const gmbt = await GMBT.deploy(ethers.BigNumber.from(10000000));
   await gmbt.deployed();
   return gmbt;
 };
@@ -80,9 +78,8 @@ export const deployInfra = async (authorisationAddress) => {
 export const deployGamebit = async () => {
   const config = await fs.readJson(CONFIG_PATH);
 
+  const [owner] = await ethers.getSigners();
 
-
-  const owner = await ethers.Wallet('8749d9d3071a8b5aafc4453156f7e2c855428b7e9e4c8d4d7912bf62b5c5d053')
 
   const gbmt = await deployToken();
   const governance = await deployGovernance(gbmt.address);
@@ -93,21 +90,21 @@ export const deployGamebit = async () => {
   );
   const infra = await deployInfra(gamebitAuthorization.address);
 
-  config.Local.contracts.GMBT.owner = owner.address;
-  config.Local.contracts.GMBT.address = gbmt.address;
+  config.Fuji.contracts.GMBT.owner = owner.address;
+  config.Fuji.contracts.GMBT.address = gbmt.address;
 
-  config.Local.contracts.Governance.owner = owner.address;
-  config.Local.contracts.Governance.address = governance.address;
+  config.Fuji.contracts.Governance.owner = owner.address;
+  config.Fuji.contracts.Governance.address = governance.address;
 
-  config.Local.contracts.GamebitAuthorizations.owner = owner.address;
-  config.Local.contracts.GamebitAuthorizations.address =
+  config.Fuji.contracts.GamebitAuthorizations.owner = owner.address;
+  config.Fuji.contracts.GamebitAuthorizations.address =
     gamebitAuthorization.address;
 
-  config.Local.contracts.Treasury.owner = owner.address;
-  config.Local.contracts.Treasury.address = treasury.address;
+  config.Fuji.contracts.Treasury.owner = owner.address;
+  config.Fuji.contracts.Treasury.address = treasury.address;
 
-  config.Local.contracts.Infra.owner = owner.address;
-  config.Local.contracts.Infra.address = infra.address;
+  config.Fuji.contracts.Infra.owner = owner.address;
+  config.Fuji.contracts.Infra.address = infra.address;
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
   return {
@@ -120,7 +117,8 @@ export const deployGamebit = async () => {
 };
 
 export const setupGame = async () => {
-  const owner = await ethers.Wallet('8749d9d3071a8b5aafc4453156f7e2c855428b7e9e4c8d4d7912bf62b5c5d053')
+  const [owner] = await ethers.getSigners();
+
 
   const config = await fs.readJson(CONFIG_PATH);
 
@@ -142,18 +140,16 @@ export const setupGame = async () => {
     ethers.utils.parseEther("0.05")
   );
 
-  await mineEmptyBlocks(1);
 
   await gamebitAuthorization.functions.editGamePlayProfitAuth(
     lotto.address,
     true
   );
 
-  await mineEmptyBlocks(1);
 
-  config.Local.contracts.LottoWinnerMock.owner = owner.address;
-  config.Local.contracts.LottoWinnerMock.trustedParty = lotto.address;
-  config.Local.contracts.LottoWinnerMock.address = lotto.address;
+  config.Fuji.contracts.LottoWinnerMock.owner = owner.address;
+  config.Fuji.contracts.LottoWinnerMock.trustedParty = lotto.address;
+  config.Fuji.contracts.LottoWinnerMock.address = lotto.address;
 
   // gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
 

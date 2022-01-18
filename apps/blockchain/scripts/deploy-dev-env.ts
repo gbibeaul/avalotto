@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { ethers, upgrades } from "hardhat";
+import { ethers } from "hardhat";
 import fs from "fs-extra";
 
 const CONFIG_PATH = "../../packages/config/config.json";
@@ -13,13 +13,11 @@ const mineEmptyBlocks = async (numberOfBlocks: number) => {
 export const deployToken = async () => {
   const GMBT = await ethers.getContractFactory("GamebitToken");
 
-  /** deploy the token and update config
-   *  constructor args: supply, operators
+  /** deploy the token
+   *  constructor args: supply
    */
-  const gmbt = await upgrades.deployProxy(GMBT, [
-    ethers.BigNumber.from(10000000),
-    [],
-  ]);
+
+  const gmbt = await GMBT.deploy(ethers.BigNumber.from(10000000));
   await gmbt.deployed();
   return gmbt;
 };
@@ -89,6 +87,7 @@ export const deployGamebit = async () => {
     gamebitAuthorization.address,
     ethers.BigNumber.from("1")
   );
+  
   const infra = await deployInfra(gamebitAuthorization.address);
 
   config.Local.contracts.GMBT.owner = owner.address;
