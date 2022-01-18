@@ -2,10 +2,11 @@
 	import { BigNumber, utils } from 'ethers';
 	import Play from './Play.svelte';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
+	import { walletStore } from '../../stores/wallet';
 	import { withPrevious } from '../../helpers/withPrevious.helpers';
 
 	let jackpot: BigNumber;
-	const [currentStep, previousStep] = withPrevious(LottoSteps.SELECT_PLAYS);
+	const [currentStep] = withPrevious(LottoSteps.SELECT_PLAYS);
 	let plays = $lottoStore.plays;
 
 	lottoStore.subscribe((value) => {
@@ -33,9 +34,10 @@
 	};
 
 	$: if ($currentStep === LottoSteps.CONFIRMED) {
-		plays = [[getRandom(), getRandom(), getRandom()]]
+		plays = [[getRandom(), getRandom(), getRandom()]];
 	}
 
+	$: console.log($walletStore.walletAddress);
 </script>
 
 <div class="justify-center flex lg:w-4/6" class:hide={$currentStep === LottoSteps.REVIEW_TICKET}>
@@ -49,26 +51,32 @@
 			</em>
 		</hgroup>
 		{#if $currentStep === LottoSteps.SELECT_PLAYS}
-			<section class="bg-white flex justify-center flex-col  px-8">
-				{#each plays as [num1, num2, num3], i}
-					<Play
-						removePlay={() => handleRemovePLay(i)}
-						playNo={i + 1}
-						bind:num1
-						bind:num2
-						bind:num3
-						isFirst={i === 0}
-					/>
-				{/each}
-			</section>
-			<section class="flex justify-center py-4">
-				<button
-					on:click={handleAddPlay}
-					class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
-				>
-					Add a play
-				</button>
-			</section>
+			{#if $walletStore.walletAddress.length > 0}
+				<section class="bg-white flex justify-center flex-col  px-8">
+					{#each plays as [num1, num2, num3], i}
+						<Play
+							removePlay={() => handleRemovePLay(i)}
+							playNo={i + 1}
+							bind:num1
+							bind:num2
+							bind:num3
+							isFirst={i === 0}
+						/>
+					{/each}
+				</section>
+				<section class="flex justify-center py-4">
+					<button
+						on:click={handleAddPlay}
+						class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
+					>
+						Add a play
+					</button>
+				</section>
+			{:else}
+				<section class="bg-white flex justify-center flex-col  px-8">
+					<strong class="font-bold flex justify-center text-sm">Please connect your wallet</strong>
+				</section>
+			{/if}
 		{/if}
 		{#if $currentStep === LottoSteps.CONFIRMING}
 			<section class="h-64 flex flex-col justify-center py-8">

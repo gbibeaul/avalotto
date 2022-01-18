@@ -6,7 +6,7 @@ type WalletState = {
 };
 
 const initialState: WalletState = {
-	walletAddress: ''
+	walletAddress: '',
 };
 
 const createWallet = () => {
@@ -31,7 +31,10 @@ const createWallet = () => {
 
 	const init = () => {
 		if (isClientEthInjected()) {
+			window.ethereum.request({ method: 'eth_requestAccounts' }).then(updateWalletAddress);
 			window.ethereum.on('accountsChanged', updateWalletAddress);
+		} else {
+			fetch('/api/remove-metamask');
 		}
 	};
 

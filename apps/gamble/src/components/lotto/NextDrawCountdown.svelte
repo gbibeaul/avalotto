@@ -4,10 +4,8 @@
 
 	let nextDrawCountdown: string;
 	let timer = null;
-	let nextDrawOn: number;
-	let distanceInMinutes: number;
 
-	const updateNextDrawCountdown = () => {
+	const updateNextDrawCountdown = (distanceInMinutes: number) => {
 		const days = Math.floor(distanceInMinutes / (60 * 24));
 		const hours = Math.floor((distanceInMinutes % (60 * 24)) / 60);
 		const minutes = Math.floor(distanceInMinutes % 60);
@@ -16,20 +14,17 @@
 		const hText = hours > 0 ? +hours + (hours == 1 ? ' HOUR, ' : ' HOURS, ') : '';
 		const mText = minutes > 0 ? +minutes + (minutes == 1 ? ' MINUTE, ' : ' MINUTES,') : '';
 
-		nextDrawCountdown = dText + hText + mText;
+		return dText + hText + mText;
 	};
 
-	const nowInMinutes = new Date().getTime() / 60000;
+	const nowInMinutes = () => new Date().getTime() / 60000;
 
 	$: {
-		nextDrawOn = $lottoStore.nextDrawOn / 60;
-		distanceInMinutes = nextDrawOn - nowInMinutes;
-		nextDrawOn && updateNextDrawCountdown();
+		nextDrawCountdown = updateNextDrawCountdown($lottoStore.nextDrawOn / 60 - nowInMinutes());		
 	}
 
 	timer = setInterval(() => {
-		distanceInMinutes -= 1;
-		updateNextDrawCountdown();
+		nextDrawCountdown = updateNextDrawCountdown($lottoStore.nextDrawOn / 60 - nowInMinutes());		
 	}, 60000);
 
 	onDestroy(() => timer && clearInterval(timer));

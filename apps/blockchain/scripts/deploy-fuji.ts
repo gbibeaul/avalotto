@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 import fs from "fs-extra";
 
 const CONFIG_PATH = "../../packages/config/config.json";
@@ -80,6 +80,7 @@ export const deployGamebit = async () => {
 
   const [owner] = await ethers.getSigners();
 
+
   const gbmt = await deployToken();
   const governance = await deployGovernance(gbmt.address);
   const gamebitAuthorization = await deployAuthorization(governance.address);
@@ -87,24 +88,23 @@ export const deployGamebit = async () => {
     gamebitAuthorization.address,
     ethers.BigNumber.from("1")
   );
-  
   const infra = await deployInfra(gamebitAuthorization.address);
 
-  config.Local.contracts.GMBT.owner = owner.address;
-  config.Local.contracts.GMBT.address = gbmt.address;
+  config.Fuji.contracts.GMBT.owner = owner.address;
+  config.Fuji.contracts.GMBT.address = gbmt.address;
 
-  config.Local.contracts.Governance.owner = owner.address;
-  config.Local.contracts.Governance.address = governance.address;
+  config.Fuji.contracts.Governance.owner = owner.address;
+  config.Fuji.contracts.Governance.address = governance.address;
 
-  config.Local.contracts.GamebitAuthorizations.owner = owner.address;
-  config.Local.contracts.GamebitAuthorizations.address =
+  config.Fuji.contracts.GamebitAuthorizations.owner = owner.address;
+  config.Fuji.contracts.GamebitAuthorizations.address =
     gamebitAuthorization.address;
 
-  config.Local.contracts.Treasury.owner = owner.address;
-  config.Local.contracts.Treasury.address = treasury.address;
+  config.Fuji.contracts.Treasury.owner = owner.address;
+  config.Fuji.contracts.Treasury.address = treasury.address;
 
-  config.Local.contracts.Infra.owner = owner.address;
-  config.Local.contracts.Infra.address = infra.address;
+  config.Fuji.contracts.Infra.owner = owner.address;
+  config.Fuji.contracts.Infra.address = infra.address;
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
   return {
@@ -118,6 +118,7 @@ export const deployGamebit = async () => {
 
 export const setupGame = async () => {
   const [owner] = await ethers.getSigners();
+
 
   const config = await fs.readJson(CONFIG_PATH);
 
@@ -139,18 +140,16 @@ export const setupGame = async () => {
     ethers.utils.parseEther("0.05")
   );
 
-  await mineEmptyBlocks(1);
 
   await gamebitAuthorization.functions.editGamePlayProfitAuth(
     lotto.address,
     true
   );
 
-  await mineEmptyBlocks(1);
 
-  config.Local.contracts.LottoWinnerMock.owner = owner.address;
-  config.Local.contracts.LottoWinnerMock.trustedParty = lotto.address;
-  config.Local.contracts.LottoWinnerMock.address = lotto.address;
+  config.Fuji.contracts.LottoWinnerMock.owner = owner.address;
+  config.Fuji.contracts.LottoWinnerMock.trustedParty = lotto.address;
+  config.Fuji.contracts.LottoWinnerMock.address = lotto.address;
 
   // gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
 
