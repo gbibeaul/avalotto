@@ -17,8 +17,7 @@ export async function get(request) {
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
 
-		return parseFloat(utils.formatEther(jackpot));
-		
+		return { status: 200, body: { jackpot: parseFloat(utils.formatEther(jackpot)) } };
 	} catch (error) {
 		console.error(error);
 		return error;
