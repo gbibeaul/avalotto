@@ -11,6 +11,11 @@
 	<div
 		class="flex flex-col bg-avascratch-background border-solid border-8 border-avascratch-border max-w-screen-sm h-full"
 	>
+		<img
+			class="absolute mt-1 ml-1 z-10"
+			src="/assets/avax_logo_grey_bg_white_color.svg"
+			alt="axax_logo"
+		/>
 		<div id="title-container" class="w-full mt-6">
 			<img class="w-full" src="/assets/avascratch_spikeball.svg" alt="spikeball_background" />
 		</div>
