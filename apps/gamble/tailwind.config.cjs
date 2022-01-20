@@ -7,7 +7,8 @@ module.exports = {
 			colors: {
 				avascratch: {
 					background: '#E84142',
-					border: '#F7DA10'
+					border: '#F7DA10',
+					scratchBtn: '#F7DA10'
 				}
 			}
 		}
