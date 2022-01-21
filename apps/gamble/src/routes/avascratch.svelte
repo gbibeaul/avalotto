@@ -35,7 +35,12 @@
 		</div>
 
 		<div id="main-container" class="w-full flex-col justify-items-center relative mt-4">
-			<div class="relative flex flex-col items-center">{numChancesToWin} CHANCES TO WIN!</div>
+			<div class="flex flex-col items-center">{numChancesToWin} CHANCES TO WIN!</div>
+			<div>
+				<div class="absolute">WINNING</div>
+				<img class="m-auto" src="/assets/avascratch_winning_number_bill.svg" alt="winning_number" />
+				<div class="absolute">NUMBER</div>
+			</div>
 			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
 			<img
 				class="absolute left-1/2 avascratch-cash-sack"
