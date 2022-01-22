@@ -51,7 +51,7 @@
 			/>
 			<div class="flex flex-row flex-wrap justify-center">
 				{#each numbers as number, i}
-					<div class="relative w-1/4 mx-2">
+					<div class="relative w-1/4 mx-2 flex justify-center">
 						<img class="relative" src="/assets/avascratch_numberball.svg" alt="scratch-number" />
 						<div class="absolute left-0 text-center top-1/3 w-full">99</div>
 					</div>
