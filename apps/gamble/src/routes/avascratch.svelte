@@ -3,8 +3,7 @@
 	export let currency = 'AVAX';
 	export let currentJackpot = '5,000';
 	export let numChancesToWin = 3;
-	let numScratchColumns = 3;
-	let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	let numbers = [99, 66, 28, 25, 69, 42, 65, 999, 11];
 
 	function handleBuyYourTicketClick() {
 		console.log('handleBuyYourTicketClick');
@@ -28,9 +27,18 @@
 				alt="spikeball_background"
 			/>
 			<div class="mt-8 relative flex flex-col items-center">
-				<div>AVASCRATCH</div>
-				<div>{currentJackpot} {currency}</div>
-				<div>CURRENT JACKPOT</div>
+				<div
+					class="font-['Bangers'] text-7xl text-avascratch-scratchBtn main-title-text font-normal"
+				>
+					AVASCRATCH
+				</div>
+				<div
+					class="font-['Bangers'] text-6xl text-avascratch-scratchBtn main-title-text font-normal"
+				>
+					{currentJackpot}
+					{currency}
+				</div>
+				<div class="font-bold text-avascratch-background text-base">CURRENT JACKPOT</div>
 			</div>
 		</div>
 
@@ -53,7 +61,11 @@
 				{#each numbers as number, i}
 					<div class="relative w-1/4 mx-2 flex justify-center">
 						<img class="relative" src="/assets/avascratch_numberball.svg" alt="scratch-number" />
-						<div class="absolute left-0 text-center top-1/3 w-full">99</div>
+						<div
+							class="absolute left-0 text-center top-1/4 w-full font-['Bangers'] text-5xl text-avascratch-background scratch-number-balls-text"
+						>
+							{number}
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -72,7 +84,22 @@
 </div>
 
 <style>
+	@font-face {
+		font-family: 'Bangers';
+		font-style: normal;
+		font-weight: 400;
+		src: url(/assets/Bangers-Regular.ttf) format('truetype');
+	}
+
 	.avascratch-cash-sack {
 		transform: translate(-50%);
+	}
+
+	.main-title-text {
+		-webkit-text-stroke: 5px #0a0007;
+	}
+
+	.scratch-number-balls-text {
+		-webkit-text-stroke: 2px #e1e0e1;
 	}
 </style>
