@@ -6,15 +6,15 @@
 	export let currentJackpot = '5,000';
 	export let numChancesToWin = 3;
 	let numbers = [
-		{ number: 99, scratched: true },
-		{ number: 66, scratched: true },
-		{ number: 28, scratched: true },
-		{ number: 25, scratched: true },
-		{ number: 69, scratched: true },
-		{ number: 42, scratched: true },
-		{ number: 65, scratched: true },
-		{ number: 999, scratched: true },
-		{ number: 11, scratched: true }
+		{ number: 99, scratched: false },
+		{ number: 66, scratched: false },
+		{ number: 28, scratched: false },
+		{ number: 25, scratched: false },
+		{ number: 69, scratched: false },
+		{ number: 42, scratched: false },
+		{ number: 65, scratched: false },
+		{ number: 999, scratched: false },
+		{ number: 11, scratched: false }
 	];
 
 	function handleBuyYourTicketClick() {
@@ -90,20 +90,20 @@
 						>
 							<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
 							{#if scratched}
-								<!-- <div class="relative left-0 text-center top-1/4" transition:fade> -->
 								<img
 									class="absolute"
 									src="/assets/avascratch_scratch_grey_area.svg"
 									alt="scratch_grey_area"
+									transition:fade={{ duration: 750 }}
 								/>
 								<div
 									class="absolute flex justify-center font-['Bangers'] text-5xl scratch-number-balls-text"
+									transition:fade={{ delay: 200, duration: 750 }}
 								>
 									{number}
 								</div>
-								<!-- </div> -->
 							{:else}
-								<div class="absolute ml-1 mb-1" transition:fade>
+								<div class="absolute ml-1 mb-1">
 									<img src="/assets/avascratch_coins_red.svg" alt="red_coins" />
 								</div>
 							{/if}
