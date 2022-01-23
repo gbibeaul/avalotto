@@ -31,7 +31,17 @@ This project uses [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/wor
 
 ## Getting Started
 
-### Yarn install
+### Install
+
+Running `yarn` from the root of the project will install all of the project's dependencies.
+
+### Deploying and running apps
+
+Whether node, browser, or blockchain, most apps will need to be running locally or deployed
+
+### Vercel apps
+
+Vercel apps may expect a config consisting of address and URLs for service layers. In the case of the gamble app, you'll need to copy `apps/gamble/.env.example` to `apps/gamble/.env` (git-ignored) and edit some of the secrets. Please ask a project lead for the secrets.
 
 ### Run the Frontend against Fuji testnet
 
