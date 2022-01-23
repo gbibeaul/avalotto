@@ -1,12 +1,34 @@
 <script>
+	import { fade } from 'svelte/transition';
+
 	export let ticketPrice = 1;
 	export let currency = 'AVAX';
 	export let currentJackpot = '5,000';
 	export let numChancesToWin = 3;
-	let numbers = [99, 66, 28, 25, 69, 42, 65, 999, 11];
+	let numbers = [
+		{ number: 99, scratched: true },
+		{ number: 66, scratched: true },
+		{ number: 28, scratched: true },
+		{ number: 25, scratched: true },
+		{ number: 69, scratched: true },
+		{ number: 42, scratched: true },
+		{ number: 65, scratched: true },
+		{ number: 999, scratched: true },
+		{ number: 11, scratched: true }
+	];
 
 	function handleBuyYourTicketClick() {
 		console.log('handleBuyYourTicketClick');
+	}
+
+	function handleScratchNumberClick(numberClicked) {
+		console.log('handleScratchNumberClick', numberClicked);
+		let foundNumber = numbers.find(({ number }) => number === numberClicked);
+
+		if (foundNumber) {
+			foundNumber.scratched = true;
+			numbers = numbers;
+		}
 	}
 </script>
 
@@ -43,7 +65,9 @@
 		</div>
 
 		<div id="main-container" class="w-full flex-col justify-items-center relative mt-4">
-			<div class="flex flex-col items-center">{numChancesToWin} CHANCES TO WIN!</div>
+			<div class="flex flex-col items-center font-bold text-4xl">
+				{numChancesToWin} CHANCES TO WIN!
+			</div>
 			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
 			<img
 				class="absolute left-1/2 avascratch-cash-sack"
@@ -58,13 +82,31 @@
 				/>
 			</div>
 			<div class="flex flex-row flex-wrap justify-center">
-				{#each numbers as number, i}
-					<div class="relative w-1/4 mx-2 flex justify-center">
-						<img class="relative" src="/assets/avascratch_numberball.svg" alt="scratch-number" />
+				{#each numbers as { number, scratched }, i}
+					<div class="relative w-1/4 mx-2">
 						<div
-							class="absolute left-0 text-center top-1/4 w-full font-['Bangers'] text-5xl text-avascratch-background scratch-number-balls-text"
+							class="relative flex justify-center items-center cursor-pointer"
+							on:click|once={() => handleScratchNumberClick(number)}
 						>
-							{number}
+							<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
+							{#if scratched}
+								<!-- <div class="relative left-0 text-center top-1/4" transition:fade> -->
+								<img
+									class="absolute"
+									src="/assets/avascratch_scratch_grey_area.svg"
+									alt="scratch_grey_area"
+								/>
+								<div
+									class="absolute flex justify-center font-['Bangers'] text-5xl scratch-number-balls-text"
+								>
+									{number}
+								</div>
+								<!-- </div> -->
+							{:else}
+								<div class="absolute ml-1 mb-1" transition:fade>
+									<img src="/assets/avascratch_coins_red.svg" alt="red_coins" />
+								</div>
+							{/if}
 						</div>
 					</div>
 				{/each}
@@ -76,8 +118,7 @@
 				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn"
 				on:click={handleBuyYourTicketClick}
 			>
-				BUY YOUR TICKET ({ticketPrice}
-				{currency})
+				<div class="font-bold">BUY YOUR TICKET ({ticketPrice} {currency})</div>
 			</button>
 		</div>
 	</div>
