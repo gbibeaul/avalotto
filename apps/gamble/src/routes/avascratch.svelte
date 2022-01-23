@@ -44,6 +44,12 @@
 
 		<div id="main-container" class="w-full flex-col justify-items-center relative mt-4">
 			<div class="flex flex-col items-center">{numChancesToWin} CHANCES TO WIN!</div>
+			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
+			<img
+				class="absolute left-1/2 avascratch-cash-sack"
+				src="/assets/avascratch_cash_sack.svg"
+				alt="sunburst_bg"
+			/>
 			<div class="relative">
 				<img
 					class="w-3/4 m-auto"
@@ -51,12 +57,6 @@
 					alt="winning_number"
 				/>
 			</div>
-			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
-			<img
-				class="absolute left-1/2 avascratch-cash-sack"
-				src="/assets/avascratch_cash_sack.svg"
-				alt="sunburst_bg"
-			/>
 			<div class="flex flex-row flex-wrap justify-center">
 				{#each numbers as number, i}
 					<div class="relative w-1/4 mx-2 flex justify-center">
