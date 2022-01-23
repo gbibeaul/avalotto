@@ -4,7 +4,6 @@
     "description": "A Component library for Gamble.fi",
     "license": "UNLICENSED",
     "main": "src/index.ts",
-    "scripts": {},
     "dependencies": {
         "svelte": "3.38.2"
     },
