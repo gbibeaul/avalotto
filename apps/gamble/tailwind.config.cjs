@@ -18,4 +18,3 @@ module.exports = {
 	},
 	plugins: [require('@tailwindcss/forms')]
 };
-background:;
