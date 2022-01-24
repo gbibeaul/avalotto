@@ -3,8 +3,6 @@
 
 	export let ticketPrice = 1;
 	export let currency = 'AVAX';
-	export let currentJackpot = '5,000';
-	export let numChancesToWin = 3;
 	let numbers = [
 		{ number: 99, scratched: false },
 		{ number: 66, scratched: false },
@@ -34,7 +32,7 @@
 
 <div class="flex justify-center h-full align-center bg-slate-300">
 	<div
-		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border max-w-screen-sm overflow-y-auto"
+		class="flex flex-col max-w-md main-container bg-avascratch-background border-solid border-8 border-avascratch-border max-w-screen-sm overflow-y-auto"
 	>
 		<img
 			class="absolute mt-1 ml-1 z-10"
@@ -50,10 +48,7 @@
 			/>
 			<div class="mt-8 relative flex flex-col items-center">
 				<div class="font-['Bangers'] text-7xl main-title-text font-normal">AVASCRATCH</div>
-				<div class="font-['Bangers'] text-6xl main-title-text font-normal">
-					{currentJackpot}
-					{currency}
-				</div>
+				<div class="font-['Bangers'] text-6xl main-title-text font-normal">NFT DRAW</div>
 				<div class="font-bold text-avascratch-background text-base leading-4">CURRENT JACKPOT</div>
 			</div>
 		</div>
