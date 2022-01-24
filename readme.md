@@ -33,15 +33,21 @@ This project uses [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/wor
 
 ### Install
 
-Running `yarn` from the root of the project will install all of the project's dependencies.
+---
+
+Running `yarn` from the root of the project will install all of the project's dependencies. If using yarn, you'll want to `yarn set version berry` first.
 
 ### Deploying and running apps
 
-Whether node, browser, or blockchain, most apps will need to be running locally or deployed
+---
 
-### Vercel apps
+Whether node, browser, or blockchain, most apps will need to be running locally or deployed. The frontend apps are running on [Vercel](https://vercel.com/) and [Supabase](https://supabase.com/)and the smart contracts are accessible via the MetaMask RPC provider.
 
-Vercel apps may expect a config consisting of address and URLs for service layers. In the case of the gamble app, you'll need to copy `apps/gamble/.env.example` to `apps/gamble/.env` (git-ignored) and edit some of the secrets. Please ask a project lead for the secrets.
+### Frontend apps on Vercel + Supabase
+
+---
+
+Vercel apps may expect a config consisting of address and URLs for service layers. In the case of the gamble app, you'll need to copy `apps/gamble/.env.example` to `apps/gamble/.env` (git-ignored) and edit some of the secrets, for Supabase and gmail. Please ask a project lead for the secrets.
 
 ### Run the Frontend against Fuji testnet
 
