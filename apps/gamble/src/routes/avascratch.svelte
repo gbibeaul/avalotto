@@ -32,7 +32,7 @@
 
 <div class="flex justify-center h-full align-center bg-slate-300">
 	<div
-		class="flex flex-col max-w-md main-container bg-avascratch-background border-solid border-8 border-avascratch-border max-w-screen-sm overflow-y-auto"
+		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border overflow-y-auto"
 	>
 		<img
 			class="absolute mt-1 ml-1 z-10"
