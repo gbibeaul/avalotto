@@ -32,9 +32,9 @@
 	}
 </script>
 
-<div class="flex justify-center align-center h-full bg-slate-300">
+<div class="flex justify-center h-full align-center bg-slate-300">
 	<div
-		class="flex flex-col bg-avascratch-background border-solid border-8 border-avascratch-border max-w-screen-sm h-full overflow-y-auto"
+		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border max-w-screen-sm overflow-y-auto"
 	>
 		<img
 			class="absolute mt-1 ml-1 z-10"
@@ -107,7 +107,7 @@
 
 		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
 			<button
-				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn"
+				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn z-10"
 				on:click={handleBuyYourTicketClick}
 			>
 				<div class="font-bold">BUY YOUR TICKET ({ticketPrice} {currency})</div>
@@ -139,5 +139,9 @@
 
 	.scratch-number-balls-text {
 		-webkit-text-stroke: 2px #e1e0e1;
+	}
+
+	.main-container {
+		max-height: 844px;
 	}
 </style>
