@@ -72,7 +72,8 @@
 				{#each numbers as { number, scratched }, i}
 					<div class="relative w-1/4 mx-2">
 						<div
-							class="relative flex justify-center items-center cursor-pointer"
+							class="relative flex justify-center items-center"
+							class:cursor-pointer={!scratched}
 							on:click|once={() => handleScratchNumberClick(number)}
 						>
 							<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
