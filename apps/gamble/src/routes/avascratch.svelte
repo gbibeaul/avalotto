@@ -1,8 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition';
 
-	export let ticketPrice = 1;
-	export let currency = 'AVAX';
 	let numbers = [
 		{ number: 99, scratched: false },
 		{ number: 66, scratched: false },
@@ -20,7 +18,6 @@
 	}
 
 	function handleScratchNumberClick(numberClicked) {
-		console.log('handleScratchNumberClick', numberClicked);
 		let foundNumber = numbers.find(({ number }) => number === numberClicked);
 
 		if (foundNumber) {
@@ -28,6 +25,9 @@
 			numbers = numbers;
 		}
 	}
+
+	// Disable the submit button if there are any un-scratched numbers.
+	$: submitButtonDisabled = numbers.some(({ scratched }) => !scratched);
 </script>
 
 <div class="flex justify-center h-full align-center bg-slate-300">
@@ -102,10 +102,12 @@
 
 		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
 			<button
-				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn z-10"
+				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn z-10 disabled:opacity-30"
+				type="submit"
 				on:click={handleBuyYourTicketClick}
+				disabled={submitButtonDisabled}
 			>
-				<div class="font-bold">BUY YOUR TICKET ({ticketPrice} {currency})</div>
+				<div class="font-bold">REVEAL YOUR PRIZE</div>
 			</button>
 		</div>
 	</div>
