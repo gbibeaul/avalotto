@@ -54,7 +54,7 @@
 					{currentJackpot}
 					{currency}
 				</div>
-				<div class="font-bold text-avascratch-background text-base">CURRENT JACKPOT</div>
+				<div class="font-bold text-avascratch-background text-base leading-4">CURRENT JACKPOT</div>
 			</div>
 		</div>
 
@@ -132,7 +132,7 @@
 		font-size: 72px;
 		background: linear-gradient(180deg, #f7da10 0%, #ffb900 100%);
 		background-clip: text;
-		line-height: 74px;
+		line-height: 66px;
 		-webkit-text-stroke: 4px #0a0007;
 		-webkit-text-fill-color: transparent;
 	}
