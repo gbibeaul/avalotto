@@ -3,7 +3,6 @@
     "version": "0.1.1",
     "license": "UNLICENSED",
     "main": "svelte.config.js",
-    "scripts": {},
     "dependencies": {
         "@babel/core": "^7.12.9",
         "@babel/preset-env": "^7.12.7",

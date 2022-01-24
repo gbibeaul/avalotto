@@ -25,9 +25,32 @@ The player rewards and staking yields are automatically rebalanced by the protoc
 1. Install [yarn](https://yarnpkg.com/en/docs/install)
 1. Install the [MetaMask Chrome extension](https://metamask.io/)
 
+## Project Hierarchy
+
+This project uses [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/) and [turborepo pipelines](https://turborepo.org/docs/features/pipelines). All direct subfolders of `app/` and `packages/` are workspaces. Put deployable, runnable projects into `apps/`. Libs and utils go into `packages/`.
+
 ## Getting Started
 
+### Install
+
+---
+
+Running `yarn` from the root of the project will install all of the project's dependencies. If using yarn, you'll want to `yarn set version berry` first.
+
+### Deploying and running apps
+
+---
+
+Whether node, browser, or blockchain, most apps will need to be running locally or deployed. The frontend apps are running on [Vercel](https://vercel.com/) and [Supabase](https://supabase.com/)and the smart contracts are accessible via the MetaMask RPC provider.
+
+### Frontend apps on Vercel + Supabase
+
+---
+
+Vercel apps may expect a config consisting of address and URLs for service layers. In the case of the gamble app, you'll need to copy `apps/gamble/.env.example` to `apps/gamble/.env` (git-ignored) and edit some of the secrets, for Supabase and gmail. Please ask a project lead for the secrets.
+
 ### Run the Frontend against Fuji testnet
+
 ---
 
 Deployed Fuji contracts should be stable but could be behind your local version
@@ -37,6 +60,7 @@ Deployed Fuji contracts should be stable but could be behind your local version
 1. Run `yarn dev:fuji`
 
 ### Local Blockchain
+
 ---
 
 This is the latest unstable stuff
@@ -44,10 +68,10 @@ This is the latest unstable stuff
 1. Copy the content of `.env.example` to a `.env` file in the apps/gamble folder
 1. Launch the test network by running `yarn start:chain`
 1. Add the [test network to MetaMask](https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC) using the following configuration:
-    - RPC URL: http://127.0.0.1:8545/
-    - Network Name: "Hardhat test"
-    - Network ID: "43112"
-    - Currency Symbol (optional): AVAX
+   - RPC URL: http://127.0.0.1:8545/
+   - Network Name: "Hardhat test"
+   - Network ID: "43112"
+   - Currency Symbol (optional): AVAX
 1. Run `yarn dev`
 
 Restarting your commands will require you to do the following:
