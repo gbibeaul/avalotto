@@ -4,25 +4,23 @@
 
 	import { lottoStore } from '../stores/lotto';
 	import { lottoProvider } from '../transport/lotto';
-	
+
 	export async function load({ session }) {
 		const { walletAddress = '', notifications } = session;
 		walletStore.updateWalletAddress([walletAddress]);
 
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();
-		const nextDrawOn  = await lotto.getNextDrawTime();
+		const nextDrawOn = await lotto.getNextDrawTime();
 
 		lottoStore.updateJackpot(jackpot);
 		lottoStore.updateNextDrawOn(nextDrawOn);
 		notificationStore.updateNotificationTarget(notifications);
 
-
 		return {
 			props: {}
 		};
 	}
-
 </script>
 
 <script lang="ts">
