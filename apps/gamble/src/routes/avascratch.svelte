@@ -49,14 +49,8 @@
 				alt="spikeball_background"
 			/>
 			<div class="mt-8 relative flex flex-col items-center">
-				<div
-					class="font-['Bangers'] text-7xl text-avascratch-scratchBtn main-title-text font-normal"
-				>
-					AVASCRATCH
-				</div>
-				<div
-					class="font-['Bangers'] text-6xl text-avascratch-scratchBtn main-title-text font-normal"
-				>
+				<div class="font-['Bangers'] text-7xl main-title-text font-normal">AVASCRATCH</div>
+				<div class="font-['Bangers'] text-6xl main-title-text font-normal">
 					{currentJackpot}
 					{currency}
 				</div>
@@ -65,9 +59,7 @@
 		</div>
 
 		<div id="main-container" class="w-full flex-col justify-items-center relative mt-4">
-			<div class="flex flex-col items-center font-bold text-4xl">
-				{numChancesToWin} CHANCES TO WIN!
-			</div>
+			<img src="/assets/avascratch_three_chances_to_win.png" alt="three_chances_to_win" />
 			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
 			<img
 				class="absolute left-1/2 avascratch-cash-sack"
@@ -137,7 +129,12 @@
 	}
 
 	.main-title-text {
-		-webkit-text-stroke: 5px #0a0007;
+		font-size: 72px;
+		background: linear-gradient(180deg, #f7da10 0%, #ffb900 100%);
+		background-clip: text;
+		line-height: 74px;
+		-webkit-text-stroke: 4px #0a0007;
+		-webkit-text-fill-color: transparent;
 	}
 
 	.scratch-number-balls-text {
