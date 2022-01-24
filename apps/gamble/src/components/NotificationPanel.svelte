@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { session } from '$app/stores';
-	import Switch from '../Switch.svelte';
-	import { notificationStore } from '../../stores/notification';
-	import { clickOutside } from '../../directives/clickOutside';
+	import Switch from './Switch.svelte';
+	import { notificationStore } from '../stores/notification';
+	import { clickOutside } from '../directives/clickOutside';
 
 	let email;
 	let discord;
