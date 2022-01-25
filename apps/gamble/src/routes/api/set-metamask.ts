@@ -1,9 +1,8 @@
 import { serialize } from 'cookie';
 import { supabase } from '../../transport/supabase';
 
-/** @type {import('@sveltejs/kit').RequestHandler} */
-export async function post(req) {
-	const { walletAddress } = JSON.parse(req.body);
+export async function post({ request }) {
+	const { walletAddress } = await request.json();
 
 	await supabase.from('wallets_ids').upsert({ id: walletAddress });
 

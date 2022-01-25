@@ -4,7 +4,7 @@ import { parseBearer as isBearerValid } from '../../helpers/parseBearer.helpers'
 
 /** */
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function post(request) {
+export async function post({ request }) {
 	try {
 		const originatingAffress = import.meta.env.VITE_GMAIL_ADDRESS;
 
@@ -21,7 +21,7 @@ export async function post(request) {
 			};
 		}
 
-		const { email = '', subject, text } = request.body;
+		const { email = '', subject, text } = await request.json();
 
 		const mailOptions = {
 			from: String(import.meta.env.VITE_GMAIL_ADDRESS),

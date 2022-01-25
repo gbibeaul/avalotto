@@ -1,7 +1,7 @@
 import { supabase } from '../../transport/supabase';
 
-export async function post(request) {
-	const { email } = JSON.parse(request.body);
+export async function post({ request }) {
+	const { email } = await request.json();
 
 	//check if exists
 	const { count } = await supabase
@@ -17,5 +17,3 @@ export async function post(request) {
 		success: true
 	};
 }
-
-

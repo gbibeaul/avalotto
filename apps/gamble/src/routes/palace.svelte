@@ -30,20 +30,20 @@
 		<button class="h-8 text-white "><FaBars /></button>
 	</header>
 	<NotificationPanel />
-	<section class="mt-80 p-6">
-		<GameCard
-			logoSrc="/assets/AVASCRATCH.svg"
-			logoText="Avascratch logo"
-			gameLink="avascratch"
-			gameDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend pharetra enim scelerisque malesuada."
-			gameImgSrc="/assets/avascratchCardTablet.png"
-			gameImgText="Avascratch is a NFT scratch card game"
-		/>
+	<section class="mt-80 p-6 lg:flex lg:mt-80 justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28">
+			<GameCard
+				logoSrc="/assets/AVASCRATCH.svg"
+				logoText="Avascratch logo"
+				gameLink="avascratch"
+				gameDescription="Try your luck with our no-loss, win NFTs scratch game! Scratch three of the same number and receive a rare NFT!"
+				gameImgSrc="/assets/avascratchCardTablet.png"
+				gameImgText="Avascratch is a NFT scratch card game"
+			/>
 		<GameCard
 			logoSrc="/assets/AVALotto_logo_white.svg"
 			logoText="Avascratch logo"
 			gameLink="lotto"
-			gameDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend pharetra enim scelerisque malesuada."
+			gameDescription="Pick the right numbers to win a guaranteed prize draw jackpot of AVAX!"
 			gameImgSrc="/assets/avalottoCardTablet.png"
 			gameImgText="Avalotto is a avalanche Lottery game"
 		/>
@@ -55,15 +55,21 @@
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
+		background-image: url('/assets/SnowyPalace-Homepage.jpg');
 	}
 	@media only screen and (max-width: 640px) {
 		:global(body) {
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
 			background-image: url('/assets/SnowyPalaceBackgroundMobile.png');
 		}
 	}
-
-	@media only screen and (min-width: 641px) {
+	@media only screen and (max-width: 1024px) {
 		:global(body) {
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
 			background-image: url('/assets/SnowyPalaceBackgroundTablet.png');
 		}
 	}
