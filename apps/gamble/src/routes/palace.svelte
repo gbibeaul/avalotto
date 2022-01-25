@@ -1,6 +1,7 @@
 <script context="module">
 	import { walletStore } from '../stores/wallet';
 	import { notificationStore } from '../stores/notification';
+	export const prerender = true;
 
 	export async function load({ session }) {
 		const { walletAddress = '', notifications } = session;

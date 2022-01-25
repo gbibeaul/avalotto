@@ -111,8 +111,8 @@
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
-        "trustedParty": "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"
+        "address": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+        "trustedParty": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E"
       }
     }
   }
