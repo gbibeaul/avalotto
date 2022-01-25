@@ -30,7 +30,7 @@
 		<button class="h-8 text-white "><FaBars /></button>
 	</header>
 	<NotificationPanel />
-	<section class="mt-80 p-6 lg:flex lg:mt-80 justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28">
+	<section class="mt-80 p-6 lg:flex lg:mt-[30%] justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28">
 			<GameCard
 				logoSrc="/assets/AVASCRATCH.svg"
 				logoText="Avascratch logo"
