@@ -36,7 +36,7 @@
 			logoText="Avascratch logo"
 			gameLink="avascratch"
 			gameDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend pharetra enim scelerisque malesuada."
-			gameImgSrc="/assets/avascratchOblique.png"
+			gameImgSrc="/assets/avascratchCardTablet.png"
 			gameImgText="Avascratch is a NFT scratch card game"
 		/>
 		<GameCard
@@ -44,22 +44,27 @@
 			logoText="Avascratch logo"
 			gameLink="lotto"
 			gameDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eleifend pharetra enim scelerisque malesuada."
-			gameImgSrc="/assets/avalottosmall.png"
+			gameImgSrc="/assets/avalottoCardTablet.png"
 			gameImgText="Avalotto is a avalanche Lottery game"
 		/>
 	</section>
 </main>
 
 <style>
-	@media only screen and (max-width: 600px) {
+	:global(body) {
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: cover;
+	}
+	@media only screen and (max-width: 640px) {
 		:global(body) {
-			background-image: url('/assets/SnowyPalace-Homepage-mobile.png');
+			background-image: url('/assets/SnowyPalaceBackgroundMobile.png');
 		}
+	}
 
-		.main {
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			background-size: cover;
+	@media only screen and (min-width: 641px) {
+		:global(body) {
+			background-image: url('/assets/SnowyPalaceBackgroundTablet.png');
 		}
 	}
 </style>

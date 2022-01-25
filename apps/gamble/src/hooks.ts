@@ -2,16 +2,14 @@ import { parse } from 'cookie';
 import { supabase } from './transport/supabase';
 
 /** @type {import('@sveltejs/kit').Handle} */
-export async function handle({ request, resolve }) {
-	const cookies = parse(request.headers.cookie || '');
+export async function handle({ event, resolve,  }) {
+	const response = await resolve(event)
+	const cookies = parse(response.headers.cookie || '');
 
-	if (cookies.walletAddress) {
-		request.locals.walletAddress = cookies.walletAddress;
-		return resolve(request);
-	}
+	event.locals.walletAddress = cookies.walletAddress ? cookies.walletAddress : null;
 
-	request.locals.address = null;
-	return resolve(request);
+
+	return response
 }
 
 /** @type {import('@sveltejs/kit').GetSession} */
