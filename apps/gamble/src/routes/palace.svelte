@@ -30,23 +30,43 @@
 		<button class="h-8 text-white "><FaBars /></button>
 	</header>
 	<NotificationPanel />
-	<section class="mt-80 p-6 lg:flex lg:mt-[30%] justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28">
-			<GameCard
-				logoSrc="/assets/AVASCRATCH.svg"
-				logoText="Avascratch logo"
-				gameLink="avascratch"
-				gameDescription="Try your luck with our no-loss, win NFTs scratch game! Scratch three of the same number and receive a rare NFT!"
-				gameImgSrc="/assets/avascratchCardTablet.png"
-				gameImgText="Avascratch is a NFT scratch card game"
+	<section
+		class="mt-80 p-6 lg:flex lg:mt-[30%] justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
+	>
+		<section class="h-80 bg-[#434343] rounded-3xl p-6 sm:flex lg:w-[500px] lg:h-[300px]">
+			<div class="sm:w-2/3">
+				<img src="/assets/AVASCRATCH.svg" alt="Avascratch logo" />
+				<p class="mt-4 text-white font-sans text-sm">
+					Try your luck with our no-loss, win NFTs scratch game! Scratch three of the same number
+					and receive a rare NFT!
+				</p>
+				<button class="cursor-pointer mt-4 text-white py-2 border-white border-2 w-20 rounded-lg"
+					><a href="avascratch">Play</a></button
+				>
+			</div>
+			<img
+				src="/assets/avascratchCardTablet.png"
+				alt="Avascratch is a NFT scratch card game"
+				class="-mt-20 ml-20 justify-end sm:translate-y-32 sm:w-82 sm:ml-0 sm:scale-125 lg:scale-150 lg:-mt-82  lg:w-72 "
 			/>
-		<GameCard
-			logoSrc="/assets/AVALotto_logo_white.svg"
-			logoText="Avascratch logo"
-			gameLink="lotto"
-			gameDescription="Pick the right numbers to win a guaranteed prize draw jackpot of AVAX!"
-			gameImgSrc="/assets/avalottoCardTablet.png"
-			gameImgText="Avalotto is a avalanche Lottery game"
-		/>
+		</section>
+
+		<section class="h-80 bg-[#434343] rounded-3xl p-6 sm:flex lg:w-[500px] lg:h-[300px]">
+			<div class="sm:w-2/3">
+				<img src="/assets/AVASCRATCH.svg" alt="Avalotto logo" />
+				<p class="mt-4 text-white font-sans text-sm">
+					Pick the right numbers to win a guaranteed prize draw jackpot of AVAX!
+				</p>
+				<button class="cursor-pointer mt-4 text-white py-2 border-white border-2 w-20 rounded-lg"
+					><a href="lotto">Play</a></button
+				>
+			</div>
+			<img
+				src="/assets/avalottoCardTablet.png"
+				alt="Avalotto is a avalanche Lottery game"
+				class="-mt-20 ml-20 justify-end sm:translate-y-32 lg:translate-y-20 sm:w-82 sm:ml-0 sm:scale-125 lg:scale-[1.35]  lg:w-72 "
+			/>
+		</section>
 	</section>
 </main>
 
