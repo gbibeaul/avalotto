@@ -54,7 +54,7 @@
 
 		<section class="h-80 bg-[#434343] rounded-3xl p-6 sm:flex lg:w-[500px] lg:h-[300px]">
 			<div class="sm:w-2/3">
-				<img src="/assets/AVASCRATCH.svg" alt="Avalotto logo" />
+				<img src="/assets/AVALotto_logo_white.svg" alt="Avalotto logo" />
 				<p class="mt-4 text-white font-sans text-sm">
 					Pick the right numbers to win a guaranteed prize draw jackpot of AVAX!
 				</p>
