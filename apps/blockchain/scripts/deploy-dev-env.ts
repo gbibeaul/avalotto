@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { ethers } from "hardhat";
 import fs from "fs-extra";
 
@@ -22,7 +21,7 @@ export const deployToken = async () => {
   return gmbt;
 };
 
-export const deployGovernance = async (gbmtAddress) => {
+export const deployGovernance = async (gbmtAddress: string) => {
   const Governance = await ethers.getContractFactory("GamebitGovernance");
 
   /** deploy the DAO governance
@@ -34,7 +33,7 @@ export const deployGovernance = async (gbmtAddress) => {
   return governance;
 };
 
-export const deployAuthorization = async (governanceAddress) => {
+export const deployAuthorization = async (governanceAddress: string) => {
   const Authorization = await ethers.getContractFactory(
     "GamebitAuthorizations"
   );
@@ -48,7 +47,7 @@ export const deployAuthorization = async (governanceAddress) => {
   return gamebitAuthorization;
 };
 
-export const deployTreasury = async (authorisationAddress, rngFee) => {
+export const deployTreasury = async (authorisationAddress: string, rngFee: number) => {
   const Treasury = await ethers.getContractFactory("GamebitTreasury");
 
   /** deploy treasury
@@ -63,7 +62,7 @@ export const deployTreasury = async (authorisationAddress, rngFee) => {
   return treasury;
 };
 
-export const deployInfra = async (authorisationAddress) => {
+export const deployInfra = async (authorisationAddress: string) => {
   const Infra = await ethers.getContractFactory("GamebitInfra");
 
   /** deploy Infra
@@ -85,7 +84,7 @@ export const deployGamebit = async () => {
   const gamebitAuthorization = await deployAuthorization(governance.address);
   const treasury = await deployTreasury(
     gamebitAuthorization.address,
-    ethers.BigNumber.from("1")
+    1
   );
   
   const infra = await deployInfra(gamebitAuthorization.address);
