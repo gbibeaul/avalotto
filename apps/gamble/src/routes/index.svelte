@@ -32,7 +32,7 @@
 	</header>
 	<NotificationPanel />
 	<section
-		class="mt-80 p-6 lg:flex lg:mt-[30%] justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
+		class="mt-80 p-6 lg:flex lg:mt-[32%] justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
 	>
 		<section class="h-80 bg-[#434343] rounded-3xl p-6 sm:flex lg:w-[500px] lg:h-[300px]">
 			<div class="sm:w-2/3">
