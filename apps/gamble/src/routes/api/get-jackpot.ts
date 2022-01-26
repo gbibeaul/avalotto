@@ -3,7 +3,7 @@ import { lottoProvider } from '../../transport/lotto';
 import { parseBearer as isBearerValid } from '../../helpers/parseBearer.helpers';
 import { utils } from 'ethers';
 
-export async function get(request) {
+export async function get({ request }) {
 	try {
 		const apiKey = await supabase.from('api_keys').select('value').eq('id', 1).limit(1);
 
