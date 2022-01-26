@@ -19,8 +19,8 @@
 </script>
 
 <script lang="ts">
-	// import FaBell from 'svelte-icons/fa/FaBell.svelte';
-	// import FaBars from 'svelte-icons/fa/FaBars.svelte';
+	import FaBell from 'svelte-icons/fa/FaBell.svelte';
+	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	// import NotificationPanel from '../components/NotificationPanel.svelte';
 </script>
 
