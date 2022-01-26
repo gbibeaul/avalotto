@@ -30,12 +30,12 @@
 	$: submitButtonDisabled = numbers.some(({ scratched }) => !scratched);
 </script>
 
-<div class="flex justify-center h-full align-center bg-slate-300">
+<div class="flex justify-center h-full align-center">
 	<div
 		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border overflow-y-auto"
 	>
 		<img
-			class="absolute mt-1 ml-1 z-10"
+			class="absolute mt-4 ml-1 z-10"
 			src="/assets/avax_logo_grey_bg_white_color.svg"
 			alt="axax_logo"
 		/>
@@ -47,15 +47,22 @@
 				alt="spikeball_background"
 			/>
 			<div class="mt-8 relative flex flex-col items-center">
-				<div class="font-['Bangers'] text-7xl main-title-text font-normal">AVASCRATCH</div>
-				<div class="font-['Bangers'] text-6xl main-title-text font-normal">NFT DRAW</div>
+				<img src="/assets/avascratch_main_title.png" alt="main_title" class="main-title" />
 				<div class="font-bold text-avascratch-background text-base leading-4">CURRENT JACKPOT</div>
 			</div>
 		</div>
 
-		<div id="main-container" class="w-full flex-col justify-items-center relative mt-4">
-			<img src="/assets/avascratch_three_chances_to_win.png" alt="three_chances_to_win" />
-			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
+		<div id="main-container" class="w-full flex-col justify-items-center relative mt-2">
+			<img
+				class="w-full max-w-md m-auto z-10 relative"
+				src="/assets/avascratch_three_chances_to_win.png"
+				alt="three_chances_to_win"
+			/>
+			<img
+				class="w-full absolute top-0"
+				src="/assets/avascratch_sunburst_bg.svg"
+				alt="sunburst_bg"
+			/>
 			<img
 				class="absolute left-1/2 avascratch-cash-sack"
 				src="/assets/avascratch_cash_sack.svg"
@@ -63,7 +70,7 @@
 			/>
 			<div class="relative">
 				<img
-					class="w-3/4 m-auto"
+					class="m-auto winning-number-bill"
 					src="/assets/avascratch_winning_number_bill.png"
 					alt="winning_number"
 				/>
@@ -99,6 +106,11 @@
 					</div>
 				{/each}
 			</div>
+			<div
+				class="relative text-center text-xl font-bold font-['Proxima-Nova'] -top-1 match-three-numbers"
+			>
+				Match three numbers to win!
+			</div>
 		</div>
 
 		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
@@ -122,17 +134,16 @@
 		src: url(/assets/Bangers-Regular.ttf) format('truetype');
 	}
 
-	.avascratch-cash-sack {
-		transform: translate(-50%);
+	@font-face {
+		font-family: 'Proxima-Nova';
+		font-style: normal;
+		font-weight: 400;
+		src: url(/assets/Proxima-Nova.otf) format('opentype');
 	}
 
-	.main-title-text {
-		font-size: 72px;
-		background: linear-gradient(180deg, #f7da10 0%, #ffb900 100%);
-		background-clip: text;
-		line-height: 66px;
-		-webkit-text-stroke: 4px #0a0007;
-		-webkit-text-fill-color: transparent;
+	.avascratch-cash-sack {
+		transform: translate(-50%);
+		max-height: 428px;
 	}
 
 	.scratch-number-balls-text {
@@ -141,5 +152,18 @@
 
 	.main-container {
 		max-height: 844px;
+	}
+
+	.main-title {
+		max-width: 85%;
+	}
+
+	.winning-number-bill {
+		max-width: 278px;
+	}
+
+	.match-three-numbers {
+		color: #d6ddd5;
+		text-shadow: -1px 1px 2px #000, 1px 1px 2px #000, 1px -1px 0 #000, -1px -1px 0 #000;
 	}
 </style>
