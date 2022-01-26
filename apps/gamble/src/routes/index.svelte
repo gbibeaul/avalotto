@@ -1,21 +1,21 @@
 <script context="module">
 	import { walletStore } from '../stores/wallet';
-	// import { notificationStore } from '../stores/notification';
+	import { notificationStore } from '../stores/notification';
 	// export const prerender = true;
 
-	// export async function load({ session }) {
-	// 	const { walletAddress = '', notifications } = session;
-	// 	walletStore.updateWalletAddress([walletAddress]);
-	// 	notificationStore.updateNotificationTarget(notifications);
+	export async function load({ session }) {
+		const { walletAddress = '', notifications } = session;
+		walletStore.updateWalletAddress([walletAddress]);
+		notificationStore.updateNotificationTarget(notifications);
 
-	// 	return {
-	// 		props: {}
-	// 	};
-	// }
+		return {
+			props: {}
+		};
+	}
 
-	// const handleNotification = () => {
-	// 	notificationStore.toggleNotificationMenu(true);
-	// };
+	const handleNotification = () => {
+		notificationStore.toggleNotificationMenu(true);
+	};
 </script>
 
 <!-- <script lang="ts">
