@@ -71,7 +71,7 @@
 </main>
 
 <style>
-	:global(body) {
+	/* :global(body) {
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
@@ -92,5 +92,5 @@
 			background-size: cover;
 			background-image: url('/assets/SnowyPalaceBackgroundTablet.png');
 		}
-	}
+	} */
 </style>
