@@ -18,11 +18,11 @@
 	};
 </script>
 
-<script lang="ts">
+<!-- <script lang="ts">
 	import FaBell from 'svelte-icons/fa/FaBell.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	import NotificationPanel from '../components/NotificationPanel.svelte';
-</script>
+</script> -->
 
 <main class="main h-full">
 	<!-- <header class="flex lg:w-auto justify-end p-4 sticky top-0">
