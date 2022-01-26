@@ -1,32 +1,31 @@
 <script context="module">
-	import { walletStore } from '../stores/wallet';
-	import { notificationStore } from '../stores/notification';
-	export const prerender = true;
+	// import { walletStore } from '../stores/wallet';
+	// import { notificationStore } from '../stores/notification';
+	// export const prerender = true;
 
-	export async function load({ session }) {
-		const { walletAddress = '', notifications } = session;
-		walletStore.updateWalletAddress([walletAddress]);
-		notificationStore.updateNotificationTarget(notifications);
+	// export async function load({ session }) {
+	// 	const { walletAddress = '', notifications } = session;
+	// 	walletStore.updateWalletAddress([walletAddress]);
+	// 	notificationStore.updateNotificationTarget(notifications);
 
-		return {
-			props: {}
-		};
-	}
+	// 	return {
+	// 		props: {}
+	// 	};
+	// }
 
-	const handleNotification = () => {
-		notificationStore.toggleNotificationMenu(true);
-	};
+	// const handleNotification = () => {
+	// 	notificationStore.toggleNotificationMenu(true);
+	// };
 </script>
 
-<script lang="ts">
+<!-- <script lang="ts">
 	import FaBell from 'svelte-icons/fa/FaBell.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	import NotificationPanel from '../components/NotificationPanel.svelte';
-	import GameCard from '../components/palace/GameCard.svelte';
-</script>
+</script> -->
 
 <main class="main h-full">
-	<header class="flex lg:w-auto justify-end p-4 sticky top-0">
+	<!-- <header class="flex lg:w-auto justify-end p-4 sticky top-0">
 		<button on:click={handleNotification} class="h-8 mr-5 text-white"><FaBell /></button>
 		<button class="h-8 text-white "><FaBars /></button>
 	</header>
@@ -68,10 +67,10 @@
 				class="-mt-20 ml-20 justify-end sm:translate-y-32 lg:translate-y-20 sm:w-82 sm:ml-0 sm:scale-125 lg:scale-[1.35]  lg:w-72 "
 			/>
 		</section>
-	</section>
+	</section> -->
 </main>
 
-<style>
+<!-- <style>
 	:global(body) {
 		background-repeat: no-repeat;
 		background-attachment: fixed;
@@ -94,4 +93,4 @@
 			background-image: url('/assets/SnowyPalaceBackgroundTablet.png');
 		}
 	}
-</style>
+</style> -->
