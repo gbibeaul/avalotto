@@ -13,8 +13,8 @@
 		{ number: 11, scratched: false }
 	];
 
-	function handleBuyYourTicketClick() {
-		console.log('handleBuyYourTicketClick');
+	function handleRevealYourPrizeClick() {
+		console.log('handleRevealYourPrizeClick');
 	}
 
 	function handleScratchNumberClick(numberClicked) {
@@ -115,9 +115,9 @@
 
 		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
 			<button
-				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn z-10 disabled:opacity-30"
+				class="border-solid rounded-md border-4 border-black py-4 px-12 z-10 disabled:opacity-30 reveal-your-prize-btn"
 				type="submit"
-				on:click={handleBuyYourTicketClick}
+				on:click={handleRevealYourPrizeClick}
 				disabled={submitButtonDisabled}
 			>
 				<div class="font-bold">REVEAL YOUR PRIZE</div>
@@ -165,5 +165,9 @@
 	.match-three-numbers {
 		color: #d6ddd5;
 		text-shadow: -1px 1px 2px #000, 1px 1px 2px #000, 1px -1px 0 #000, -1px -1px 0 #000;
+	}
+
+	.reveal-your-prize-btn {
+		background: linear-gradient(180deg, #f7da10 0%, #ffb900 100%);
 	}
 </style>
