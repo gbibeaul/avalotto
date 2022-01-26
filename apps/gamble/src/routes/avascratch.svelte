@@ -30,7 +30,7 @@
 	$: submitButtonDisabled = numbers.some(({ scratched }) => !scratched);
 </script>
 
-<div class="flex justify-center h-full align-center">
+<div class="flex justify-center h-full items-center">
 	<div
 		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border overflow-y-auto"
 	>
@@ -40,7 +40,7 @@
 			alt="axax_logo"
 		/>
 
-		<div id="title-container" class="align-center w-full relative mt-6">
+		<div id="title-container" class="w-full relative mt-6">
 			<img
 				class="w-full absolute"
 				src="/assets/avascratch_spikeball.svg"
@@ -151,7 +151,7 @@
 	}
 
 	.main-container {
-		max-height: 844px;
+		height: 844px;
 	}
 
 	.main-title {
