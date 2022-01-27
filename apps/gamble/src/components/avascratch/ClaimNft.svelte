@@ -12,7 +12,7 @@
 	}
 
 	$: playText = `PLAY ${
-		currentTicketIndex + 1 === numTickets ? `AGAIN` : `NEXT ${currentTicketIndex + 1}/${numTickets}`
+		currentTicketIndex + 1 === numTickets ? `AGAIN` : `NEXT ${currentTicketIndex + 2}/${numTickets}`
 	}`;
 </script>
 
