@@ -10,7 +10,7 @@ webPush.setVapidDetails(
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
 	try {
-		const subscription = request.json();
+		const subscription = await request.json();
 		console.log({subscription})
 		await webPush.sendNotification(subscription, 'brand new push notification');
 	} catch (error) {
