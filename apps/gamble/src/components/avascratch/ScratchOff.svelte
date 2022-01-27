@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 
-	export let numbers = [];
+	export let ticket = { numbers: [] };
 	const dispatch = createEventDispatcher();
 
 	function handleScratchNumberClick(number) {
@@ -31,12 +31,12 @@
 		/>
 	</div>
 	<div class="flex flex-row flex-wrap justify-center">
-		{#each numbers as { number, scratched }, i}
+		{#each ticket.numbers as { number, scratched }, i}
 			<div class="relative w-1/4 mx-2">
 				<div
 					class="relative flex justify-center items-center"
 					class:cursor-pointer={!scratched}
-					on:click|once={() => handleScratchNumberClick(number)}
+					on:click={() => handleScratchNumberClick(number)}
 				>
 					<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
 					{#if scratched}

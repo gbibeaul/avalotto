@@ -1,28 +1,31 @@
 <script>
 	import Title from '../components/avascratch/Title.svelte';
+	import BuyTickets from '../components/avascratch/BuyTickets.svelte';
 	import ScratchOff from '../components/avascratch/ScratchOff.svelte';
+	import generateTickets from '../components/avascratch/generateTickets';
 
-	let numbers = [
-		{ number: 99, scratched: false },
-		{ number: 66, scratched: false },
-		{ number: 28, scratched: false },
-		{ number: 25, scratched: false },
-		{ number: 69, scratched: false },
-		{ number: 42, scratched: false },
-		{ number: 65, scratched: false },
-		{ number: 999, scratched: false },
-		{ number: 11, scratched: false }
-	];
+	let tickets = [];
+	let currentTicket = {};
+	let screens = ['BUY_TICKETS', 'SCRATCH_OFF', 'WINNER', 'NFT_PREVIEW'];
+	let currentScreen = screens[0];
 	export let showRevealYourPrizeBtn = false;
 
 	function handleScratchNumberClick(event) {
 		const numberClicked = event.detail.number;
+		let { numbers } = currentTicket;
 		let foundNumber = numbers.find(({ number }) => number === numberClicked);
 
 		if (foundNumber) {
 			foundNumber.scratched = true;
-			numbers = numbers;
+			currentTicket = currentTicket;
 		}
+	}
+
+	function handleBuyTickets(event) {
+		const number = event.detail.number;
+		tickets = generateTickets(number);
+		currentTicket = tickets[0];
+		currentScreen = 'SCRATCH_OFF';
 	}
 
 	function handleRevealYourPrizeClick() {
@@ -30,7 +33,12 @@
 	}
 
 	// Disable the submit button if there are any un-scratched numbers.
-	$: submitButtonDisabled = numbers.some(({ scratched }) => !scratched);
+	$: submitButtonDisabled = currentTicket?.numbers?.some(({ scratched }) => !scratched);
+	$: showTitle = currentScreen == 'BUY_TICKETS' || currentScreen === 'SCRATCH_OFF';
+	$: showBuyTickets = currentScreen == 'BUY_TICKETS';
+	$: showScratchOff = currentScreen === 'SCRATCH_OFF';
+	$: showWinner = currentScreen === 'WINNER';
+	$: showNftPreview = currentScreen === 'NFT_PREVIEW';
 </script>
 
 <div class="flex justify-center h-full items-center">
@@ -43,9 +51,17 @@
 			alt="axax_logo"
 		/>
 
-		<Title />
+		{#if showTitle}
+			<Title />
+		{/if}
 
-		<ScratchOff {numbers} on:scratchNumberClicked={handleScratchNumberClick} />
+		{#if showBuyTickets}
+			<BuyTickets on:buyTickets={handleBuyTickets} />
+		{/if}
+
+		{#if showScratchOff}
+			<ScratchOff ticket={currentTicket} on:scratchNumberClicked={handleScratchNumberClick} />
+		{/if}
 
 		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
 			{#if showRevealYourPrizeBtn}
