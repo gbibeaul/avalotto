@@ -72,7 +72,7 @@
 
 {#if open}
 	<div
-		class="fixed inset-0 overflow-hidden"
+		class="fixed inset-0 overflow-hidden z-10"
 		aria-labelledby="slide-over-title"
 		role="dialog"
 		aria-modal="true"
