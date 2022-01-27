@@ -4,13 +4,11 @@ import { NetworkIds } from '../../constants';
 import { supabase } from '../../transport/supabase';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function post(request) {
+export async function post({ request }) {
 	try {
-		if (typeof request.body !== 'string') {
-			throw 'Body is not a stringified json';
-		}
+		const body = await request.json();
 
-		const { email = '', discord = '', signature, address, browser } = JSON.parse(request.body);
+		const { email = '', discord = '', signature, address, browser } = body;
 
 		const network_id = NetworkIds[networkParser()];
 
@@ -22,7 +20,15 @@ export async function post(request) {
 
 		const res = await supabase
 			.from('notification_targets')
-			.upsert({ id: address.toLowerCase(), enabled: true, browser, email, discord, signature, network_id });
+			.upsert({
+				id: address.toLowerCase(),
+				enabled: true,
+				browser,
+				email,
+				discord,
+				signature,
+				network_id
+			});
 
 		return res;
 	} catch (error) {
