@@ -22,7 +22,9 @@ enum ScratchOffStatus {
  *
  * minted ==> scratched ==> redeemed
  */
-interface IScratchOffCard {
+interface IScratchOff {
+    event Minted(uint256 tokenId);
+
     /**
      * Mint
      */
@@ -41,7 +43,7 @@ interface IScratchOffCard {
     /**
      * Get the scratched off, revealed values
      */
-    function getBalls(uint256 tokenId) external view returns(uint256[] calldata);
+    function getBalls(uint256 tokenId) external view returns(uint8[9] memory);
 
     /**
      * State transition: scratched ==> redeemed
@@ -52,4 +54,39 @@ interface IScratchOffCard {
      * Get the redeemed NFT ID (address is a magic hard-coded address for now, but will need to change)
      */
     function getRedemption(uint256 tokenId) external view returns(uint256);
+}
+
+/**
+ * Mocked version of contract to be replaced
+ */
+contract ScratchOff is IScratchOff{
+    function mint() external {
+        emit Minted(0);
+    }
+
+    function getStatus(uint256 tokenId) external view returns(ScratchOffStatus) {
+        if (tokenId == 0) {
+            return ScratchOffStatus.Minted;
+        }
+
+        if (tokenId == 1) {
+            return ScratchOffStatus.Scratched;
+        }
+
+        return ScratchOffStatus.Redeemed;
+    }
+
+    function scratch(uint256 tokenId) external {}
+
+    function getBalls(uint256 tokenId) external view returns(uint8[9] memory) {
+        uint8[9] memory balls = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        return balls;
+    }
+
+    function redeem(uint256 tokenId) external {}
+
+    function getRedemption(uint256 tokenId) external view returns(uint256) {
+        return tokenId; // mocked
+    }
 }
