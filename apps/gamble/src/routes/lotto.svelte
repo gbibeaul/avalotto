@@ -30,7 +30,7 @@
 	import NotificationPanel from '../components/NotificationPanel.svelte';
 </script>
 
-<div class="h-full gradient justify-content-around">
+<div class="gradient justify-content-around">
 	<Banner />
 	<div class="lg:flex lg:justify-between px-2">
 		<TicketLeftSide />
@@ -40,8 +40,7 @@
 </div>
 
 <style>
-		:global(body) {
-			background: linear-gradient(116.82deg, #d32d28 0%, #6c1280 48.44%, #1102df 100%);
+	.gradient {
+		background: linear-gradient(116.82deg, #d32d28 0%, #6c1280 48.44%, #1102df 100%);
 	}
-	
 </style>
