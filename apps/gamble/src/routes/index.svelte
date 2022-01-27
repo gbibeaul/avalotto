@@ -1,7 +1,6 @@
 <script context="module">
 	import { walletStore } from '../stores/wallet';
 	import { notificationStore } from '../stores/notification';
-	export const prerender = true;
 
 	export async function load({ session }) {
 		const { walletAddress = '', notifications } = session;
@@ -22,6 +21,8 @@
 	import FaBell from 'svelte-icons/fa/FaBell.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	import NotificationPanel from '../components/NotificationPanel.svelte';
+	export const prerender = true;
+
 </script>
 
 <main class="main h-full">
