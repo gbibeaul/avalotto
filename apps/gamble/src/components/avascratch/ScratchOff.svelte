@@ -5,9 +5,9 @@
 	export let ticket = { numbers: [] };
 	const dispatch = createEventDispatcher();
 
-	function handleScratchNumberClick(number) {
+	function handleScratchNumberClick(numberIndex) {
 		dispatch('scratchNumberClicked', {
-			number
+			numberIndex
 		});
 	}
 </script>
@@ -36,7 +36,7 @@
 				<div
 					class="relative flex justify-center items-center"
 					class:cursor-pointer={!scratched}
-					on:click={() => handleScratchNumberClick(number)}
+					on:click|once={() => handleScratchNumberClick(i)}
 				>
 					<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
 					{#if scratched}

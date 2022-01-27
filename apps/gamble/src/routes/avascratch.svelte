@@ -11,9 +11,9 @@
 	export let showRevealYourPrizeBtn = false;
 
 	function handleScratchNumberClick(event) {
-		const numberClicked = event.detail.number;
+		const numberIndex = event.detail.numberIndex;
 		let { numbers } = currentTicket;
-		let foundNumber = numbers.find(({ number }) => number === numberClicked);
+		let foundNumber = numbers[numberIndex];
 
 		if (foundNumber) {
 			foundNumber.scratched = true;
