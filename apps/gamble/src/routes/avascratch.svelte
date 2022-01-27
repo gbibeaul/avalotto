@@ -47,6 +47,7 @@
 			currentScreen = 'BUY_TICKETS';
 		} else {
 			currentTicket = tickets[currentTicketIndex + 1];
+			currentScreen = 'SCRATCH_OFF';
 		}
 	}
 
@@ -86,11 +87,11 @@
 		{/if}
 
 		{#if claimNft}
-			<ClaimNft on:playNext={handlePlayNext} />
+			<ClaimNft {currentTicketIndex} {numTickets} on:playNext={handlePlayNext} />
 		{/if}
 
 		{#if showRevealYourPrizeBtn}
-			<RevealYourPrize {currentTicketIndex} {numTickets} />
+			<RevealYourPrize />
 		{/if}
 	</div>
 </div>
