@@ -1,13 +1,27 @@
-import { parse } from 'cookie';
 import { supabase } from './transport/supabase';
+
+function getCookie(cname, cookieString) {
+	let name = cname + '=';
+	let decodedCookie = decodeURIComponent(cookieString);
+	let ca = decodedCookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return '';
+}
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
 	const rawCookie = await event.request.headers.get('cookie');
-	const cookies =
-		typeof rawCookie === 'string' ? {} : parse(rawCookie);
+	const walletAddress = getCookie('walletAddress', rawCookie);
 
-	event.locals.walletAddress = cookies.walletAddress ? cookies.walletAddress : null;
+	event.locals.walletAddress = walletAddress.length > 0 ? walletAddress : null;
 	const response = await resolve(event);
 
 	return response;
