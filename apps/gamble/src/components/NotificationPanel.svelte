@@ -32,6 +32,19 @@
 		notificationStore.toggleNotificationMenu(false);
 	};
 
+	function urlBase64ToUint8Array(base64String) {
+		const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+		const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+
+		const rawData = window.atob(base64);
+		const outputArray = new Uint8Array(rawData.length);
+
+		for (let i = 0; i < rawData.length; ++i) {
+			outputArray[i] = rawData.charCodeAt(i);
+		}
+		return outputArray;
+	}
+
 	const configurePubSub = async () => {
 		if ('serviceWorker' in navigator) {
 			const swreg = await navigator.serviceWorker.ready;
@@ -40,10 +53,11 @@
 			if (sub === null) {
 				const sub = await swreg.pushManager.subscribe({
 					userVisibleOnly: true,
-					applicationServerKey:
+					applicationServerKey: urlBase64ToUint8Array(
 						'BJcygaFAR7wseePq54m06Xqxt7XbSc3cZphJnG34bQTPt-ZLgels4rokGm_WXKP5VPoF3KwwNAftv9147crXZtk'
+					)
 				});
-				
+
 				console.log('new sub', sub);
 			} else {
 				console.log('sub', sub);
@@ -86,7 +100,7 @@
 					signature,
 					address,
 					browser,
-					pushSubscription,
+					pushSubscription
 				})
 			});
 			const data = await res.json();
