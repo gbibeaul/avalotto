@@ -5,7 +5,7 @@ import { supabase } from './transport/supabase';
 export async function handle({ event, resolve }) {
 	const rawCookie = await event.request.headers.get('cookie');
 	const cookies =
-		typeof rawCookie === 'string' ? {} : parse(await event.request.headers.get('cookie'));
+		typeof rawCookie === 'string' ? {} : parse(rawCookie);
 
 	event.locals.walletAddress = cookies.walletAddress ? cookies.walletAddress : null;
 	const response = await resolve(event);
