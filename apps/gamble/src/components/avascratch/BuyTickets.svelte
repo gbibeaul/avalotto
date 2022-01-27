@@ -10,7 +10,7 @@
 	}
 </script>
 
-<div class="flex flex-col m-auto w-full items-center">
+<div class="flex flex-col mt-24 w-full items-center">
 	<button
 		class="border-solid rounded-md border-4 border-black py-4 z-10 mb-3 buy-button"
 		type="submit"

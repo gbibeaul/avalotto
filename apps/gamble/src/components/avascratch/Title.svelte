@@ -1,4 +1,8 @@
-<div id="title-container" class="w-full relative mt-6">
+<script>
+	import { fade } from 'svelte/transition';
+</script>
+
+<div id="title-container" class="w-full relative mt-6" out:fade={{ duration: 750 }}>
 	<img class="w-full absolute" src="/assets/avascratch_spikeball.svg" alt="spikeball_background" />
 	<div class="mt-8 relative flex flex-col items-center">
 		<img src="/assets/avascratch_main_title.png" alt="main_title" class="main-title" />

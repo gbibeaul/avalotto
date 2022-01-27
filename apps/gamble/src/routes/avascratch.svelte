@@ -2,11 +2,14 @@
 	import Title from '../components/avascratch/Title.svelte';
 	import BuyTickets from '../components/avascratch/BuyTickets.svelte';
 	import ScratchOff from '../components/avascratch/ScratchOff.svelte';
+	import Winner from '../components/avascratch/Winner.svelte';
+	import ClaimNft from '../components/avascratch/ClaimNft.svelte';
+	import RevealYourPrize from '../components/avascratch/RevealYourPrize.svelte';
 	import generateTickets from '../components/avascratch/generateTickets';
 
 	let tickets = [];
 	let currentTicket = {};
-	let screens = ['BUY_TICKETS', 'SCRATCH_OFF', 'WINNER', 'NFT_PREVIEW'];
+	let screens = ['BUY_TICKETS', 'SCRATCH_OFF', 'WINNER', 'CLAIM_NFT'];
 	let currentScreen = screens[0];
 	export let showRevealYourPrizeBtn = false;
 
@@ -19,6 +22,13 @@
 			foundNumber.scratched = true;
 			currentTicket = currentTicket;
 		}
+
+		const ticketFullyScratched = currentTicket.numbers.every((number) => number.scratched);
+		if (ticketFullyScratched) {
+			setTimeout(() => {
+				currentScreen = 'WINNER';
+			}, 5000);
+		}
 	}
 
 	function handleBuyTickets(event) {
@@ -28,17 +38,25 @@
 		currentScreen = 'SCRATCH_OFF';
 	}
 
-	function handleRevealYourPrizeClick() {
-		console.log('handleRevealYourPrizeClick');
+	function handleWinnerClaimNft() {
+		currentScreen = 'CLAIM_NFT';
 	}
 
-	// Disable the submit button if there are any un-scratched numbers.
-	$: submitButtonDisabled = currentTicket?.numbers?.some(({ scratched }) => !scratched);
+	function handlePlayNext() {
+		if (currentTicketIndex + 1 === numTickets) {
+			currentScreen = 'BUY_TICKETS';
+		} else {
+			currentTicket = tickets[currentTicketIndex + 1];
+		}
+	}
+
 	$: showTitle = currentScreen == 'BUY_TICKETS' || currentScreen === 'SCRATCH_OFF';
 	$: showBuyTickets = currentScreen == 'BUY_TICKETS';
 	$: showScratchOff = currentScreen === 'SCRATCH_OFF';
 	$: showWinner = currentScreen === 'WINNER';
-	$: showNftPreview = currentScreen === 'NFT_PREVIEW';
+	$: claimNft = currentScreen === 'CLAIM_NFT';
+	$: currentTicketIndex = tickets.findIndex((ticket) => ticket === currentTicket);
+	$: numTickets = tickets.length;
 </script>
 
 <div class="flex justify-center h-full items-center">
@@ -63,27 +81,23 @@
 			<ScratchOff ticket={currentTicket} on:scratchNumberClicked={handleScratchNumberClick} />
 		{/if}
 
-		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
-			{#if showRevealYourPrizeBtn}
-				<button
-					class="border-solid rounded-md border-4 border-black py-4 px-12 z-10 disabled:opacity-30 reveal-your-prize-btn"
-					type="submit"
-					on:click={handleRevealYourPrizeClick}
-					disabled={submitButtonDisabled}
-				>
-					<div class="font-bold">REVEAL YOUR PRIZE</div>
-				</button>
-			{/if}
-		</div>
+		{#if showWinner}
+			<Winner on:winnerClaimNft={handleWinnerClaimNft} />
+		{/if}
+
+		{#if claimNft}
+			<ClaimNft on:playNext={handlePlayNext} />
+		{/if}
+
+		{#if showRevealYourPrizeBtn}
+			<RevealYourPrize {currentTicketIndex} {numTickets} />
+		{/if}
 	</div>
 </div>
 
 <style>
 	.main-container {
 		height: 844px;
-	}
-
-	.reveal-your-prize-btn {
-		background: linear-gradient(180deg, #f7da10 0%, #ffb900 100%);
+		width: 100%;
 	}
 </style>

@@ -12,7 +12,11 @@
 	}
 </script>
 
-<div id="scratch-off" class="w-full flex-col justify-items-center relative -mt-1">
+<div
+	id="scratch-off"
+	class="w-full flex-col justify-items-center relative -mt-1"
+	out:fade={{ duration: 750 }}
+>
 	<img
 		class="w-full absolute sunburst-bg"
 		src="/assets/avascratch_sunburst_bg.svg"
