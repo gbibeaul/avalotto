@@ -3,7 +3,6 @@ pragma solidity ^0.8.10;
 import "./GamebitAuthorizations.sol";
 import "./Game.sol";
 
-// todo is this it's own deployed contract or a inheritable contract?
 contract GamebitInfra {
     IGamebitAuthorization gamebitAuth;
     uint256 rngRequestIndex = 1;
@@ -43,6 +42,14 @@ contract GamebitInfra {
         _;
     }
 
+    /**
+        * @dev This is requestecd by a game. It will start the RNG 3 way handshake process
+        1. Game requests an RNG to Infra
+        2. Infra saves the requests and emits a RNGRequestCreated event
+        3. The oracle captures the request and will answer back with an RNG using fullfillRNGRequest
+        4. the infra will notify the game that the RNG has been fulfilled
+        5. the game will then consume the RNG while auditing the 
+     */
     function requestRng() public rngAuthorized returns (uint256 rngIndex) {
         rngRequests[rngRequestIndex] = RNGRequest(
             block.number,
@@ -69,9 +76,11 @@ contract GamebitInfra {
         IGame(msg.sender).validateRng(_rngIndex, _randomNum, _commit);
     }
 
+    /**
+     * @dev The commit is obtained in the oracle server. It represents a signed json string of the RNG api call.
+     */
     function validateCommit(uint256 _rngIndex, uint256 _commit)
         public
-        isOfficialRng
         returns (bool)
     {
         require(
@@ -89,19 +98,6 @@ contract GamebitInfra {
         return true;
     }
 
-    // accept oracle request
-    //   1. validate the requesting game
-    //   2. foward fees to the treasury
-    //   3. emit the request for oracle call
-
-    // fulfill oracle request
-    //   1. validate who is the oracle
-    //   2. send call game method for fulfilling oracle call
-
-    // start a game session
-    // fund management, player management etc
-
-    // end a game session
 }
 
 interface IInfrastructure {
