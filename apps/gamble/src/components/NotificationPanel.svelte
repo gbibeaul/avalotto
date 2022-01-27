@@ -8,6 +8,7 @@
 	let email;
 	let discord;
 	let browser;
+	let pushSubscription: PushSubscription;
 
 	let open: boolean;
 
@@ -20,6 +21,8 @@
 
 		discord = value.discord;
 		browser = value.browser;
+
+		pushSubscription = value.pushSubscription;
 	});
 
 	// suscribed to session store since we need to hydrate the session after a successful approval from metamask
@@ -29,8 +32,32 @@
 		notificationStore.toggleNotificationMenu(false);
 	};
 
+	const configurePubSub = async () => {
+		if ('serviceWorker' in navigator) {
+			const swreg = await navigator.serviceWorker.ready;
+			const sub = await swreg.pushManager.getSubscription();
+			notificationStore.updatePushSubscription(sub);
+			if (sub === null) {
+				const sub = await swreg.pushManager.subscribe({
+					userVisibleOnly: true,
+					applicationServerKey:
+						'BJcygaFAR7wseePq54m06Xqxt7XbSc3cZphJnG34bQTPt-ZLgels4rokGm_WXKP5VPoF3KwwNAftv9147crXZtk'
+				});
+				
+				console.log('new sub', sub);
+			} else {
+				console.log('sub', sub);
+			}
+		}
+	};
+
 	const handleBrowser = () => {
-		browser = !browser;
+		Notification.requestPermission((result) => {
+			if (result === 'granted') {
+				browser = true;
+				configurePubSub();
+			}
+		});
 	};
 
 	const handleActivateEmail = () => {
@@ -41,20 +68,26 @@
 		showDiscord = !showDiscord;
 	};
 
-
 	const handleSubmit = async (e: Event) => {
 		e.preventDefault();
 		const { signature, address } = await notificationStore.approveNotifications();
 
-		const emailNotif = showEmail ? email : ''
-		const discordNotif = showDiscord ? discord : ''
+		const emailNotif = showEmail ? email : '';
+		const discordNotif = showDiscord ? discord : '';
 
 		if (signature) {
-			email = emailNotif
-			discord = discordNotif
+			email = emailNotif;
+			discord = discordNotif;
 			const res = await fetch('/api/notification-target', {
 				method: 'POST',
-				body: JSON.stringify({ email: emailNotif, discord: discordNotif, signature, address, browser })
+				body: JSON.stringify({
+					email: emailNotif,
+					discord: discordNotif,
+					signature,
+					address,
+					browser,
+					pushSubscription,
+				})
 			});
 			const data = await res.json();
 			session.update((s) => ({ ...s, notifications: data[0] }));
@@ -122,15 +155,12 @@
 										<h2 class="text-4xl font-light" id="slide-over-title">Notifications</h2>
 									</div>
 									<div class="mt-1">
-										<p class="text-sm">
-											Stay up to date with with jackpot announcements and news!
-										</p>
+										<p class="text-sm">Stay up to date with with jackpot announcements and news!</p>
 									</div>
 								</div>
 								<div class="flex-1 flex flex-col justify-between">
 									<div class="px-4 divide-y divide-gray-200 sm:px-6">
 										<div class="space-y-10 pt-6 pb-5">
-
 											<div class="flex items-center justify-between">
 												<span class="flex-grow flex flex-col">
 													<span class="text-sm font-medium text-gray-900" id="availability-label"
@@ -153,7 +183,6 @@
 												</div>
 											{/if}
 
-
 											<div class="flex items-center justify-between">
 												<span class="flex-grow flex flex-col">
 													<span class="text-sm font-medium text-gray-900" id="availability-label"
@@ -164,26 +193,29 @@
 											</div>
 											{#if showDiscord}
 												<div class="mt-1">
-														<input
-															bind:value={discord}
-															type="text"
-															name="discord"
-															id="discord"
-															required
-															pattern={discordPattern}
-															placeholder="user#1234"
-															class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-														/>
+													<input
+														bind:value={discord}
+														type="text"
+														name="discord"
+														id="discord"
+														required
+														pattern={discordPattern}
+														placeholder="user#1234"
+														class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+													/>
 												</div>
 											{/if}
-											<div class="flex items-center justify-between">
-												<span class="flex-grow flex flex-col">
-													<span class="text-sm font-medium text-gray-900" id="availability-label"
-														>Browser Notifications</span
-													>
-												</span>
-												<Switch active={browser} on:click={handleBrowser} />
-											</div>
+
+											{#if 'Notification' in window}
+												<div class="flex items-center justify-between">
+													<span class="flex-grow flex flex-col">
+														<span class="text-sm font-medium text-gray-900" id="availability-label"
+															>Browser Notifications</span
+														>
+													</span>
+													<Switch active={browser} on:click={handleBrowser} />
+												</div>
+											{/if}
 										</div>
 									</div>
 								</div>
@@ -196,10 +228,7 @@
 								>
 									Cancel
 								</button>
-								<button
-									type="submit"
-									class="w-40 bg-indigo-500 text-white rounded h-12"
-								>
+								<button type="submit" class="w-40 bg-indigo-500 text-white rounded h-12">
 									Save
 								</button>
 							</div>
