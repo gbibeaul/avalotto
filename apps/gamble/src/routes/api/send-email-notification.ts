@@ -11,10 +11,10 @@ export async function post({ request }) {
 		if (typeof originatingAffress !== 'string') {
 			throw 'originating email address not set in env vars';
 		}
-
+console.log('request headers', request.headers )
 		const apiKey = await supabase.from('api_keys').select('value').eq('id', 1).limit(1);
 
-		if (!isBearerValid(request.headers.authorization, apiKey.data[0])) {
+		if (!isBearerValid(request.headers.get('authorization'), apiKey.data[0])) {
 			return {
 				message: 'not authorized',
 				status: 403
@@ -48,7 +48,7 @@ export async function post({ request }) {
 	} catch (error) {
 		console.error(error);
 		return {
-			error: 'Sending notification failed'
+			error: 'Sending email notification failed'
 		};
 	}
 }
