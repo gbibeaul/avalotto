@@ -1,145 +1,104 @@
 <script>
-	import { fade } from 'svelte/transition';
+	import Title from '../components/avascratch/Title.svelte';
+	import BuyTickets from '../components/avascratch/BuyTickets.svelte';
+	import ScratchOff from '../components/avascratch/ScratchOff.svelte';
+	import Winner from '../components/avascratch/Winner.svelte';
+	import ClaimNft from '../components/avascratch/ClaimNft.svelte';
+	import RevealYourPrize from '../components/avascratch/RevealYourPrize.svelte';
+	import generateTickets from '../components/avascratch/generateTickets';
 
-	let numbers = [
-		{ number: 99, scratched: false },
-		{ number: 66, scratched: false },
-		{ number: 28, scratched: false },
-		{ number: 25, scratched: false },
-		{ number: 69, scratched: false },
-		{ number: 42, scratched: false },
-		{ number: 65, scratched: false },
-		{ number: 999, scratched: false },
-		{ number: 11, scratched: false }
-	];
+	let tickets = [];
+	let currentTicket = {};
+	let screens = ['BUY_TICKETS', 'SCRATCH_OFF', 'WINNER', 'CLAIM_NFT'];
+	let currentScreen = screens[0];
+	export let showRevealYourPrizeBtn = false;
 
-	function handleBuyYourTicketClick() {
-		console.log('handleBuyYourTicketClick');
-	}
-
-	function handleScratchNumberClick(numberClicked) {
-		let foundNumber = numbers.find(({ number }) => number === numberClicked);
+	function handleScratchNumberClick(event) {
+		const numberIndex = event.detail.numberIndex;
+		let { numbers } = currentTicket;
+		let foundNumber = numbers[numberIndex];
 
 		if (foundNumber) {
 			foundNumber.scratched = true;
-			numbers = numbers;
+			currentTicket = currentTicket;
+		}
+
+		const ticketFullyScratched = currentTicket.numbers.every((number) => number.scratched);
+		if (ticketFullyScratched) {
+			setTimeout(() => {
+				currentScreen = 'WINNER';
+			}, 5000);
 		}
 	}
 
-	// Disable the submit button if there are any un-scratched numbers.
-	$: submitButtonDisabled = numbers.some(({ scratched }) => !scratched);
+	function handleBuyTickets(event) {
+		const number = event.detail.number;
+		tickets = generateTickets(number);
+		currentTicket = tickets[0];
+		currentScreen = 'SCRATCH_OFF';
+	}
+
+	function handleWinnerClaimNft() {
+		currentScreen = 'CLAIM_NFT';
+	}
+
+	function handlePlayNext() {
+		if (currentTicketIndex + 1 === numTickets) {
+			currentScreen = 'BUY_TICKETS';
+		} else {
+			currentTicket = tickets[currentTicketIndex + 1];
+			currentScreen = 'SCRATCH_OFF';
+		}
+	}
+
+	$: showTitle = currentScreen == 'BUY_TICKETS' || currentScreen === 'SCRATCH_OFF';
+	$: showBuyTickets = currentScreen == 'BUY_TICKETS';
+	$: showScratchOff = currentScreen === 'SCRATCH_OFF';
+	$: showWinner = currentScreen === 'WINNER';
+	$: claimNft = currentScreen === 'CLAIM_NFT';
+	$: currentTicketIndex = tickets.findIndex((ticket) => ticket === currentTicket);
+	$: numTickets = tickets.length;
 </script>
 
-<div class="flex justify-center h-full align-center bg-slate-300">
+<div class="flex justify-center h-full items-center">
 	<div
 		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border overflow-y-auto"
 	>
 		<img
-			class="absolute mt-1 ml-1 z-10"
+			class="absolute mt-4 ml-1 z-10"
 			src="/assets/avax_logo_grey_bg_white_color.svg"
 			alt="axax_logo"
 		/>
 
-		<div id="title-container" class="align-center w-full relative mt-6">
-			<img
-				class="w-full absolute"
-				src="/assets/avascratch_spikeball.svg"
-				alt="spikeball_background"
-			/>
-			<div class="mt-8 relative flex flex-col items-center">
-				<div class="font-['Bangers'] text-7xl main-title-text font-normal">AVASCRATCH</div>
-				<div class="font-['Bangers'] text-6xl main-title-text font-normal">NFT DRAW</div>
-				<div class="font-bold text-avascratch-background text-base leading-4">CURRENT JACKPOT</div>
-			</div>
-		</div>
+		{#if showTitle}
+			<Title />
+		{/if}
 
-		<div id="main-container" class="w-full flex-col justify-items-center relative mt-4">
-			<img src="/assets/avascratch_three_chances_to_win.png" alt="three_chances_to_win" />
-			<img class="w-full absolute" src="/assets/avascratch_sunburst_bg.svg" alt="sunburst_bg" />
-			<img
-				class="absolute left-1/2 avascratch-cash-sack"
-				src="/assets/avascratch_cash_sack.svg"
-				alt="sunburst_bg"
-			/>
-			<div class="relative">
-				<img
-					class="w-3/4 m-auto"
-					src="/assets/avascratch_winning_number_bill.png"
-					alt="winning_number"
-				/>
-			</div>
-			<div class="flex flex-row flex-wrap justify-center">
-				{#each numbers as { number, scratched }, i}
-					<div class="relative w-1/4 mx-2">
-						<div
-							class="relative flex justify-center items-center"
-							class:cursor-pointer={!scratched}
-							on:click|once={() => handleScratchNumberClick(number)}
-						>
-							<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
-							{#if scratched}
-								<img
-									class="absolute"
-									src="/assets/avascratch_scratch_grey_area.svg"
-									alt="scratch_grey_area"
-									transition:fade={{ duration: 750 }}
-								/>
-								<div
-									class="absolute flex justify-center font-['Bangers'] text-5xl scratch-number-balls-text"
-									transition:fade={{ delay: 200, duration: 750 }}
-								>
-									{number}
-								</div>
-							{:else}
-								<div class="absolute ml-1 mb-1">
-									<img src="/assets/avascratch_coins_red.svg" alt="red_coins" />
-								</div>
-							{/if}
-						</div>
-					</div>
-				{/each}
-			</div>
-		</div>
+		{#if showBuyTickets}
+			<BuyTickets on:buyTickets={handleBuyTickets} />
+		{/if}
 
-		<div id="footer" class="flex self-center justify-self-end mt-auto mb-4">
-			<button
-				class="border-solid rounded-md border-4 border-black py-4 px-12 bg-avascratch-scratchBtn z-10 disabled:opacity-30"
-				type="submit"
-				on:click={handleBuyYourTicketClick}
-				disabled={submitButtonDisabled}
-			>
-				<div class="font-bold">REVEAL YOUR PRIZE</div>
-			</button>
-		</div>
+		{#if showScratchOff}
+			<ScratchOff ticket={currentTicket} on:scratchNumberClicked={handleScratchNumberClick} />
+		{/if}
+
+		{#if showWinner}
+			<Winner on:winnerClaimNft={handleWinnerClaimNft} />
+		{/if}
+
+		{#if claimNft}
+			<ClaimNft {currentTicketIndex} {numTickets} on:playNext={handlePlayNext} />
+		{/if}
+
+		{#if showRevealYourPrizeBtn}
+			<RevealYourPrize />
+		{/if}
 	</div>
 </div>
 
 <style>
-	@font-face {
-		font-family: 'Bangers';
-		font-style: normal;
-		font-weight: 400;
-		src: url(/assets/Bangers-Regular.ttf) format('truetype');
-	}
-
-	.avascratch-cash-sack {
-		transform: translate(-50%);
-	}
-
-	.main-title-text {
-		font-size: 72px;
-		background: linear-gradient(180deg, #f7da10 0%, #ffb900 100%);
-		background-clip: text;
-		line-height: 66px;
-		-webkit-text-stroke: 4px #0a0007;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.scratch-number-balls-text {
-		-webkit-text-stroke: 2px #e1e0e1;
-	}
-
 	.main-container {
-		max-height: 844px;
+		height: 844px;
+		width: 100%;
 	}
 </style>
