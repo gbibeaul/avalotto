@@ -35,7 +35,7 @@ This project uses [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/wor
 
 ---
 
-Running `yarn` from the root of the project will install all of the project's dependencies. If using yarn, you'll want to `yarn set version berry` first.
+Running `yarn` from the root of the project will install all of the project's dependencies. The project is already setup to use Yarn Berry regardless of the global Yarn binary you have installed on your system.
 
 ### Deploying and running apps
 
