@@ -10,8 +10,7 @@ webPush.setVapidDetails(
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
 	try {
-		const subscription = await request.json();
-		const { title, content } = await request.json();
+		const { subscription, title, content } = await request.json();
 
 		if(!(title && content)) {
 			return {
