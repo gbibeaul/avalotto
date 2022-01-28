@@ -3512,6 +3512,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/typography@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@tailwindcss/typography@npm:0.5.1"
+  dependencies:
+    lodash.castarray: ^4.4.0
+    lodash.isplainobject: ^4.0.6
+    lodash.merge: ^4.6.2
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 894bab9a14a5bc4071573618ca9fd6b5bbe53e3c26af8aa1de440b8be59a63cf105f9fb1b12611bf446b4b054c6a48e8ff5c7c85ff233c5f78d70ffb7e53b5d9
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^7.0.3":
   version: 7.31.2
   resolution: "@testing-library/dom@npm:7.31.2"
@@ -4014,6 +4027,13 @@ __metadata:
   version: 5.1.1
   resolution: "@types/lru-cache@npm:5.1.1"
   checksum: e1d6c0085f61b16ec5b3073ec76ad1be4844ea036561c3f145fc19f71f084b58a6eb600b14128aa95809d057d28f1d147c910186ae51219f58366ffd2ff2e118
+  languageName: node
+  linkType: hard
+
+"@types/marked@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@types/marked@npm:4.0.1"
+  checksum: c2dabaae5ed5e2806ee3ef7f717ef7fe91ac5ee2718162219dd34de9d684d36efd561987fb3316b659d1add6d432696ca507da04b94380a77aac30870cb276d7
   languageName: node
   linkType: hard
 
@@ -10890,6 +10910,7 @@ __metadata:
     "@sveltejs/adapter-auto": next
     "@sveltejs/kit": next
     "@tailwindcss/forms": ^0.4.0
+    "@tailwindcss/typography": ^0.5.1
     "@types/nodemailer": ^6.4.4
     "@typescript-eslint/eslint-plugin": ^4.31.1
     "@typescript-eslint/parser": ^4.31.1
@@ -10911,6 +10932,7 @@ __metadata:
     svelte: ^3.44.0
     svelte-check: ^2.2.6
     svelte-icons: ^2.1.0
+    svelte-markdown: ^0.2.2
     svelte-preprocess: ^4.9.4
     tailwindcss: ^3.0.1
     tslib: ^2.3.1
@@ -14317,6 +14339,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.castarray@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.castarray@npm:4.4.0"
+  checksum: fca8c7047e0ae2738b0b2503fb00157ae0ff6d8a1b716f87ed715b22560e09de438c75b65e01a7e44ceb41c5b31dce2eb576e46db04beb9c699c498e03cbd00f
+  languageName: node
+  linkType: hard
+
 "lodash.clonedeep@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.clonedeep@npm:4.5.0"
@@ -14349,6 +14378,13 @@ __metadata:
   version: 4.4.0
   resolution: "lodash.isequalwith@npm:4.4.0"
   checksum: 428ba7a57c47ec05e2dd18c03a4b4c45dac524a46af7ce3f412594bfc7be6a5acaa51acf9ea113d0002598e9aafc6e19ee8d20bc28363145fcb4d21808c9039f
+  languageName: node
+  linkType: hard
+
+"lodash.isplainobject@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "lodash.isplainobject@npm:4.0.6"
+  checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
   languageName: node
   linkType: hard
 
@@ -14679,6 +14715,15 @@ __metadata:
   dependencies:
     object-visit: ^1.0.0
   checksum: c27045a5021c344fc19b9132eb30313e441863b2951029f8f8b66f79d3d8c1e7e5091578075a996f74e417479506fe9ede28c44ca7bc351a61c9d8073daec36a
+  languageName: node
+  linkType: hard
+
+"marked@npm:^4.0.10":
+  version: 4.0.12
+  resolution: "marked@npm:4.0.12"
+  bin:
+    marked: bin/marked.js
+  checksum: 7575117f85a8986652f3ac8b8a7b95056c4c5fce01a1fc76dc4c7960412cb4c9bd9da8133487159b6b3ff84f52b543dfe9a36f826a5f358892b5ec4b6824f192
   languageName: node
   linkType: hard
 
@@ -20142,6 +20187,18 @@ __metadata:
   version: 2.1.0
   resolution: "svelte-icons@npm:2.1.0"
   checksum: a32e305152be010a694cc7afe5848fb8f88dd2dba36624cbd3c92a2bf54e5683c57c44b4faa31bccee19cf9cc855158e588591672c4ae89984e3500bef0c488a
+  languageName: node
+  linkType: hard
+
+"svelte-markdown@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "svelte-markdown@npm:0.2.2"
+  dependencies:
+    "@types/marked": ^4.0.1
+    marked: ^4.0.10
+  peerDependencies:
+    svelte: ^3.0.0
+  checksum: d5884aa4cfb80d36cd00e05874b8971b1bd8c8f2870c57df8ff79de4065ed3826834a1cfe281652adaf41cbf5c28f82b54a102ce33db6155d461664632043cb9
   languageName: node
   linkType: hard
 
