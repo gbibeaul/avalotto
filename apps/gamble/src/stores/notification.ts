@@ -36,7 +36,6 @@ const createNotification = () => {
 	}
 
 	const updatePushSubscription = (pushSubscription: PushSubscription) => {
-		console.log('called', pushSubscription)
 		update((s) => ({ ...s, pushSubscription }));
 	};
 

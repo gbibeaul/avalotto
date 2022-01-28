@@ -1,16 +1,20 @@
+/// <reference lib="webworker" />
+
 self.addEventListener('install', (event) => {
 	console.log('service worker installed', event);
 });
 
-
-self.addEventListener('push', event => {
-	if(event.data.text() === "brand new push notification"){
+self.addEventListener('push', (event: any) => {
+	const { type, title, content } = JSON.parse(event.data.text());
+	console.log('A new push event', event.data.text());
+	if (type === 'JACKPOT_PASSED_BY_10') {
 		event.waitUntil(
-			self.registration.showNotification("Jackpot updated", {
-			  body: "One or more tracked repositories have new issues or pull requests.",
+			self.registration.showNotification(title, {
+				body: content,
+				icon: '/assets/metamask.png'
 			})
-		  );
+		);
 	}
-})
+});
 
 export {};

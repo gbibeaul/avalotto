@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { session } from '$app/stores';
+	import { onMount } from 'svelte';
 	import Switch from './Switch.svelte';
 	import { notificationStore } from '../stores/notification';
 	import { clickOutside } from '../directives/clickOutside';
+	import { urlBase64ToUint8Array } from '../helpers/misc.helpers';
 
 	let email;
 	let discord;
@@ -24,6 +26,14 @@
 
 		pushSubscription = value.pushSubscription;
 	});
+	onMount(async () => {
+		if ('serviceWorker' in navigator) {
+			const swreg = await navigator.serviceWorker.ready;
+			const sub = await swreg.pushManager.getSubscription();
+			console.log('push', sub)
+			notificationStore.updatePushSubscription(sub);
+		}
+	});
 
 	// suscribed to session store since we need to hydrate the session after a successful approval from metamask
 	session.subscribe(() => {});
@@ -32,35 +42,25 @@
 		notificationStore.toggleNotificationMenu(false);
 	};
 
-	function urlBase64ToUint8Array(base64String) {
-		const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-		const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-
-		const rawData = window.atob(base64);
-		const outputArray = new Uint8Array(rawData.length);
-
-		for (let i = 0; i < rawData.length; ++i) {
-			outputArray[i] = rawData.charCodeAt(i);
-		}
-		return outputArray;
-	}
-
 	const configurePubSub = async () => {
+		const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string;
+		if (!vapidPublicKey) {
+			console.error('VITE_VAPID_PUBLIC_KEY env not set');
+			return;
+		}
 		if ('serviceWorker' in navigator) {
-			const swreg = await navigator.serviceWorker.ready;
-			const sub = await swreg.pushManager.getSubscription();
-			notificationStore.updatePushSubscription(sub);
-			if (sub === null) {
-				const sub = await swreg.pushManager.subscribe({
-					userVisibleOnly: true,
-					applicationServerKey: urlBase64ToUint8Array(
-						'BJcygaFAR7wseePq54m06Xqxt7XbSc3cZphJnG34bQTPt-ZLgels4rokGm_WXKP5VPoF3KwwNAftv9147crXZtk'
-					)
-				});
+			try {
+				const swreg = await navigator.serviceWorker.ready;
+				if (pushSubscription === null) {
+					const newSub = await swreg.pushManager.subscribe({
+						userVisibleOnly: true,
+						applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+					});
 
-				console.log('new sub', sub);
-			} else {
-				console.log('sub', sub);
+					notificationStore.updatePushSubscription(newSub);
+				}
+			} catch (error) {
+				console.error('error registering push notifications', error);
 			}
 		}
 	};
@@ -68,7 +68,6 @@
 	const handleBrowser = () => {
 		Notification.requestPermission((result) => {
 			if (result === 'granted') {
-				browser = true;
 				configurePubSub();
 			}
 		});
@@ -99,7 +98,7 @@
 					discord: discordNotif,
 					signature,
 					address,
-					browser,
+					browser: !!pushSubscription,
 					pushSubscription
 				})
 			});
@@ -221,13 +220,20 @@
 											{/if}
 
 											{#if 'Notification' in window}
-												<div class="flex items-center justify-between">
+												<div class="flex items-start justify-between">
 													<span class="flex-grow flex flex-col">
 														<span class="text-sm font-medium text-gray-900" id="availability-label"
 															>Browser Notifications</span
 														>
+														{#if pushSubscription}
+															<span
+																class="text-sm font-medium text-indigo-400"
+																id="availability-label"
+																>You are subscribed to recieve push notifications</span
+															>
+														{/if}
 													</span>
-													<Switch active={browser} on:click={handleBrowser} />
+													<Switch active={pushSubscription} on:click={handleBrowser} />
 												</div>
 											{/if}
 										</div>
