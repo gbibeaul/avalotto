@@ -11,7 +11,7 @@ export async function post({ request }) {
 		if (typeof originatingAffress !== 'string') {
 			throw 'originating email address not set in env vars';
 		}
-console.log('request headers', request.headers )
+
 		const apiKey = await supabase.from('api_keys').select('value').eq('id', 1).limit(1);
 
 		if (!isBearerValid(request.headers.get('authorization'), apiKey.data[0])) {
@@ -43,6 +43,7 @@ console.log('request headers', request.headers )
 		});
 
 		return {
+			status: 200,
 			success: true
 		};
 	} catch (error) {

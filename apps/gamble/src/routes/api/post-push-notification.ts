@@ -11,11 +11,25 @@ webPush.setVapidDetails(
 export async function post({ request }) {
 	try {
 		const subscription = await request.json();
-		console.log({subscription})
-		await webPush.sendNotification(subscription, 'brand new push notification');
+		const { title, content } = await request.json();
+
+		if(!(title && content)) {
+			return {
+				status: 400,
+				message: "title or content missing"
+			}
+		}
+
+		console.log(`Pushing to ${subscription}: titile - ${title} content: ${content}`);
+		await webPush.sendNotification(subscription, JSON.stringify({ title, content }));
+
+		return {
+			status: 200
+		}
 	} catch (error) {
 		console.error(error);
 		return {
+			status: 500,
 			error: JSON.stringify(error)
 		};
 	}
