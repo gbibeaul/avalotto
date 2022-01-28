@@ -10,17 +10,17 @@ webPush.setVapidDetails(
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
 	try {
-		const { subscription, title, content } = await request.json();
+		const { subscription, type, title, content } = await request.json();
 
-		if(!(title && content)) {
+		if(!type) {
 			return {
 				status: 400,
-				message: "title or content missing"
+				message: "No notification type is in the request"
 			}
 		}
 
-		console.log(`Pushing to ${subscription}: titile - ${title} content: ${content}`);
-		await webPush.sendNotification(subscription, JSON.stringify({ title, content }));
+		console.log(`Pushing to ${subscription.endpoint} => type - ${type}  titile - ${title} content: ${content}`);
+		await webPush.sendNotification(subscription, JSON.stringify({ type, title, content }));
 
 		return {
 			status: 200
