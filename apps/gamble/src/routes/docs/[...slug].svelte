@@ -1,14 +1,26 @@
 <script context="module">
+  import frontMatter from 'front-matter';
+  const allDocs = import.meta.globEager(`./_docs/**/*.md`, {assert: {type: 'raw'}});
+  const docsBySlug = {};
+  for (const [path, doc] of Object.entries(allDocs)) {
+    const slug = path.match(/^\.\/_docs\/(.*)\.md$/);
+    const { attributes: metadata, body: content } = frontMatter(doc);
+    docsBySlug[slug[1]] = {
+      metadata,
+      content,
+    };
+  }
+
   /** @type {import('@sveltejs/kit').Load} */
-	export async function load({ params, fetch }) {
-    const res = await fetch(`/api/get-docs/${params.slug}`);
-    if (res.ok) {
-      const data = await res.json();
+	export async function load({ params }) {
+    const doc = docsBySlug[params.slug];
+    if (doc) {
+      const {metadata, content} = doc;
 
       return {
         props: {
-          metadata: data.metadata,
-          content: data.content
+          metadata,
+          content,
         }
       }
     }
