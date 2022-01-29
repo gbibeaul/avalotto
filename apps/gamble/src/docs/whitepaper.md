@@ -1,3 +1,6 @@
+---
+title: Whitepaper
+---
 # Whitepaper
 
 This is our whitepaper

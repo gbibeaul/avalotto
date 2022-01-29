@@ -7,6 +7,7 @@
 
       return {
         props: {
+          metadata: data.metadata,
           content: data.content
         }
       }
@@ -21,7 +22,12 @@
 <script lang="ts">
   import SvelteMarkdown from 'svelte-markdown'
   export let content;
+  export let metadata;
+  export let title = [metadata.title, 'Gamebit Documentation'].filter(v => !!v).join(' | ')
 </script>
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 <div class="prose">
 <SvelteMarkdown source={content} />
 </div>
