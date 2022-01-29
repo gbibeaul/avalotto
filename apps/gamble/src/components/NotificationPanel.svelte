@@ -30,7 +30,6 @@
 		if ('serviceWorker' in navigator) {
 			const swreg = await navigator.serviceWorker.ready;
 			const sub = await swreg.pushManager.getSubscription();
-			console.log('push', sub)
 			notificationStore.updatePushSubscription(sub);
 		}
 	});

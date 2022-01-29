@@ -24,7 +24,6 @@
 		"@supabase/supabase-js": "^1.28.5",
 		"@tailwindcss/forms": "^0.4.0",
 		"@types/nodemailer": "^6.4.4",
-		"@types/web-push": "^3.3.2",
 		"cookie": "^0.4.1",
 		"date-fns": "^2.27.0",
 		"dotenv": "^10.0.0",
@@ -37,6 +36,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@types/web-push": "^3.3.2",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"@typescript-eslint/parser": "^4.31.1",
 		"autoprefixer": "^10.4.0",

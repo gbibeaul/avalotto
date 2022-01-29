@@ -1,4 +1,3 @@
-import { supabase } from '../../transport/supabase';
 import webPush from 'web-push';
 
 webPush.setVapidDetails(

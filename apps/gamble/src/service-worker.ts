@@ -6,7 +6,6 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('push', (event: any) => {
 	const { type, title, content } = JSON.parse(event.data.text());
-	console.log('A new push event', event.data.text());
 	if (type === 'JACKPOT_PASSED_BY_10') {
 		event.waitUntil(
 			self.registration.showNotification(title, {
