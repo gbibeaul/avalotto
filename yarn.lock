@@ -4263,6 +4263,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/web-push@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "@types/web-push@npm:3.3.2"
+  dependencies:
+    "@types/node": "*"
+  checksum: 0b635e63779b1b03af536373ea7a43cfadc993d941be45a7bccd6b891b5e361ecb0f10e5375a58c0f9d355697281bc366c6a5908110afd57361fef6f2a5017d7
+  languageName: node
+  linkType: hard
+
 "@types/web3-provider-engine@npm:^14.0.0":
   version: 14.0.1
   resolution: "@types/web3-provider-engine@npm:14.0.1"
@@ -5064,7 +5073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"asn1.js@npm:^5.2.0":
+"asn1.js@npm:^5.2.0, asn1.js@npm:^5.3.0":
   version: 5.4.1
   resolution: "asn1.js@npm:5.4.1"
   dependencies:
@@ -6468,6 +6477,13 @@ __metadata:
   version: 0.2.13
   resolution: "buffer-crc32@npm:0.2.13"
   checksum: 06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
+  languageName: node
+  linkType: hard
+
+"buffer-equal-constant-time@npm:1.0.1":
+  version: 1.0.1
+  resolution: "buffer-equal-constant-time@npm:1.0.1"
+  checksum: 80bb945f5d782a56f374b292770901065bad21420e34936ecbe949e57724b4a13874f735850dd1cc61f078773c4fb5493a41391e7bda40d1fa388d6bd80daaab
   languageName: node
   linkType: hard
 
@@ -8551,6 +8567,15 @@ __metadata:
     jsbn: ~0.1.0
     safer-buffer: ^2.1.0
   checksum: 22fef4b6203e5f31d425f5b711eb389e4c6c2723402e389af394f8411b76a488fa414d309d866e2b577ce3e8462d344205545c88a8143cc21752a5172818888a
+  languageName: node
+  linkType: hard
+
+"ecdsa-sig-formatter@npm:1.0.11":
+  version: 1.0.11
+  resolution: "ecdsa-sig-formatter@npm:1.0.11"
+  dependencies:
+    safe-buffer: ^5.0.1
+  checksum: 207f9ab1c2669b8e65540bce29506134613dd5f122cccf1e6a560f4d63f2732d427d938f8481df175505aad94583bcb32c688737bb39a6df0625f903d6d93c03
   languageName: node
   linkType: hard
 
@@ -10921,6 +10946,7 @@ __metadata:
     "@tailwindcss/forms": ^0.4.0
     "@tailwindcss/typography": ^0.5.1
     "@types/nodemailer": ^6.4.4
+    "@types/web-push": ^3.3.2
     "@typescript-eslint/eslint-plugin": ^4.31.1
     "@typescript-eslint/parser": ^4.31.1
     autoprefixer: ^10.4.0
@@ -10947,6 +10973,7 @@ __metadata:
     tailwindcss: ^3.0.1
     tslib: ^2.3.1
     typescript: ^4.4.3
+    web-push: ^3.4.5
   languageName: unknown
   linkType: soft
 
@@ -11866,6 +11893,15 @@ __metadata:
     jsprim: ^1.2.2
     sshpk: ^1.7.0
   checksum: 3324598712266a9683585bb84a75dec4fd550567d5e0dd4a0fff6ff3f74348793404d3eeac4918fa0902c810eeee1a86419e4a2e92a164132dfe6b26743fb47c
+  languageName: node
+  linkType: hard
+
+"http_ece@npm:1.1.0":
+  version: 1.1.0
+  resolution: "http_ece@npm:1.1.0"
+  dependencies:
+    urlsafe-base64: ~1.0.0
+  checksum: 220a9a1c09165b4a3194c9b68a1597d3afc66a6bf8bc3ae1ae8d80d5117d8529f1346d59da7f096df8f3adbe2f42697a6edb31a6075b946207b910b72f28adba
   languageName: node
   linkType: hard
 
@@ -13720,6 +13756,27 @@ __metadata:
     array-includes: ^3.1.3
     object.assign: ^4.1.2
   checksum: dcee22e6382ee5a6bd4187333a44b6420d9d079838119a07055d6e88d137dd0afadc97a2246152b0b65006bd5fc393112dc0cef01956a01a66c1713913953c66
+  languageName: node
+  linkType: hard
+
+"jwa@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "jwa@npm:2.0.0"
+  dependencies:
+    buffer-equal-constant-time: 1.0.1
+    ecdsa-sig-formatter: 1.0.11
+    safe-buffer: ^5.0.1
+  checksum: 8f00b71ad5fe94cb55006d0d19202f8f56889109caada2f7eeb63ca81755769ce87f4f48101967f398462e3b8ae4faebfbd5a0269cb755dead5d63c77ba4d2f1
+  languageName: node
+  linkType: hard
+
+"jws@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "jws@npm:4.0.0"
+  dependencies:
+    jwa: ^2.0.0
+    safe-buffer: ^5.0.1
+  checksum: d68d07aa6d1b8cb35c363a9bd2b48f15064d342a5d9dc18a250dbbce8dc06bd7e4792516c50baa16b8d14f61167c19e851fd7f66b59ecc68b7f6a013759765f7
   languageName: node
   linkType: hard
 
@@ -21565,6 +21622,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"urlsafe-base64@npm:^1.0.0, urlsafe-base64@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "urlsafe-base64@npm:1.0.0"
+  checksum: 41d28a337044e5ad287174e928227b025d03424c5cd316956fdcbd916fccdc70981fa9a67e77325c5250c8150ba90bca0de65e783aa6235567b7f820e1146cb6
+  languageName: node
+  linkType: hard
+
 "usb@npm:^1.6.0":
   version: 1.9.2
   resolution: "usb@npm:1.9.2"
@@ -21890,6 +21954,22 @@ __metadata:
     watchpack-chokidar2:
       optional: true
   checksum: 8b7cb8c8df8f4dd0e8ac47693c0141c4f020a4b031411247d600eca31522fde6f1f9a3a6f6518b46e71f7971b0ed5734c08c60d7fdd2530e7262776286f69236
+  languageName: node
+  linkType: hard
+
+"web-push@npm:^3.4.5":
+  version: 3.4.5
+  resolution: "web-push@npm:3.4.5"
+  dependencies:
+    asn1.js: ^5.3.0
+    http_ece: 1.1.0
+    https-proxy-agent: ^5.0.0
+    jws: ^4.0.0
+    minimist: ^1.2.5
+    urlsafe-base64: ^1.0.0
+  bin:
+    web-push: src/cli.js
+  checksum: b81ffb404539c00a4d1b7b5a8ec788963f23cf042e1491d4c567167465a7211b497752b8e96156be4848543414ce5f8633ca9ed9d7f2707fe1bd4192616f41eb
   languageName: node
   linkType: hard
 

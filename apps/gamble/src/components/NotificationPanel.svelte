@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { session } from '$app/stores';
+	import { onMount } from 'svelte';
 	import Switch from './Switch.svelte';
 	import { notificationStore } from '../stores/notification';
 	import { clickOutside } from '../directives/clickOutside';
+	import { urlBase64ToUint8Array } from '../helpers/misc.helpers';
 
 	let email;
 	let discord;
 	let browser;
+	let pushSubscription: PushSubscription;
 
 	let open: boolean;
 
@@ -20,6 +23,15 @@
 
 		discord = value.discord;
 		browser = value.browser;
+
+		pushSubscription = value.pushSubscription;
+	});
+	onMount(async () => {
+		if ('serviceWorker' in navigator) {
+			const swreg = await navigator.serviceWorker.ready;
+			const sub = await swreg.pushManager.getSubscription();
+			notificationStore.updatePushSubscription(sub);
+		}
 	});
 
 	// suscribed to session store since we need to hydrate the session after a successful approval from metamask
@@ -29,8 +41,35 @@
 		notificationStore.toggleNotificationMenu(false);
 	};
 
+	const configurePubSub = async () => {
+		const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string;
+		if (!vapidPublicKey) {
+			console.error('VITE_VAPID_PUBLIC_KEY env not set');
+			return;
+		}
+		if ('serviceWorker' in navigator) {
+			try {
+				const swreg = await navigator.serviceWorker.ready;
+				if (pushSubscription === null) {
+					const newSub = await swreg.pushManager.subscribe({
+						userVisibleOnly: true,
+						applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+					});
+
+					notificationStore.updatePushSubscription(newSub);
+				}
+			} catch (error) {
+				console.error('error registering push notifications', error);
+			}
+		}
+	};
+
 	const handleBrowser = () => {
-		browser = !browser;
+		Notification.requestPermission((result) => {
+			if (result === 'granted') {
+				configurePubSub();
+			}
+		});
 	};
 
 	const handleActivateEmail = () => {
@@ -41,20 +80,26 @@
 		showDiscord = !showDiscord;
 	};
 
-
 	const handleSubmit = async (e: Event) => {
 		e.preventDefault();
 		const { signature, address } = await notificationStore.approveNotifications();
 
-		const emailNotif = showEmail ? email : ''
-		const discordNotif = showDiscord ? discord : ''
+		const emailNotif = showEmail ? email : '';
+		const discordNotif = showDiscord ? discord : '';
 
 		if (signature) {
-			email = emailNotif
-			discord = discordNotif
+			email = emailNotif;
+			discord = discordNotif;
 			const res = await fetch('/api/notification-target', {
 				method: 'POST',
-				body: JSON.stringify({ email: emailNotif, discord: discordNotif, signature, address, browser })
+				body: JSON.stringify({
+					email: emailNotif,
+					discord: discordNotif,
+					signature,
+					address,
+					browser: !!pushSubscription,
+					pushSubscription
+				})
 			});
 			const data = await res.json();
 			session.update((s) => ({ ...s, notifications: data[0] }));
@@ -122,15 +167,12 @@
 										<h2 class="text-4xl font-light" id="slide-over-title">Notifications</h2>
 									</div>
 									<div class="mt-1">
-										<p class="text-sm">
-											Stay up to date with with jackpot announcements and news!
-										</p>
+										<p class="text-sm">Stay up to date with with jackpot announcements and news!</p>
 									</div>
 								</div>
 								<div class="flex-1 flex flex-col justify-between">
 									<div class="px-4 divide-y divide-gray-200 sm:px-6">
 										<div class="space-y-10 pt-6 pb-5">
-
 											<div class="flex items-center justify-between">
 												<span class="flex-grow flex flex-col">
 													<span class="text-sm font-medium text-gray-900" id="availability-label"
@@ -153,7 +195,6 @@
 												</div>
 											{/if}
 
-
 											<div class="flex items-center justify-between">
 												<span class="flex-grow flex flex-col">
 													<span class="text-sm font-medium text-gray-900" id="availability-label"
@@ -164,26 +205,36 @@
 											</div>
 											{#if showDiscord}
 												<div class="mt-1">
-														<input
-															bind:value={discord}
-															type="text"
-															name="discord"
-															id="discord"
-															required
-															pattern={discordPattern}
-															placeholder="user#1234"
-															class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-														/>
+													<input
+														bind:value={discord}
+														type="text"
+														name="discord"
+														id="discord"
+														required
+														pattern={discordPattern}
+														placeholder="user#1234"
+														class="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+													/>
 												</div>
 											{/if}
-											<div class="flex items-center justify-between">
-												<span class="flex-grow flex flex-col">
-													<span class="text-sm font-medium text-gray-900" id="availability-label"
-														>Browser Notifications</span
-													>
-												</span>
-												<Switch active={browser} on:click={handleBrowser} />
-											</div>
+
+											{#if 'Notification' in window}
+												<div class="flex items-start justify-between">
+													<span class="flex-grow flex flex-col">
+														<span class="text-sm font-medium text-gray-900" id="availability-label"
+															>Browser Notifications</span
+														>
+														{#if pushSubscription}
+															<span
+																class="text-sm font-medium text-indigo-400"
+																id="availability-label"
+																>You are subscribed to recieve push notifications</span
+															>
+														{/if}
+													</span>
+													<Switch active={pushSubscription} on:click={handleBrowser} />
+												</div>
+											{/if}
 										</div>
 									</div>
 								</div>
@@ -196,10 +247,7 @@
 								>
 									Cancel
 								</button>
-								<button
-									type="submit"
-									class="w-40 bg-indigo-500 text-white rounded h-12"
-								>
+								<button type="submit" class="w-40 bg-indigo-500 text-white rounded h-12">
 									Save
 								</button>
 							</div>

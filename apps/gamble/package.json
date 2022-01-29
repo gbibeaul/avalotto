@@ -33,11 +33,13 @@
 		"mdsvex": "^0.9.8",
 		"moralis": "^0.0.176",
 		"nodemailer": "^6.7.2",
-		"svelte-icons": "^2.1.0"
+		"svelte-icons": "^2.1.0",
+		"web-push": "^3.4.5"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@types/web-push": "^3.3.2",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"@typescript-eslint/parser": "^4.31.1",
 		"autoprefixer": "^10.4.0",
