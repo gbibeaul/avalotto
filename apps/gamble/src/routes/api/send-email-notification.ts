@@ -14,7 +14,7 @@ export async function post({ request }) {
 
 		const apiKey = await supabase.from('api_keys').select('value').eq('id', 1).limit(1);
 
-		if (!isBearerValid(request.headers.authorization, apiKey.data[0])) {
+		if (!isBearerValid(request.headers.get('authorization'), apiKey.data[0])) {
 			return {
 				message: 'not authorized',
 				status: 403
@@ -43,12 +43,13 @@ export async function post({ request }) {
 		});
 
 		return {
+			status: 200,
 			success: true
 		};
 	} catch (error) {
 		console.error(error);
 		return {
-			error: 'Sending notification failed'
+			error: 'Sending email notification failed'
 		};
 	}
 }

@@ -6,7 +6,7 @@ import { supabase } from '../../transport/supabase';
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
 	try {
-		const { email = '', discord = '', signature, address, browser } = await request.json();
+		const { email = '', discord = '', pushSubscription, signature, address, browser } = await request.json();
 
 		const network_id = NetworkIds[networkParser()];
 
@@ -22,6 +22,7 @@ export async function post({ request }) {
 				id: address.toLowerCase(),
 				enabled: true,
 				browser,
+				push_subscription: pushSubscription,
 				email,
 				discord,
 				signature,
