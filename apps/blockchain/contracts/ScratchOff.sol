@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "./Game.sol";
+
 /**
  * NFT mint + scratch off + redeem interfaces
  *
@@ -62,14 +64,18 @@ interface IScratchOff {
 /**
  * Mocked version of contract to be replaced
  */
-contract ScratchOffCard is IScratchOff, ERC721 {
+contract ScratchOffCard is IScratchOff, ERC721, Game {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
 
     mapping(uint256 => ScratchOffStatus) private _statuses;
 
-    constructor() ERC721("ScratchOffCard", "SCRATCH") {}
+    mapping(uint256 => uint256) private rngToToken;
+
+    constructor(address _treasury, address _gamebitAuth, address _gamebitInfra)
+        ERC721("ScratchOffCard", "SCRATCH")
+        Game(_treasury, _gamebitAuth, _gamebitInfra) {}
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://tbd";
@@ -95,8 +101,14 @@ contract ScratchOffCard is IScratchOff, ERC721 {
         return _statuses[tokenId];
     }
 
-    function scratch(uint256 tokenId) external {
-        _statuses[tokenId] = ScratchOffStatus.Scratched;
+    function scratch(uint256 _tokenId) external {
+        uint256 requestId = requestRng();
+    }
+
+    function consumeRng(uint256 _rng, uint256 _requestId) internal override {
+       uint256 tokenId = rngToToken[_requestId];
+    
+       _statuses[tokenId] = ScratchOffStatus.Scratched;
     }
 
     function getBalls(uint256 tokenId) external view returns(uint8[9] memory) {
