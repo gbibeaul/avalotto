@@ -30,6 +30,8 @@ enum ScratchOffStatus {
  * minted ==> scratched ==> redeemed
  */
 interface IScratchOff {
+    event Scratched(uint256, uint256[9]);
+
     /**
      * Mint
      */
@@ -48,7 +50,7 @@ interface IScratchOff {
     /**
      * Get the scratched off, revealed values
      */
-    function getBalls(uint256 tokenId) external view returns(uint8[9] memory);
+    function getBalls(uint256 tokenId) external view returns(uint256[9] memory);
 
     /**
      * State transition: scratched ==> redeemed
@@ -70,8 +72,9 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
     Counters.Counter private _tokenIdCounter;
 
     mapping(uint256 => ScratchOffStatus) private _statuses;
-
+    mapping(uint256 => uint256[9]) private tokenToRolls;
     mapping(uint256 => uint256) private rngToToken;
+
 
     constructor(address _treasury, address _gamebitAuth, address _gamebitInfra)
         ERC721("ScratchOffCard", "SCRATCH")
@@ -103,18 +106,32 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
 
     function scratch(uint256 _tokenId) external {
         uint256 requestId = requestRng();
+        rngToToken[requestId] = _tokenId; 
+    }
+
+    function expand(uint256 randomValue, uint256 n) public pure returns (uint256[] memory expandedValues) {
+        expandedValues = new uint256[](n);
+        for (uint256 i = 0; i < n; i++) {
+            expandedValues[i] = uint256(keccak256(abi.encode(randomValue, i)));
+        }
+        return expandedValues;
     }
 
     function consumeRng(uint256 _rng, uint256 _requestId) internal override {
-       uint256 tokenId = rngToToken[_requestId];
-    
-       _statuses[tokenId] = ScratchOffStatus.Scratched;
+        uint256 tokenId = rngToToken[_requestId];
+        uint256[] memory expanded = expand(_rng, 9);
+
+        for (uint8 i = 0; i < expanded.length; i++) {
+            tokenToRolls[tokenId][i] = (expanded[i] % 99) + 1;
+        }
+
+        _statuses[tokenId] = ScratchOffStatus.Scratched;
+
+        emit Scratched(tokenId, tokenToRolls[tokenId]);
     }
 
-    function getBalls(uint256 tokenId) external view returns(uint8[9] memory) {
-        uint8[9] memory balls = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-        return balls;
+    function getBalls(uint256 tokenId) external view returns(uint256[9] memory) {
+        return tokenToRolls[tokenId];
     }
 
     function redeem(uint256 tokenId) external {
