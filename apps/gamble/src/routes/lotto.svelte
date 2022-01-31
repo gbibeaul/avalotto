@@ -41,7 +41,7 @@
 	}
 </script>
 
-<div class="gradient h-full">
+<div class="h-full">
 	{#if showAnimation}
 		<div class="fixed w-full">
 			<LottiePlayer
@@ -65,7 +65,12 @@
 
 <style>
 
-	.gradient {
+	:global(body) {
 		background: linear-gradient(116.82deg, #d32d28 0%, #6c1280 48.44%, #1102df 100%);
+		background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
+			background-position: 50%;
+
 	}
 </style>
