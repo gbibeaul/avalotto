@@ -60,7 +60,7 @@
 	$: numTickets = tickets.length;
 </script>
 
-<div class="flex justify-center h-full items-center">
+<div class="flex justify-center h-screen items-center page-container">
 	<div
 		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border overflow-y-auto"
 	>
@@ -100,5 +100,9 @@
 	.main-container {
 		height: 844px;
 		width: 100%;
+	}
+
+	.page-container {
+		background: linear-gradient(112.41deg, #d81414 0.38%, #32148a 52.78%, #a5820a 100%);
 	}
 </style>

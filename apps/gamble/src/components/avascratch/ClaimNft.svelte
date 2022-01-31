@@ -14,14 +14,13 @@
 	$: playText = `PLAY ${
 		currentTicketIndex + 1 === numTickets ? `AGAIN` : `NEXT ${currentTicketIndex + 2}/${numTickets}`
 	}`;
+	$: nftPlaceholderSrc = `/assets/avascratch/nft-placeholder-${currentTicketIndex + 1}.png`;
 </script>
 
 <div class="relative flex flex-col h-full items-center justify-center" in:fade={{ duration: 750 }}>
-	<img
-		src="/assets/avascratch/nft_placeholder.svg"
-		alt="nft_placeholder"
-		class="z-10 nft-placeholder"
-	/>
+	<div>
+		<img src={nftPlaceholderSrc} alt="nft_placeholder" class="z-10 nft-placeholder rounded-md" />
+	</div>
 
 	<div class="absolute bottom-0 mb-4 z-20">
 		<button
