@@ -18,9 +18,11 @@
 </script>
 
 <div class="relative flex flex-col h-full items-center justify-center" in:fade={{ duration: 750 }}>
-	<div>
-		<img src={nftPlaceholderSrc} alt="nft_placeholder" class="z-10 nft-placeholder rounded-md" />
-	</div>
+	<img
+		src={nftPlaceholderSrc}
+		alt="nft_placeholder"
+		class="z-10 nft-placeholder rounded-md drop-shadow-lg"
+	/>
 
 	<div class="absolute bottom-0 mb-4 z-20">
 		<button

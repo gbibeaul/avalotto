@@ -64,11 +64,16 @@
 	<div
 		class="flex flex-col max-w-lg main-container bg-avascratch-background border-solid border-8 border-avascratch-border overflow-y-auto"
 	>
-		<img
-			class="absolute mt-4 ml-1 z-10"
-			src="/assets/avax_logo_grey_bg_white_color.svg"
-			alt="axax_logo"
-		/>
+		<div class="relative">
+			<img
+				class="absolute mt-2 ml-1 z-10"
+				src="/assets/avax_logo_grey_bg_white_color.svg"
+				alt="axax_logo"
+			/>
+			<a href="/" class="absolute top-2 right-2 z-10">
+				<img src="/assets/avascratch/go-to-home-icon.svg" alt="go_to_home_logo" />
+			</a>
+		</div>
 
 		{#if showTitle}
 			<Title />
