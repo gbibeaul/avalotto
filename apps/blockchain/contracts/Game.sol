@@ -88,7 +88,7 @@ abstract contract Game {
     }
 
     // TODO: evaluate the ordering of all the statements in this function for security
-    function requestRng() internal returns(uint256) {
+    function requestRng() internal returns (uint256) {
         treasury.receiveRngPayment();
 
         uint256 requestId = infra.requestRng();
