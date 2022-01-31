@@ -3457,9 +3457,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@next":
-  version: 1.0.0-next.241
-  resolution: "@sveltejs/kit@npm:1.0.0-next.241"
+"@sveltejs/kit@npm:next":
+  version: 1.0.0-next.250
+  resolution: "@sveltejs/kit@npm:1.0.0-next.250"
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^1.0.0-next.32
     sade: ^1.7.4
@@ -3468,13 +3468,13 @@ __metadata:
     svelte: ^3.44.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: d6a719a9a2eb526e9c3424e9183b34e8dcc3a553a314dfc0c192c7f955c8c738af02891481d8958691fee20bf6630eac99f7c98da86fb4f269812f0dcbc3d61b
+  checksum: 37fc5d35d09fe75770455c2e088dc7db8e15ca88a5770d3b196097e94cf37bdc98434442089df35d1eb00d08bd16e75c2616de9dda6e521412e2672d32c79591
   languageName: node
   linkType: hard
 
 "@sveltejs/vite-plugin-svelte@npm:^1.0.0-next.32":
-  version: 1.0.0-next.35
-  resolution: "@sveltejs/vite-plugin-svelte@npm:1.0.0-next.35"
+  version: 1.0.0-next.36
+  resolution: "@sveltejs/vite-plugin-svelte@npm:1.0.0-next.36"
   dependencies:
     "@rollup/pluginutils": ^4.1.2
     debug: ^4.3.3
@@ -3488,7 +3488,7 @@ __metadata:
   peerDependenciesMeta:
     diff-match-patch:
       optional: true
-  checksum: d194d9634f53c24f8b84e9557e838b4076b3a0304fc8ccda296d98b0052bf5ccf302b304929b0bb9b7f12b587c0427a960b710c0ddb37d6c5306b2898dfcac38
+  checksum: a78907ae4719db44351e763a0291e7943eb07dbcee0da8b9214479ad94ba9fe0ca6e2d319c8ca26fd9a86c8374864f42790cd83a2924571b5f23c9fab115fecf
   languageName: node
   linkType: hard
 
@@ -3509,6 +3509,19 @@ __metadata:
   peerDependencies:
     tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
   checksum: 881a80b136f22b3da68323166ddfbcd844841f711d75ce4d64479302ae523ac7c1fe8a3bb57370216e6da69303640d70d543ecdb3ec2086f1ddf428a6c13566f
+  languageName: node
+  linkType: hard
+
+"@tailwindcss/typography@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@tailwindcss/typography@npm:0.5.1"
+  dependencies:
+    lodash.castarray: ^4.4.0
+    lodash.isplainobject: ^4.0.6
+    lodash.merge: ^4.6.2
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 894bab9a14a5bc4071573618ca9fd6b5bbe53e3c26af8aa1de440b8be59a63cf105f9fb1b12611bf446b4b054c6a48e8ff5c7c85ff233c5f78d70ffb7e53b5d9
   languageName: node
   linkType: hard
 
@@ -4240,6 +4253,13 @@ __metadata:
   version: 1.11.4
   resolution: "@types/underscore@npm:1.11.4"
   checksum: db9f8486bc851b732259e51f42d62aad1ae2158be5724612dc125ece5f5d61c51447f9dea28284c2a0f79cb95e788d01cb5ce97709880019213e69fab0dd1696
+  languageName: node
+  linkType: hard
+
+"@types/unist@npm:^2.0.0, @types/unist@npm:^2.0.2, @types/unist@npm:^2.0.3":
+  version: 2.0.6
+  resolution: "@types/unist@npm:2.0.6"
+  checksum: 25cb860ff10dde48b54622d58b23e66214211a61c84c0f15f88d38b61aa1b53d4d46e42b557924a93178c501c166aa37e28d7f6d994aba13d24685326272d5db
   languageName: node
   linkType: hard
 
@@ -10748,6 +10768,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"front-matter@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "front-matter@npm:4.0.2"
+  dependencies:
+    js-yaml: ^3.13.1
+  checksum: a5b4c36d75a820301ebf31db0f677332d189c4561903ab6853eaa0504b43634f98557dbf87752e09043dbd2c9dcc14b4bcf9151cb319c8ad7e26edb203c0cd23
+  languageName: node
+  linkType: hard
+
 "fs-constants@npm:^1.0.0":
   version: 1.0.0
   resolution: "fs-constants@npm:1.0.0"
@@ -10915,6 +10944,7 @@ __metadata:
     "@sveltejs/adapter-auto": next
     "@sveltejs/kit": next
     "@tailwindcss/forms": ^0.4.0
+    "@tailwindcss/typography": ^0.5.1
     "@types/nodemailer": ^6.4.4
     "@types/web-push": ^3.3.2
     "@typescript-eslint/eslint-plugin": ^4.31.1
@@ -10928,6 +10958,8 @@ __metadata:
     eslint-config-prettier: ^8.3.0
     eslint-plugin-svelte3: ^3.2.1
     ethers: ^5.5.2
+    front-matter: ^4.0.2
+    mdsvex: ^0.9.8
     moralis: ^0.0.176
     nodemailer: ^6.7.2
     postcss-cli: ^9.1.0
@@ -14373,6 +14405,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.castarray@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.castarray@npm:4.4.0"
+  checksum: fca8c7047e0ae2738b0b2503fb00157ae0ff6d8a1b716f87ed715b22560e09de438c75b65e01a7e44ceb41c5b31dce2eb576e46db04beb9c699c498e03cbd00f
+  languageName: node
+  linkType: hard
+
 "lodash.clonedeep@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.clonedeep@npm:4.5.0"
@@ -14405,6 +14444,13 @@ __metadata:
   version: 4.4.0
   resolution: "lodash.isequalwith@npm:4.4.0"
   checksum: 428ba7a57c47ec05e2dd18c03a4b4c45dac524a46af7ce3f412594bfc7be6a5acaa51acf9ea113d0002598e9aafc6e19ee8d20bc28363145fcb4d21808c9039f
+  languageName: node
+  linkType: hard
+
+"lodash.isplainobject@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "lodash.isplainobject@npm:4.0.6"
+  checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
   languageName: node
   linkType: hard
 
@@ -14760,6 +14806,20 @@ __metadata:
   version: 2.0.14
   resolution: "mdn-data@npm:2.0.14"
   checksum: 9d0128ed425a89f4cba8f787dca27ad9408b5cb1b220af2d938e2a0629d17d879a34d2cb19318bdb26c3f14c77dd5dfbae67211f5caaf07b61b1f2c5c8c7dc16
+  languageName: node
+  linkType: hard
+
+"mdsvex@npm:^0.9.8":
+  version: 0.9.8
+  resolution: "mdsvex@npm:0.9.8"
+  dependencies:
+    "@types/unist": ^2.0.3
+    prism-svelte: ^0.4.7
+    prismjs: ^1.17.1
+    vfile-message: ^2.0.4
+  peerDependencies:
+    svelte: 3.x
+  checksum: d19f18fed167542d479c85dfc575d10f50d02816d538f438bd30311b8ae5cbaac5927cfb19f3195b526bb6d60ed8081dbf9d88aba57dd560de1def4ddb5aa16c
   languageName: node
   linkType: hard
 
@@ -17517,6 +17577,20 @@ __metadata:
   bin:
     printj: bin/printj.njs
   checksum: 3bb8976e02c2a5943f86bf7d1cbe7764fa9fb6fb177cbc9fe0044adbd7be11dbf82e4c72d381f4d2ddc578fada92ea24ab263069549254cb796a252f11fd1ddf
+  languageName: node
+  linkType: hard
+
+"prism-svelte@npm:^0.4.7":
+  version: 0.4.7
+  resolution: "prism-svelte@npm:0.4.7"
+  checksum: 7f3648ba67558eb510380587fecc511e903164f7c5eed856cbd16bbc00b144e1398eda84537f0e48cbc1a14cdb3835aba3a266f357848aa0e80f5b28d848d0b5
+  languageName: node
+  linkType: hard
+
+"prismjs@npm:^1.17.1":
+  version: 1.26.0
+  resolution: "prismjs@npm:1.26.0"
+  checksum: 6de058930ce767d44d60322e625bbc255f5107c7bf82c441ade19a289358e01e35040cea0c17adf8f7b829f17aa48e2d84b40866b5b3f8c75a12c6b3f0ead231
   languageName: node
   linkType: hard
 
@@ -21419,6 +21493,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"unist-util-stringify-position@npm:^2.0.0":
+  version: 2.0.3
+  resolution: "unist-util-stringify-position@npm:2.0.3"
+  dependencies:
+    "@types/unist": ^2.0.2
+  checksum: f755cadc959f9074fe999578a1a242761296705a7fe87f333a37c00044de74ab4b184b3812989a57d4cd12211f0b14ad397b327c3a594c7af84361b1c25a7f09
+  languageName: node
+  linkType: hard
+
 "universalify@npm:^0.1.0, universalify@npm:^0.1.2":
   version: 0.1.2
   resolution: "universalify@npm:0.1.2"
@@ -21730,6 +21813,16 @@ __metadata:
     core-util-is: 1.0.2
     extsprintf: ^1.2.0
   checksum: c431df0bedf2088b227a4e051e0ff4ca54df2c114096b0c01e1cbaadb021c30a04d7dd5b41ab277bcd51246ca135bf931d4c4c796ecae7a4fef6d744ecef36ea
+  languageName: node
+  linkType: hard
+
+"vfile-message@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "vfile-message@npm:2.0.4"
+  dependencies:
+    "@types/unist": ^2.0.0
+    unist-util-stringify-position: ^2.0.0
+  checksum: 1bade499790f46ca5aba04bdce07a1e37c2636a8872e05cf32c26becc912826710b7eb063d30c5754fdfaeedc8a7658e78df10b3bc535c844890ec8a184f5643
   languageName: node
   linkType: hard
 
