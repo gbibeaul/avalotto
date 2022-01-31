@@ -1,0 +1,10 @@
+{
+    "name": "Gamebit",
+    "short_name": "Gamebit",
+    "theme_color": "#2196f3",
+    "background_color": "#2196f3",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/"
+  }

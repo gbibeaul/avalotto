@@ -18,7 +18,7 @@ npm init svelte@next my-app
 
 ## Developing
 
-Once you've created a project and installed dependencies (`npm install` or `yarn`), start a development server:
+Once you've created a project and installed dependencies (`yarn`), start a development server:
 
 ```bash
 npm run dev

@@ -7,10 +7,12 @@ import type { Notification_targets } from '..//types';
 
 interface NotificationState extends Notification_targets {
 	menuOpen: boolean;
+	pushSubscription: PushSubscription;
 };
 
 const initialState: NotificationState = {
-	menuOpen: false
+	menuOpen: false,
+	pushSubscription: null
 };
 
 const createNotification = () => {
@@ -32,6 +34,10 @@ const createNotification = () => {
 	const updateNotificationTarget = (notificationTarget: Notification_targets) => {
 		update(s => ({...s, ...notificationTarget}))
 	}
+
+	const updatePushSubscription = (pushSubscription: PushSubscription) => {
+		update((s) => ({ ...s, pushSubscription }));
+	};
 
 	const approveNotifications = async () => {
 		try {
@@ -55,7 +61,8 @@ const createNotification = () => {
 		subscribe,
 		toggleNotificationMenu,
 		approveNotifications,
-		updateNotificationTarget
+		updateNotificationTarget,
+		updatePushSubscription
 	};
 };
 
