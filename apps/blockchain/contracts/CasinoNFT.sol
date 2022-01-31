@@ -13,7 +13,7 @@ interface IScratchOffRedeemable {
     /**
      * Mint
      */
-    function mint(uint256) external;
+    function mint(address, uint256) external;
 }
 
 contract CasinoNFT is IScratchOffRedeemable, ERC721 {
@@ -21,7 +21,7 @@ contract CasinoNFT is IScratchOffRedeemable, ERC721 {
     mapping (uint256 => bool) private redeemed;
 
     constructor(address _scratchOff) ERC721("CasinoNFT", "PLAYER") {
-	scratchOff = _scratchOff;
+	    scratchOff = _scratchOff;
     }
 
     function _baseURI() internal pure override returns (string memory) {
@@ -35,11 +35,11 @@ contract CasinoNFT is IScratchOffRedeemable, ERC721 {
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
-    function mint(uint256 _tokenId) external {
+    function mint(address _to, uint256 _tokenId) external {
         require(_msgSender() == scratchOff, "Only scratch off can mint");
         require(!redeemed[_tokenId], "Scratch off may only be redeemed once");
 
-        _safeMint(_msgSender(), _tokenId);
+        _safeMint(_to, _tokenId);
 
         redeemed[_tokenId] = true;
     }

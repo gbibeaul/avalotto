@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./Game.sol";
+import "./CasinoNFT.sol";
 
 /**
  * NFT mint + scratch off + redeem interfaces
@@ -56,11 +57,6 @@ interface IScratchOff {
      * State transition: scratched ==> redeemed
      */
     function redeem(uint256 tokenId) external;
-
-    /**
-     * Get the redeemed NFT ID (address is a magic hard-coded address for now, but will need to change)
-     */
-    function getRedemption(uint256 tokenId) external view returns(uint256);
 }
 
 /**
@@ -71,14 +67,18 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
 
     Counters.Counter private _tokenIdCounter;
 
+    IScratchOffRedeemable private casinoNFT;
+
     mapping(uint256 => ScratchOffStatus) private _statuses;
     mapping(uint256 => uint256[9]) private tokenToRolls;
     mapping(uint256 => uint256) private rngToToken;
 
 
-    constructor(address _treasury, address _gamebitAuth, address _gamebitInfra)
+    constructor(address _treasury, address _gamebitAuth, address _gamebitInfra, address _casinoNFT)
         ERC721("ScratchOffCard", "SCRATCH")
-        Game(_treasury, _gamebitAuth, _gamebitInfra) {}
+        Game(_treasury, _gamebitAuth, _gamebitInfra) {
+            casinoNFT = CasinoNFT(_casinoNFT);
+        }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://tbd";
@@ -96,6 +96,7 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
     {
         super._beforeTokenTransfer(from, to, tokenId);
     }
+
     function mint() external {
         safeMint(_msgSender());
     }
@@ -105,6 +106,8 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
     }
 
     function scratch(uint256 _tokenId) external {
+        require(_statuses[_tokenId] == ScratchOffStatus.Minted);
+        require(ownerOf(_tokenId) == _msgSender());
         uint256 requestId = requestRng();
         rngToToken[requestId] = _tokenId; 
     }
@@ -131,14 +134,16 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
     }
 
     function getBalls(uint256 tokenId) external view returns(uint256[9] memory) {
+        require(_statuses[tokenId] != ScratchOffStatus.Minted);
         return tokenToRolls[tokenId];
     }
 
     function redeem(uint256 tokenId) external {
-        _statuses[tokenId] = ScratchOffStatus.Redeemed;
-    }
+        require(_statuses[tokenId] == ScratchOffStatus.Scratched);
+        require(ownerOf(tokenId) == _msgSender());
 
-    function getRedemption(uint256 tokenId) external view returns(uint256) {
-        return tokenId; // mocked
+        casinoNFT.mint(_msgSender(), tokenId);
+
+        _statuses[tokenId] = ScratchOffStatus.Redeemed;
     }
 }
