@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BigNumber, utils } from 'ethers';
 	import Play from './Play.svelte';
+	import { fade } from 'svelte/transition';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
 	import { walletStore } from '../../stores/wallet';
 	import { withPrevious } from '../../helpers/withPrevious.helpers';
@@ -37,6 +38,10 @@
 		plays = [[getRandom(), getRandom(), getRandom()]];
 	}
 
+	$: if ($currentStep === LottoSteps.SELECT_PLAYS) {
+		lottoStore.setPlays(plays)
+	}
+
 </script>
 
 <div class="justify-center flex lg:w-4/6" class:hide={$currentStep === LottoSteps.REVIEW_TICKET}>
@@ -51,7 +56,7 @@
 		</hgroup>
 		{#if $currentStep === LottoSteps.SELECT_PLAYS}
 			{#if $walletStore.walletAddress.length > 0}
-				<section class="bg-white flex justify-center flex-col  px-8">
+				<section class="bg-white flex justify-center flex-col  px-8" >
 					{#each plays as [num1, num2, num3], i}
 						<Play
 							removePlay={() => handleRemovePLay(i)}
@@ -78,12 +83,12 @@
 			{/if}
 		{/if}
 		{#if $currentStep === LottoSteps.CONFIRMING}
-			<section class="h-64 flex flex-col justify-center py-8">
+			<section class="h-64 flex flex-col justify-center py-8" in:fade={{ duration: 750 }}>
 				<strong class="font-bold flex justify-center text-sm">Confirming...</strong>
 			</section>
 		{/if}
 		{#if $currentStep === LottoSteps.CONFIRMED}
-			<section class="h-64 flex flex-col justify-center py-8 mt-6">
+			<section class="h-64 flex flex-col justify-center py-8 mt-6" in:fade={{ duration: 750 }}>
 				<strong class="font-bold flex justify-center text-sm">Ticket purchase confirmed</strong>
 				<span class="flex justify-center text-sm">
 					<div><b>Tx ID: </b> {$lottoStore.txHash.slice(0, 18)}...</div>

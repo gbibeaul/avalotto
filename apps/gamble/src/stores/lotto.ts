@@ -92,12 +92,12 @@ const createLotto = () => {
 		updateJackpot(jackpot);
 		updateNextDrawOn(nextDrawTime);
 
-		lotto.on('jackpotUpdated', updateJackpot)
-
+		lotto.on('jackpotUpdated', updateJackpot);
 	};
 
 	const placeBet = async (numbers: number[][]) => {
 		try {
+			const now = new Date();
 			requestAccount();
 			const value = numbers.length;
 			const { lotto } = await getProviders();
@@ -108,6 +108,7 @@ const createLotto = () => {
 			const transaction = await lotto.bet(betsToBigNumbers, {
 				value: utils.parseEther(String(value))
 			});
+			setStep(LottoSteps.CONFIRMING);
 
 			const tx = await transaction.wait(1);
 			setTxHash(tx.transactionHash);
@@ -135,9 +136,13 @@ const createLotto = () => {
 				body: JSON.stringify({ event })
 			});
 
-			setTimeout(() => {
+			if (now.getTime() - new Date().getTime() < 1000) {
+				setTimeout(() => {
+					setStep(LottoSteps.CONFIRMED);
+				}, 1000);
+			} else {
 				setStep(LottoSteps.CONFIRMED);
-			});
+			}
 		} catch (e) {
 			console.error(e);
 		}

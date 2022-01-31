@@ -1,5 +1,6 @@
 <script lang="ts">
 	import FaDice from 'svelte-icons/fa/FaDice.svelte';
+	import { fade } from 'svelte/transition';
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 	export let playNo: number;
 	export let num1: number;
@@ -24,7 +25,7 @@
 	};
 </script>
 
-<div class="container px-8 flex md:flex-row flex-col justify-center  border-b-2 drop-shadow-sm border-gray-100 ">
+<div class="container px-8 flex md:flex-row flex-col justify-center  border-b-2 drop-shadow-sm border-gray-100 " in:fade={{ duration: 750 }}>
 	<p class="w-full md:w-1/6 flex text-bold text-lg justify-center mt-8 ">PLAY {playNo}</p>
 	<div class="flex container space-x-3 justify-center">
 		<section class="flex py-4 space-x-3">

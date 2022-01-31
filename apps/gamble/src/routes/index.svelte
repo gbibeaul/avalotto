@@ -117,16 +117,24 @@
 
 <style>
 	.main {
+		height: 200%;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
 		background-image: url('/assets/SnowyPalace-Homepage.webp');
+	}
+
+	@media only screen and (max-width: 420px) {
+		.main {
+			background-position: 75%;
+		}
 	}
 	@media only screen and (max-width: 640px) {
 		.main {
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: cover;
+			background-position: 50%;
 			background-image: url('/assets/SnowyPalaceBackgroundMobile.webp');
 		}
 	}
@@ -136,6 +144,15 @@
 			background-attachment: fixed;
 			background-size: cover;
 			background-image: url('/assets/SnowyPalaceBackgroundTablet.webp');
+		}
+	}
+
+	@media only screen and (min-width: 1500px) {
+		.main {
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
+			background-image: url('/assets/SnowyPalaceBackground4k.webp');
 		}
 	}
 </style>

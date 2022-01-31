@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { BigNumber, utils } from 'ethers';
+	import { fade } from 'svelte/transition';
 	import FaLongArrowAltLeft from 'svelte-icons/fa/FaLongArrowAltLeft.svelte';
 	import { format } from 'date-fns';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
@@ -27,6 +28,7 @@
 	let jackpot: BigNumber;
 
 	lottoStore.subscribe((value) => {
+		console.log(value)
 		currentStep = value.currentStep;
 		jackpot = value.jackpot;
 	});
@@ -46,6 +48,8 @@
 	const handleBuy = () => {
 		lottoStore.placeBet(plays);
 	};
+
+	
 
 </script>
 
