@@ -17,6 +17,9 @@ abstract contract Game {
     IInfrastructure infra;
     address payable treasuryContract;
     uint256 contractTreasuryAccount = 0;
+
+    mapping(uint256 => bool) private requests;
+    
     event RngReceived(string);
     event RngRequested(uint256);
 
@@ -65,17 +68,27 @@ abstract contract Game {
         treasury.payGameSessionWinnings{value: msg.value}(_amount, _profits, _winner);
     }
 
-    function requestRng() internal {
-        infra.requestRng();
+    // TODO: evaluate the ordering of all the statements in this function for security
+    function requestRng() internal returns(uint256) {
+        // doesn't actually transfer any funds, just the treasury's accounting
         treasury.receiveRngPayment();
+
+        uint256 requestId = infra.requestRng();
+        requests[requestId] = true;
+
+        return requestId;
     }
 
-    function validateRng(uint256 _index, uint256 _rng, uint256 _commit) public onlyInfra {
-        require(infra.validateCommit(_index, _commit), "Invalid commit");
-        consumeRng(_rng);
+    // TODO: evaluate the ordering of all the statements in this function for security
+    function validateRng(uint256 _requestId, uint256 _rng, uint256 _provenance) external onlyInfra {
+        require(requests[_requestId], "Invalid request ID");
+        require(infra.validateCommit(_requestId, _provenance), "Invalid commit");
+        requests[_requestId] = false;
+
+        consumeRng(_rng, _requestId);
     }
 
-    function consumeRng(uint256 _rng) public virtual onlyInfra {}
+    function consumeRng(uint256 _rng, uint256 _requestId) internal virtual {}
 }
 
 interface IGame {
