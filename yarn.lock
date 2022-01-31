@@ -2494,9 +2494,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/Lotto":
+"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/lotto":
   version: 0.0.0-use.local
-  resolution: "@gamble/lotto@workspace:packages/Lotto"
+  resolution: "@gamble/lotto@workspace:packages/lotto"
   languageName: unknown
   linkType: soft
 

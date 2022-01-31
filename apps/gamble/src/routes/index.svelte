@@ -30,14 +30,16 @@
 	};
 </script>
 
-<main class="main h-full">
-	<header
-		class="flex py-8 fixed top-0 right-0 items-center  w-full justify-between px-8"
-	>
+<main class="main pt-[108px] h-full">
+	<header class="flex py-8 fixed top-0 right-0 items-center  w-full justify-between px-8">
 		<a class="text-white text-xl" href="/docs">Docs</a>
 
 		<div class="flex items-center">
-			<button aria-label="notifications" on:click={handleNotification} class="h-6 w-6 mr-4 text-white">
+			<button
+				aria-label="notifications"
+				on:click={handleNotification}
+				class="h-6 w-6 mr-4 text-white"
+			>
 				<FaBell />
 			</button>
 			{#if $walletStore.walletAddress.length > 0}
@@ -64,7 +66,7 @@
 	</header>
 	<NotificationPanel />
 	<section
-		class="relative pt-[500px]  pb-80 h-full p-6 lg:flex  justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
+		class="relative mt-[392px]  pb-80 p-6 lg:flex  justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
 	>
 		<section class="h-80 bg-[#434343] rounded-3xl p-6 sm:flex lg:w-[500px] lg:h-[330px]">
 			<div class="sm:w-2/3 lg:w-1/2	">
