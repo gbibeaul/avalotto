@@ -17,7 +17,9 @@ abstract contract Game {
     IInfrastructure infra;
     address payable treasuryContract;
     uint256 contractTreasuryAccount = 0;
+
     mapping(uint256 => bool) private requests;
+    
     event RngReceived(string);
     event RngRequested(uint256);
 
@@ -86,7 +88,7 @@ abstract contract Game {
     }
 
     // TODO: evaluate the ordering of all the statements in this function for security
-    function requestRng() internal returns (uint256) {
+    function requestRng() internal returns(uint256) {
         treasury.receiveRngPayment();
 
         uint256 requestId = infra.requestRng();
@@ -95,6 +97,7 @@ abstract contract Game {
         return requestId;
     }
 
+    // TODO: evaluate the ordering of all the statements in this function for security
     function validateRng(
         uint256 _requestId,
         uint256 _rng,
