@@ -198,11 +198,13 @@ contract GamebitTreasury {
 
     function receiveRngPayment() public payable approvedGame {
         treasuryFunds += rngFee;
+        authorizedGameFunds[msg.sender] -= rngFee;
         emit ProfitTaken(ProfitType.RNG_FEE, rngFee, msg.sender);
     }
 
     function receiveOraclePayment(address _game) public payable {
         treasuryFunds += rngFee;
+        authorizedGameFunds[msg.sender] -= rngFee;
         emit ProfitTaken(ProfitType.ORACLE_FEE, rngFee, _game);
     }
 }

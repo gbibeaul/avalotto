@@ -25,7 +25,7 @@ contract LottoMockWinner is LottoGamebit {
         return [uint256(1), uint256(2), uint256(3)];
     }
 
-    function consumeRng(uint256 _rng) public override onlyInfra {
+    function consumeRng(uint256 _rng, uint256 _requestId) internal override {
         uint256[3] memory _drawNumbers = _getLotteryResults();
 
         previousDraws[amountOfDraws] = _drawNumbers;

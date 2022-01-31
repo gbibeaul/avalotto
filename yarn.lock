@@ -2486,9 +2486,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/lotto":
+"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/Lotto":
   version: 0.0.0-use.local
-  resolution: "@gamble/lotto@workspace:packages/lotto"
+  resolution: "@gamble/lotto@workspace:packages/Lotto"
   languageName: unknown
   linkType: soft
 
@@ -10921,7 +10921,6 @@ __metadata:
     "@typescript-eslint/parser": ^4.31.1
     autoprefixer: ^10.4.0
     concurrently: ^6.4.0
-    cookie: ^0.4.1
     cross-env: ^7.0.3
     date-fns: ^2.27.0
     dotenv: ^10.0.0
