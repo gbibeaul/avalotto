@@ -8,6 +8,7 @@
 
 	export async function load({ session }) {
 		const { walletAddress = '', notifications } = session;
+		console.log(walletAddress)
 		walletStore.updateWalletAddress([walletAddress]);
 
 		const lotto = await lottoProvider();
@@ -67,9 +68,8 @@
 	.main {
 		background: linear-gradient(116.82deg, #d32d28 0%, #6c1280 48.44%, #1102df 100%);
 		background-repeat: no-repeat;
-			background-attachment: fixed;
-			background-size: cover;
-			background-position: 50%;
-
+		background-attachment: fixed;
+		background-size: cover;
+		background-position: 50%;
 	}
 </style>

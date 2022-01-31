@@ -28,7 +28,6 @@
 	let jackpot: BigNumber;
 
 	lottoStore.subscribe((value) => {
-		console.log(value)
 		currentStep = value.currentStep;
 		jackpot = value.jackpot;
 	});

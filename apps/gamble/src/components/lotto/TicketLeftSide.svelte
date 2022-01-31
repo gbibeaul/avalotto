@@ -15,6 +15,10 @@
 		jackpot = value.jackpot;
 	});
 
+	walletStore.subscribe((value) => {
+		// console.log(value)
+	})
+
 	const getRandom = () => Math.floor(Math.random() * 100);
 
 	const handleAddPlay = () => {
@@ -55,7 +59,7 @@
 			</em>
 		</hgroup>
 		{#if $currentStep === LottoSteps.SELECT_PLAYS}
-			{#if $walletStore.walletAddress.length > 0}
+			{#if $walletStore.walletAddress.length > 0 }
 				<section class="bg-white flex justify-center flex-col  px-8" >
 					{#each plays as [num1, num2, num3], i}
 						<Play
