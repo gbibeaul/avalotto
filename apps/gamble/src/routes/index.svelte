@@ -31,34 +31,40 @@
 </script>
 
 <main class="main h-full">
-	<header class="flex lg:w-auto justify-end p-8 fixed top-0 right-0 items-center">
-		<button aria-label="notifications" on:click={handleNotification} class="h-6 mr-8 text-white">
-			<FaBell />
-		</button>
-		{#if $walletStore.walletAddress.length > 0}
-			<button
-				aria-label="request account"
-				on:click={handleRemoveAccount}
-				class="text-white border-white border-2 py-2 px-6 rounded-lg flex justify-center items-center "
-			>
-				<span class="h-4 mr-3 ">
-					<FaWallet />
-				</span>
-				{getShortenedAddress($walletStore.walletAddress)}
+	<header
+		class="flex  justify-end py-8 fixed top-0 right-0 items-center  w-full justify-between px-8"
+	>
+		<a class="text-white text-xl" href="/docs">Docs</a>
+
+		<div class="flex items-center">
+			<button aria-label="notifications" on:click={handleNotification} class="h-6 mr-4 text-white">
+				<FaBell />
 			</button>
-		{:else}
-			<button
-				aria-label="request account"
-				on:click={handleRequestAccount}
-				class="text-white border-white border-2 py-2 px-6 rounded-lg flex justify-center items-center "
-			>
-				Connect Wallet
-			</button>
-		{/if}
+			{#if $walletStore.walletAddress.length > 0}
+				<button
+					aria-label="request account"
+					on:click={handleRemoveAccount}
+					class="text-white border-white border-2 py-2 px-6 rounded-lg flex justify-center items-center "
+				>
+					<span class="h-4 mr-3 ">
+						<FaWallet />
+					</span>
+					{getShortenedAddress($walletStore.walletAddress)}
+				</button>
+			{:else}
+				<button
+					aria-label="request account"
+					on:click={handleRequestAccount}
+					class="text-white border-white border-2 py-2 px-6 rounded-lg flex justify-center items-center "
+				>
+					Connect Wallet
+				</button>
+			{/if}
+		</div>
 	</header>
 	<NotificationPanel />
 	<section
-		class="mt-80 p-6 lg:flex lg:mt-[32%] justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
+		class="pt-[500px]  pb-80 h-full p-6 lg:flex  justify-around space-x-2 lg:space-y-0 sm:space-y-20 space-y-28"
 	>
 		<section class="h-80 bg-[#434343] rounded-3xl p-6 sm:flex lg:w-[500px] lg:h-[330px]">
 			<div class="sm:w-2/3 lg:w-1/2	">
@@ -100,7 +106,7 @@
 					width="422"
 					height="362"
 					alt="Avalotto is a avalanche Lottery game"
-					class="relative -top-[40px] sm:top-[60px]  sm:top-[55px] -z-index-10 sm:scale-[1.7] lg:scale-[1.9]"
+					class="relative -top-[40px] sm:top-[60px]  sm:top-[55px] sm:scale-[1.7] lg:scale-[1.9]"
 				/>
 			</a>
 		</section>
@@ -108,14 +114,14 @@
 </main>
 
 <style>
-	:global(body) {
+	.main {
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
 		background-image: url('/assets/SnowyPalace-Homepage.webp');
 	}
 	@media only screen and (max-width: 640px) {
-		:global(body) {
+		.main {
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: cover;
@@ -123,7 +129,7 @@
 		}
 	}
 	@media only screen and (max-width: 1024px) {
-		:global(body) {
+		.main {
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: cover;

@@ -17,13 +17,16 @@
 		/>
 	</a>
 </header>
-<section class="flex justify-center mt-40">
+<section class="flex justify-center mt-40 bg-white">
 	<article class="prose text-center">
 		<slot />
 	</article>
 </section>
 
 <style>
+:global(body) {
+		background: white;
+	}
 	.header {
 		min-height: 125px;
 		background-image: url(/assets/snowy-palace-documentation-banner.png);
