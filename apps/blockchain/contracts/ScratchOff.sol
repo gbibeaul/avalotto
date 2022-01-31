@@ -6,6 +6,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "./Game.sol";
+import "./CasinoNFT.sol";
+
 /**
  * NFT mint + scratch off + redeem interfaces
  *
@@ -28,6 +31,8 @@ enum ScratchOffStatus {
  * minted ==> scratched ==> redeemed
  */
 interface IScratchOff {
+    event Scratched(uint256, uint256[9]);
+
     /**
      * Mint
      */
@@ -46,30 +51,34 @@ interface IScratchOff {
     /**
      * Get the scratched off, revealed values
      */
-    function getBalls(uint256 tokenId) external view returns(uint8[9] memory);
+    function getBalls(uint256 tokenId) external view returns(uint256[9] memory);
 
     /**
      * State transition: scratched ==> redeemed
      */
     function redeem(uint256 tokenId) external;
-
-    /**
-     * Get the redeemed NFT ID (address is a magic hard-coded address for now, but will need to change)
-     */
-    function getRedemption(uint256 tokenId) external view returns(uint256);
 }
 
 /**
  * Mocked version of contract to be replaced
  */
-contract ScratchOffCard is IScratchOff, ERC721 {
+contract ScratchOffCard is IScratchOff, ERC721, Game {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
 
-    mapping(uint256 => ScratchOffStatus) private _statuses;
+    IScratchOffRedeemable private casinoNFT;
 
-    constructor() ERC721("ScratchOffCard", "SCRATCH") {}
+    mapping(uint256 => ScratchOffStatus) private _statuses;
+    mapping(uint256 => uint256[9]) private tokenToRolls;
+    mapping(uint256 => uint256) private rngToToken;
+
+
+    constructor(address _treasury, address _gamebitAuth, address _gamebitInfra, address _casinoNFT)
+        ERC721("ScratchOffCard", "SCRATCH")
+        Game(_treasury, _gamebitAuth, _gamebitInfra) {
+            casinoNFT = CasinoNFT(_casinoNFT);
+        }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://tbd";
@@ -87,6 +96,7 @@ contract ScratchOffCard is IScratchOff, ERC721 {
     {
         super._beforeTokenTransfer(from, to, tokenId);
     }
+
     function mint() external {
         safeMint(_msgSender());
     }
@@ -95,21 +105,45 @@ contract ScratchOffCard is IScratchOff, ERC721 {
         return _statuses[tokenId];
     }
 
-    function scratch(uint256 tokenId) external {
-        _statuses[tokenId] = ScratchOffStatus.Scratched;
+    function scratch(uint256 _tokenId) external {
+        require(_statuses[_tokenId] == ScratchOffStatus.Minted);
+        require(ownerOf(_tokenId) == _msgSender());
+        uint256 requestId = requestRng();
+        rngToToken[requestId] = _tokenId; 
     }
 
-    function getBalls(uint256 tokenId) external view returns(uint8[9] memory) {
-        uint8[9] memory balls = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    function expand(uint256 randomValue, uint256 n) public pure returns (uint256[] memory expandedValues) {
+        expandedValues = new uint256[](n);
+        for (uint256 i = 0; i < n; i++) {
+            expandedValues[i] = uint256(keccak256(abi.encode(randomValue, i)));
+        }
+        return expandedValues;
+    }
 
-        return balls;
+    function consumeRng(uint256 _rng, uint256 _requestId) internal override {
+        uint256 tokenId = rngToToken[_requestId];
+        uint256[] memory expanded = expand(_rng, 9);
+
+        for (uint8 i = 0; i < expanded.length; i++) {
+            tokenToRolls[tokenId][i] = (expanded[i] % 99) + 1;
+        }
+
+        _statuses[tokenId] = ScratchOffStatus.Scratched;
+
+        emit Scratched(tokenId, tokenToRolls[tokenId]);
+    }
+
+    function getBalls(uint256 tokenId) external view returns(uint256[9] memory) {
+        require(_statuses[tokenId] != ScratchOffStatus.Minted);
+        return tokenToRolls[tokenId];
     }
 
     function redeem(uint256 tokenId) external {
-        _statuses[tokenId] = ScratchOffStatus.Redeemed;
-    }
+        require(_statuses[tokenId] == ScratchOffStatus.Scratched);
+        require(ownerOf(tokenId) == _msgSender());
 
-    function getRedemption(uint256 tokenId) external view returns(uint256) {
-        return tokenId; // mocked
+        casinoNFT.mint(_msgSender(), tokenId);
+
+        _statuses[tokenId] = ScratchOffStatus.Redeemed;
     }
 }

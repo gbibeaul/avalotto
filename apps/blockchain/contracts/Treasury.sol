@@ -1,7 +1,5 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./GamebitAuthorizations.sol";
 
 contract GamebitTreasury {
@@ -197,6 +195,7 @@ contract GamebitTreasury {
      */
 
     function receiveRngPayment() public payable approvedGame {
+        // TODO: URGENT GB DECREASE GAME FUNDS
         treasuryFunds += rngFee;
         authorizedGameFunds[msg.sender] -= rngFee;
         emit ProfitTaken(ProfitType.RNG_FEE, rngFee, msg.sender);
