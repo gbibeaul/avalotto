@@ -17,10 +17,15 @@ abstract contract Game {
     IInfrastructure infra;
     address payable treasuryContract;
     uint256 contractTreasuryAccount = 0;
+    mapping(uint256 => bool) private requests;
     event RngReceived(string);
     event RngRequested(uint256);
 
-    constructor(address _treasury, address _gamitAuth, address _gamebitInfra) {
+    constructor(
+        address _treasury,
+        address _gamitAuth,
+        address _gamebitInfra
+    ) {
         treasury = ITreasury(_treasury);
         treasuryContract = payable(_treasury);
         gamebitAuth = IGamebitAuthorization(_gamitAuth);
@@ -35,9 +40,20 @@ abstract contract Game {
         _;
     }
 
+    modifier onlyStaffOrGov() {
+        require(
+            gamebitAuth.isStaffOrGovApproved(msg.sender),
+            "Only official staff or governance can call this function"
+        );
+        _;
+    }
+
     // single plays methods (i.e. moves, scratch cards, etc)
 
-    function acceptPlay(uint256 _amount, uint256 _profit) internal returns (bool) {
+    function acceptPlay(uint256 _amount, uint256 _profit)
+        internal
+        returns (bool)
+    {
         contractTreasuryAccount += _amount;
         treasury.acceptPlay(_amount, _profit);
         return true;
@@ -62,22 +78,45 @@ abstract contract Game {
         uint256 _profits,
         address payable _winner
     ) internal {
-        treasury.payGameSessionWinnings{value: msg.value}(_amount, _profits, _winner);
+        treasury.payGameSessionWinnings{value: msg.value}(
+            _amount,
+            _profits,
+            _winner
+        );
     }
 
-    function requestRng() internal {
-        infra.requestRng();
+    // TODO: evaluate the ordering of all the statements in this function for security
+    function requestRng() internal returns (uint256) {
         treasury.receiveRngPayment();
+
+        uint256 requestId = infra.requestRng();
+        requests[requestId] = true;
+
+        return requestId;
     }
 
-    function validateRng(uint256 _index, uint256 _rng, uint256 _commit) public onlyInfra {
-        require(infra.validateCommit(_index, _commit), "Invalid commit");
-        consumeRng(_rng);
+    function validateRng(
+        uint256 _requestId,
+        uint256 _rng,
+        uint256 _provenance
+    ) external onlyInfra {
+        require(requests[_requestId], "Invalid request ID");
+        require(
+            infra.validateCommit(_requestId, _provenance),
+            "Invalid commit"
+        );
+        requests[_requestId] = false;
+
+        consumeRng(_rng, _requestId);
     }
 
-    function consumeRng(uint256 _rng) public virtual onlyInfra {}
+    function consumeRng(uint256 _rng, uint256 _requestId) internal virtual {}
 }
 
 interface IGame {
-    function validateRng(uint256 _index, uint256 _rng, uint256 _commit) external;
+    function validateRng(
+        uint256 _index,
+        uint256 _rng,
+        uint256 _provenance
+    ) external;
 }

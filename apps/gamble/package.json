@@ -17,7 +17,7 @@
 		"@gamble/components": "^1.0.0",
 		"@gamble/config": "^1.0.0",
 		"@gamble/lotto": "^1.0.0",
-		"@gamble/lotto-winner-mock": "^1.0.0",
+		"@gamble/lotto-mock-winner": "^1.0.0",
 		"@metamask/detect-provider": "^1.2.0",
 		"@metamask/onboarding": "^1.0.1",
 		"@metamask/providers": "^8.1.1",

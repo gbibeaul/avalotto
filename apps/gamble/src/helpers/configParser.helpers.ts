@@ -1,5 +1,5 @@
 import configuration from '@gamble/config';
-import { abi as lottoWinnerMockAbi } from '@gamble/lotto-winner-mock';
+import { abi as lottoWinnerMockAbi } from '@gamble/lotto-mock-winner';
 import { abi as lottoAbi } from '@gamble/lotto';
 
 

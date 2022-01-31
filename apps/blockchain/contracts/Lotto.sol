@@ -36,11 +36,6 @@ contract LottoGamebit is Game {
         nextDraw = block.timestamp + (_drawDaysInterval * 1 days);
     }
 
-    modifier onlyTrustedParty() {
-        require(msg.sender == trustedParty);
-        _;
-    }
-
     /**
      * @dev modifier to be added to any action taken by a better party
      */
@@ -134,4 +129,16 @@ contract LottoGamebit is Game {
 
         emit jackpotUpdated(jackpot);
     }
+
+    /**
+     * DRAW ACTIONS
+     */
+    function weeklyDraw() public onlyStaffOrGov {
+        require(betsClosed == false, "Can only pick a draw if bets are open");
+        // close the draws while we pick an RNG to avoid gaming the system
+        betsClosed = true;
+        requestRng();
+    }
+
+
 }

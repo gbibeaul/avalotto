@@ -12,13 +12,13 @@
 <header
 	class="lg:h-34 h-26 flex flex-wrap lg:flex-nowrap items-center lg:border-b-2 border-b-white/[.65] mx-6 py-4"
 >
-	<div class="lg:w-full w-1/2">
+	<a class="lg:w-full w-1/2" href="/">
 		<img
 			src="/assets/AVALotto_logo_white.svg"
 			class="object-contain lg:w-28 w-16 "
 			alt="AVALotto logo"
 		/>
-	</div>
+	</a>
 
 	<div class="order-2 mr-4 lg:w-auto w-full">
 		<NextDrawCountdown />

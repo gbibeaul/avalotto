@@ -37,7 +37,6 @@
 		plays = [[getRandom(), getRandom(), getRandom()]];
 	}
 
-	$: console.log($walletStore.walletAddress);
 </script>
 
 <div class="justify-center flex lg:w-4/6" class:hide={$currentStep === LottoSteps.REVIEW_TICKET}>

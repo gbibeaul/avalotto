@@ -65,21 +65,21 @@ contract GamebitInfra {
     function fulFillRng(
         uint256 _rngIndex,
         uint256 _randomNum,
-        uint256 _commit
+        uint256 _provenance
     ) public isOfficialRng {
         require(
             rngRequests[_rngIndex].consumed == false,
             "RNG request has already been fulfilled or cancelled"
         );
-        commits[_rngIndex] = _commit;
+        commits[_rngIndex] = _provenance;
         reveals[_rngIndex] = _randomNum;
-        IGame(msg.sender).validateRng(_rngIndex, _randomNum, _commit);
+        IGame(msg.sender).validateRng(_rngIndex, _randomNum, _provenance);
     }
 
     /**
      * @dev The commit is obtained in the oracle server. It represents a signed json string of the RNG api call.
      */
-    function validateCommit(uint256 _rngIndex, uint256 _commit)
+    function validateCommit(uint256 _rngIndex, uint256 _provenance)
         public
         returns (bool)
     {
@@ -91,7 +91,7 @@ contract GamebitInfra {
             rngRequests[_rngIndex].consumed == false,
             "This RNG has already been consumed"
         );
-        require(commits[_rngIndex] == _commit, "Commit does not match");
+        require(commits[_rngIndex] == _provenance, "Commit does not match");
         rngRequests[_rngIndex].consumed = true;
         emit RNGRequestFulfilled(_rngIndex, reveals[_rngIndex]);
         delete rngRequests[_rngIndex];
@@ -105,5 +105,5 @@ interface IInfrastructure {
 
     function fulFillRng(uint256 _rngIndex, uint256 _randomNum) external;
 
-    function validateCommit(uint256 _rngIndex, uint256 _commit) external returns (bool);
+    function validateCommit(uint256 _rngIndex, uint256 _provenance) external returns (bool);
 }
