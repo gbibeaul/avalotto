@@ -117,7 +117,7 @@
 
 <style>
 	.main {
-		height: 200%;
+		height: 300%;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
