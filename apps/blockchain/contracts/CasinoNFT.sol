@@ -36,11 +36,11 @@ contract CasinoNFT is IScratchOffRedeemable, ERC721 {
     }
 
     function mint(uint256 _tokenId) external {
-	require(_msgSender() == scratchOff, "Only scratch off can mint");
-	require(!redeemed[_tokenId], "Scratch off may only be redeemed once");
+        require(_msgSender() == scratchOff, "Only scratch off can mint");
+        require(!redeemed[_tokenId], "Scratch off may only be redeemed once");
 
         _safeMint(_msgSender(), _tokenId);
 
-	redeemed[_tokenId] = true;
+        redeemed[_tokenId] = true;
     }
 }
