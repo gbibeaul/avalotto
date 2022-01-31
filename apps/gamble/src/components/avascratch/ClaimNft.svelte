@@ -18,7 +18,7 @@
 
 <div class="relative flex flex-col h-full items-center justify-center" in:fade={{ duration: 750 }}>
 	<img
-		src="/assets/avascratch_nft_placeholder.svg"
+		src="/assets/avascratch/nft_placeholder.svg"
 		alt="nft_placeholder"
 		class="z-10 nft-placeholder"
 	/>

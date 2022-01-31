@@ -19,18 +19,18 @@
 >
 	<img
 		class="w-full absolute sunburst-bg"
-		src="/assets/avascratch_sunburst_bg.svg"
+		src="/assets/avascratch/sunburst_bg.svg"
 		alt="sunburst_bg"
 	/>
 	<img
 		class="absolute left-1/2 avascratch-cash-sack"
-		src="/assets/avascratch_cash_sack.svg"
+		src="/assets/avascratch/cash_sack.svg"
 		alt="sunburst_bg"
 	/>
 	<div class="relative">
 		<img
 			class="m-auto winning-number-bill"
-			src="/assets/avascratch_winning_number_bill.png"
+			src="/assets/avascratch/winning_number_bill.png"
 			alt="winning_number"
 		/>
 	</div>
@@ -42,11 +42,11 @@
 					class:cursor-pointer={!scratched}
 					on:click|once={() => handleScratchNumberClick(i)}
 				>
-					<img src="/assets/avascratch_numberball.svg" alt="scratch-number" />
+					<img src="/assets/avascratch/numberball.svg" alt="scratch-number" />
 					{#if scratched}
 						<img
 							class="absolute"
-							src="/assets/avascratch_scratch_grey_area.svg"
+							src="/assets/avascratch/scratch_grey_area.svg"
 							alt="scratch_grey_area"
 							transition:fade={{ duration: 750 }}
 						/>
@@ -58,7 +58,7 @@
 						</div>
 					{:else}
 						<div class="absolute ml-1 mb-1">
-							<img src="/assets/avascratch_coins_red.svg" alt="red_coins" />
+							<img src="/assets/avascratch/coins_red.svg" alt="red_coins" />
 						</div>
 					{/if}
 				</div>

@@ -11,14 +11,14 @@
 
 <div class="relative flex flex-col h-full items-center justify-center" in:fade={{ duration: 750 }}>
 	<img
-		src="/assets/avascratch_winner_sunburst_bg.svg"
+		src="/assets/avascratch/winner_sunburst_bg.svg"
 		alt="winner_sunburst_bg"
 		class="absolute sunburst-bg"
 	/>
-	<img src="/assets/avascratch_spikeball.svg" alt="spikeball" class="absolute spikeball" />
+	<img src="/assets/avascratch/spikeball.svg" alt="spikeball" class="absolute spikeball" />
 	<img
-		src="/assets/avascratch_winner_claim_your_nft.png"
-		alt="winner_claim_nft"
+		src="/assets/avascratch/winner-text.png"
+		alt="winner-text"
 		class="z-10 winner-claim-your-nft"
 	/>
 
@@ -37,7 +37,7 @@
 	.sunburst-bg {
 		left: 50%;
 		transform: translate(-50%, 8%);
-		width: 95%;
+		max-height: 86%;
 	}
 
 	.spikeball {
