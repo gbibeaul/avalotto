@@ -40,6 +40,11 @@
         "test": "hardhat test",
         "deploy:fuji": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network fuji scripts/deploy-fuji.ts",
         "deliver": "ts-node scripts/deliver-contract.ts",
-        "deploy:dev": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network localhost scripts/deploy-dev-env.ts"
+        "deploy:dev": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network localhost scripts/deploy-dev-env.ts",
+        "rng": "TS_NODE_TRANSPILE_ONLY=1 ts-node scripts/local-rng.ts"
+    },
+    "dependencies": {
+        "@gamble/infra": "workspace:^",
+        "isomorphic-unfetch": "^3.1.0"
     }
 }

@@ -7,6 +7,7 @@
   "scripts": {
     "build": "yarn turbo run build",
     "test": "yarn turbo run test",
+    "rng": "yarn workspace @gamble/blockchain run rng",
     "test:blockchain": "yarn turbo run test --scope=*blockchain*",
     "deliver": "yarn turbo run deliver",
     "deploy:dev": "yarn workspace @gamble/blockchain run deploy:dev",

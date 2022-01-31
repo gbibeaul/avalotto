@@ -47,7 +47,10 @@ export const deployAuthorization = async (governanceAddress: string) => {
   return gamebitAuthorization;
 };
 
-export const deployTreasury = async (authorisationAddress: string, rngFee: number) => {
+export const deployTreasury = async (
+  authorisationAddress: string,
+  rngFee: number
+) => {
   const Treasury = await ethers.getContractFactory("GamebitTreasury");
 
   /** deploy treasury
@@ -82,11 +85,8 @@ export const deployGamebit = async () => {
   const gbmt = await deployToken();
   const governance = await deployGovernance(gbmt.address);
   const gamebitAuthorization = await deployAuthorization(governance.address);
-  const treasury = await deployTreasury(
-    gamebitAuthorization.address,
-    1
-  );
-  
+  const treasury = await deployTreasury(gamebitAuthorization.address, 1);
+
   const infra = await deployInfra(gamebitAuthorization.address);
 
   config.Local.contracts.GMBT.owner = owner.address;
@@ -151,7 +151,11 @@ export const setupGame = async () => {
   config.Local.contracts.LottoWinnerMock.trustedParty = lotto.address;
   config.Local.contracts.LottoWinnerMock.address = lotto.address;
 
-  // gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
+  await gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
+
+  await mineEmptyBlocks(1);
+
+  await gamebitAuthorization.functions.changeRng(owner.address);
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
 };
@@ -162,3 +166,10 @@ setupGame()
     console.error(error);
     process.exit(1);
   });
+
+// deployGamebit()
+//   .then(() => process.exit(0))
+//   .catch((error) => {
+//     console.error(error);
+//     process.exit(1);
+//   });

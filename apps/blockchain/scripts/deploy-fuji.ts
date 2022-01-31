@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { ethers, upgrades } from "hardhat";
+import { ethers } from "hardhat";
 import fs from "fs-extra";
 
 const CONFIG_PATH = "../../packages/config/config.json";
@@ -80,7 +80,6 @@ export const deployGamebit = async () => {
 
   const [owner] = await ethers.getSigners();
 
-
   const gbmt = await deployToken();
   const governance = await deployGovernance(gbmt.address);
   const gamebitAuthorization = await deployAuthorization(governance.address);
@@ -89,6 +88,9 @@ export const deployGamebit = async () => {
     ethers.BigNumber.from("1")
   );
   const infra = await deployInfra(gamebitAuthorization.address);
+
+  // in Fuji the owner provides the RNG oracles but that should never be the case in prod
+  gamebitAuthorization.functions.changeRng(owner);
 
   config.Fuji.contracts.GMBT.owner = owner.address;
   config.Fuji.contracts.GMBT.address = gbmt.address;
@@ -119,7 +121,6 @@ export const deployGamebit = async () => {
 export const setupGame = async () => {
   const [owner] = await ethers.getSigners();
 
-
   const config = await fs.readJson(CONFIG_PATH);
 
   const { gamebitAuthorization, treasury, infra } = await deployGamebit();
@@ -140,18 +141,18 @@ export const setupGame = async () => {
     ethers.utils.parseEther("0.05")
   );
 
-
   await gamebitAuthorization.functions.editGamePlayProfitAuth(
     lotto.address,
     true
   );
 
-
   config.Fuji.contracts.LottoWinnerMock.owner = owner.address;
   config.Fuji.contracts.LottoWinnerMock.trustedParty = lotto.address;
   config.Fuji.contracts.LottoWinnerMock.address = lotto.address;
 
-  // gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
+  await gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
+
+  await gamebitAuthorization.functions.changeRng(owner.address);
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
 };

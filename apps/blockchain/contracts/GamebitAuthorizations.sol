@@ -156,7 +156,7 @@ contract GamebitAuthorizations {
     }
 
     /**
-        Enable the staff from taking actions. Gives power back to the staff alongside governance
+        Enable the staff to take actions. Gives power back to the staff alongside governance
      */
     function enableStaff() public onlyGovernance {
         staffEnabled = true;

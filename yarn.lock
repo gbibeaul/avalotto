@@ -2363,7 +2363,7 @@ __metadata:
     "@gamble/components": ^1.0.0
     "@gamble/config": ^1.0.0
     "@gamble/lotto": ^1.0.0
-    "@gamble/lotto-winner-mock": ^1.0.0
+    "@gamble/lotto-mock-winner": ^1.0.0
     "@metamask/detect-provider": ^1.2.0
     "@metamask/onboarding": ^1.0.1
     "@metamask/providers": ^8.1.1
@@ -2396,6 +2396,7 @@ __metadata:
     "@appliedblockchain/chainlink-plugins-fund-link": ^0.0.3
     "@babel/preset-typescript": ^7.16.0
     "@defi-wonderland/smock": ^2.0.7
+    "@gamble/infra": "workspace:^"
     "@nomiclabs/hardhat-ethers": ^2.0.3
     "@nomiclabs/hardhat-waffle": ^2.0.1
     "@openzeppelin/contracts": ^4.4.1
@@ -2417,6 +2418,7 @@ __metadata:
     hardhat: ^2.7.0
     hardhat-erc1820: ^0.1.0
     hardhat-jest-plugin: ^0.0.6
+    isomorphic-unfetch: ^3.1.0
     jest: ^27.3.1
     mocha: ^9.1.3
     ts-node: ^10.4.0
@@ -2480,9 +2482,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamble/lotto-winner-mock@^1.0.0, @gamble/lotto-winner-mock@workspace:packages/LottoWinnerMock":
+"@gamble/infra@workspace:^, @gamble/infra@workspace:packages/Infra":
   version: 0.0.0-use.local
-  resolution: "@gamble/lotto-winner-mock@workspace:packages/LottoWinnerMock"
+  resolution: "@gamble/infra@workspace:packages/Infra"
+  languageName: unknown
+  linkType: soft
+
+"@gamble/lotto-mock-winner@^1.0.0, @gamble/lotto-mock-winner@workspace:packages/LottoMockWinner":
+  version: 0.0.0-use.local
+  resolution: "@gamble/lotto-mock-winner@workspace:packages/LottoMockWinner"
   languageName: unknown
   linkType: soft
 
@@ -10936,7 +10944,7 @@ __metadata:
     "@gamble/components": ^1.0.0
     "@gamble/config": ^1.0.0
     "@gamble/lotto": ^1.0.0
-    "@gamble/lotto-winner-mock": ^1.0.0
+    "@gamble/lotto-mock-winner": ^1.0.0
     "@metamask/detect-provider": ^1.2.0
     "@metamask/onboarding": ^1.0.1
     "@metamask/providers": ^8.1.1
@@ -10951,6 +10959,7 @@ __metadata:
     "@typescript-eslint/parser": ^4.31.1
     autoprefixer: ^10.4.0
     concurrently: ^6.4.0
+    cookie: ^0.4.1
     cross-env: ^7.0.3
     date-fns: ^2.27.0
     dotenv: ^10.0.0
@@ -12775,6 +12784,16 @@ __metadata:
     node-fetch: ^1.0.1
     whatwg-fetch: ">=0.10.0"
   checksum: bb5daa7c3785d6742f4379a81e55b549a469503f7c9bf9411b48592e86632cf5e8fe8ea878dba185c0f33eb7c510c23abdeb55aebfdf5d3c70f031ced68c5424
+  languageName: node
+  linkType: hard
+
+"isomorphic-unfetch@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "isomorphic-unfetch@npm:3.1.0"
+  dependencies:
+    node-fetch: ^2.6.1
+    unfetch: ^4.2.0
+  checksum: 82b92fe4ec2823a81ab0fc0d11bd94d710e6f9a940d56b3cba31896d4345ec9ffc7949f4ff31ebcae84f6b95f7ebf3474c4c7452b834eb4078ea3f2c37e459c5
   languageName: node
   linkType: hard
 
@@ -21422,6 +21441,13 @@ __metadata:
   version: 1.9.1
   resolution: "underscore@npm:1.9.1"
   checksum: bee6f587661a6a9ca2f77e611896141e0287af51d8ca6034b11d0d4163ddbdd181a9720078ddbe94d265b7694f4880bc7f4c2ad260cfb8985ee2f9adcf13df03
+  languageName: node
+  linkType: hard
+
+"unfetch@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "unfetch@npm:4.2.0"
+  checksum: 6a4b2557e1d921eaa80c4425ce27a404945ec26491ed06e62598f333996a91a44c7908cb26dc7c2746d735762b13276cf4aa41829b4c8f438dde63add3045d7a
   languageName: node
   linkType: hard
 

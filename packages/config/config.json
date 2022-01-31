@@ -81,27 +81,27 @@
       "GMBT": {
         "name": "GMBT",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+        "address": "0xf5059a5D33d5853360D16C683c16e67980206f36"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
+        "address": "0x998abeb3E57409262aE5b751f60747921B33613E"
       },
       "Governance": {
         "name": "Governance",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+        "address": "0x95401dc811bb5740090279Ba06cfA8fcF6113778"
       },
       "Treasury": {
         "name": "Treasury",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+        "address": "0x70e0bA845a1A0F2DA3359C97E0285013525FFC49"
       },
       "Infra": {
         "name": "Infra",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+        "address": "0x4826533B4897376654Bb4d4AD88B7faFD0C98528"
       },
       "Lotto": {
         "name": "Lotto",
@@ -111,8 +111,8 @@
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
-        "trustedParty": "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1"
+        "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+        "trustedParty": "0x0165878A594ca255338adfa4d48449f69242Eb8F"
       }
     }
   }

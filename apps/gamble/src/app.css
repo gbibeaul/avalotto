@@ -19,7 +19,7 @@ body {
 }
 
 body {
-	background-image: url('/assets/SnowyPalace-Homepage.webp');
+	background-image: none;
 }
 
 #svelte {

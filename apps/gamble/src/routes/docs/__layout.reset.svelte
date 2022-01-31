@@ -1,29 +1,35 @@
 <script>
-  import './docs.css';
-  export let metadata;
-  export let title = [metadata?.title, 'Snowy Palace Docs'].filter(p => !!p).join(' | ');
+	import './docs.css';
+	export let metadata;
+	export let title = [metadata?.title, 'Snowy Palace Docs'].filter((p) => !!p).join(' | ');
 </script>
+
 <svelte:head>
-  <title>{title}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{title}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 </svelte:head>
-<style>
-  .header {
-    min-height: 125px;
-    background-image: url(/assets/snowy-palace-documentation-banner.png);
-    background-size: cover;
-  }
-  .logo {
-    max-width: 280px;
-  }
-</style>
-<header class="p-4 bg-slate-600 header">
-  <img
-    class="logo"
-    src="/assets/snowy-palace-documentation-header.png"
-    alt="Snowy Palace Documentation"
-  />
+<header class="p-4 bg-slate-600 header fixed top-0 w-full">
+	<a href="/">
+		<img
+			class="logo cursor-pointer"
+			src="/assets/snowy-palace-documentation-header.png"
+			alt="Snowy Palace Documentation"
+		/>
+	</a>
 </header>
-<div class="prose p-2">
-  <slot></slot>
-</div>
+<section class="flex justify-center mt-40">
+	<article class="prose text-center">
+		<slot />
+	</article>
+</section>
+
+<style>
+	.header {
+		min-height: 125px;
+		background-image: url(/assets/snowy-palace-documentation-banner.png);
+		background-size: cover;
+	}
+	.logo {
+		max-width: 280px;
+	}
+</style>

@@ -40,6 +40,14 @@ abstract contract Game {
         _;
     }
 
+    modifier onlyStaffOrGov() {
+        require(
+            gamebitAuth.isStaffOrGovApproved(msg.sender),
+            "Only official staff or governance can call this function"
+        );
+        _;
+    }
+
     // single plays methods (i.e. moves, scratch cards, etc)
 
     function acceptPlay(uint256 _amount, uint256 _profit)

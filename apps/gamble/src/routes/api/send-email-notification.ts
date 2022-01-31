@@ -36,7 +36,6 @@ export async function post({ request }) {
 					console.error(err);
 					reject(err);
 				} else {
-					console.log(info);
 					resolve(info);
 				}
 			});
