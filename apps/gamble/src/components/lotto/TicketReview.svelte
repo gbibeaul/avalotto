@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { BigNumber, utils } from 'ethers';
+	import { fade } from 'svelte/transition';
 	import FaLongArrowAltLeft from 'svelte-icons/fa/FaLongArrowAltLeft.svelte';
 	import { format } from 'date-fns';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
@@ -47,12 +48,14 @@
 		lottoStore.placeBet(plays);
 	};
 
+	
+
 </script>
 
 <!-- outer component with gradient bg -->
 <div class="justify-center flex lg:w-2/6" class:hide={isTicketHidden}>
 	<!-- white card -->
-	<main class=" w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36 flex flex-row">
+	<main class="w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36 flex flex-row">
 		<!-- left portion of card -->
 		<div class="w-5/6 p-4 flex flex-col">
 			<!-- row with back arrow and inted -->

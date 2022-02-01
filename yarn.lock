@@ -2494,9 +2494,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/lotto":
+"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/Lotto":
   version: 0.0.0-use.local
-  resolution: "@gamble/lotto@workspace:packages/lotto"
+  resolution: "@gamble/lotto@workspace:packages/Lotto"
   languageName: unknown
   linkType: soft
 
@@ -2914,6 +2914,15 @@ __metadata:
   version: 4.72.0
   resolution: "@ledgerhq/logs@npm:4.72.0"
   checksum: 128eeb1ff3dc8ab1a50ad811bf886eae45f8de9887bfd15b84e947914c69e77d1b859219d119ec5c40e0b1794ca238dea7fc2bc896db18fb60b5f7244c56ce19
+  languageName: node
+  linkType: hard
+
+"@lottiefiles/svelte-lottie-player@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@lottiefiles/svelte-lottie-player@npm:0.2.0"
+  dependencies:
+    lottie-web: ^5.7.8
+  checksum: 65d5b21ed47e25ad5ac9323019f46f76841128c2cec697eefb07484edf9813a7a311bde6cbbd7d5d3f6544beb8a6144a7be555817806d61b103df7620859f046
   languageName: node
   linkType: hard
 
@@ -10945,6 +10954,7 @@ __metadata:
     "@gamble/config": ^1.0.0
     "@gamble/lotto": ^1.0.0
     "@gamble/lotto-mock-winner": ^1.0.0
+    "@lottiefiles/svelte-lottie-player": ^0.2.0
     "@metamask/detect-provider": ^1.2.0
     "@metamask/onboarding": ^1.0.1
     "@metamask/providers": ^8.1.1
@@ -14610,6 +14620,13 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"lottie-web@npm:^5.7.8":
+  version: 5.8.1
+  resolution: "lottie-web@npm:5.8.1"
+  checksum: 48c19ea7863310150dc9e46855b0f85179f3768ac0c0cf4f3ffb18944819079d3046c31ca04f2748291f3c413a855329a12ce9c3faae056a1a869776b6ed12a9
   languageName: node
   linkType: hard
 

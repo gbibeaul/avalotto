@@ -51,22 +51,5 @@ A first priority in our roadmap is introducing a trusted and verifiable oracle s
 ## Governance
 After initial critical roadmap items are tackled and our community has shown positive growth, we intend to transition to a DAO governance model where token holders can influence key protocol decisions through voting. This can range from hiring, tokenomic revisions or roadmap decisions.
 
-## Tokenomics
-
-Gamebit has a max supply of 5 billion $GBIT tokens. 15% are allocated to the team, 10% to seed investors, 50% for marketing & airdrop activities and 25% for community circulation.
-
-### Token uses
-Our $GBIT token provides utility in multiple ways:
-
-- **Staking**: In order to earn a % share of casino revenue, users must stake their $GBIT tokens. Gamebit will use the ve model for veGBIT to encourage long-term staking. Those that earn the non-tradeable veGBIT token will earn higher percentages of the casino revenue. If $GBIT is ever unstaked, a user loses all of their veGBIT.
-Governance: A minimum amount of staked $GBIT tokens will be required to participate in the future DAO governance
-Game Credits: $GBIT stakers will be eligible for regular “free play” credits towards select games
-
-- **Staking**
-The player rewards and staking yields are automatically rebalanced by the protocol to ensure the long-term viability of the platform. $GBIT APY and rewards are directly influenced by:
-
-- **Protocol volume (more revenue, more rewards to be earned)
-**Amount of accrued veGBIT (higher veGBIT, higher the APY of your staked GBIT)
-
 ## Conclusion
 Gamebit aims to become the de facto play & earn protocol on Avalanche for casino-style gaming. We want to disrupt the traditional casino model by offering our players a chance to earn a direct piece of our protocol's revenue. Additionally, we want to empower builders to create fun games to further grow the Gamebit protocol. We believe that the combination of these powerful elements will lead to a prosperous future ecosystem where players, builders and yield chasers can thrive and ultimately bring more visibility to Avalanche.
