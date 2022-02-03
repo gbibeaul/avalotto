@@ -50,7 +50,7 @@
 			</p>
 		</div>
 	</section>
-	<section class="flex items-baseline mt-5">
+	<section class="flex md:w-1/6  justify-center items-baseline mt-5">
 		<button class="h-8 w-8 icon mr-4 " on:click={handleRandomNum}><FaDice /></button>
 		<button class="h-6 w-6" on:click={removePlay} class:disabled={isFirst} class:enabled={!isFirst}
 			><MDClose /></button
