@@ -51,17 +51,19 @@
 
 <div class="justify-center flex lg:w-4/6" class:hide={$currentStep === LottoSteps.REVIEW_TICKET}>
 	<main class="w-11/12 bg-white mt-4 rounded-md overflow-y-scroll mb-36">
-		<hgroup class="h-48 flex flex-col justify-center py-6 border-b-2  ">
-			<strong class="font-bold flex justify-center text-sm uppercase"
+		<hgroup class="h-[167px] ">
+			<strong class="font-bold flex justify-center pt-8 text-sm text-lotto-black uppercase"
 				>The current jackpot (FUJI TEST) is</strong
 			>
-			<em class="flex justify-center font-italic text-6xl"
+			<em
+				class="flex justify-center text-lotto-black font-lotto font-extrabold text-5xl md:text-6xl"
 				>{(+utils.formatEther(jackpot)).toFixed(2)} AVAX
 			</em>
+			<div class="divider w-full h-8  mt-6" />
 		</hgroup>
 		{#if $currentStep === LottoSteps.SELECT_PLAYS}
 			{#if $session.walletAddress}
-				<section class="bg-white flex justify-center flex-col  px-8">
+				<section class="px-8">
 					{#each plays as [num1, num2, num3], i}
 						<Play
 							removePlay={() => handleRemovePLay(i)}
@@ -76,7 +78,7 @@
 				<section class="flex justify-center py-4">
 					<button
 						on:click={handleAddPlay}
-						class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
+						class="w-40 h-12 bg-avaloto md:font-bold text-sm rounded text-lotto-purple border-lotto-purple border-2"
 					>
 						Add a play
 					</button>
@@ -86,7 +88,7 @@
 					<button
 						aria-label="request account"
 						on:click={handleRequestAccount}
-						class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
+						class="w-40 h-12 bg-avaloto font-bold rounded text-lotto-purple border-lotto-purple border-2"
 					>
 						Connect Wallet
 					</button>
@@ -143,5 +145,9 @@
 		.hide {
 			display: none;
 		}
+	}
+
+	.divider {
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0.0594) 0%, rgba(0, 0, 0, 0) 100%);
 	}
 </style>
