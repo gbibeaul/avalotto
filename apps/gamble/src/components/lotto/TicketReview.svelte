@@ -131,7 +131,7 @@
 			</div>
 			{#if !isViewOnly}
 				<div class="flex justify-center">
-					<button on:click={handleBuy} class="bg-avaloto w-80 bg-indigo-500 text-white rounded h-12"
+					<button on:click={handleBuy} class="bg-avaloto w-80 bg-indigo-500 uppercase text-white rounded h-12"
 						>buy now</button
 					>
 				</div>
@@ -140,10 +140,10 @@
 
 		<!-- right portion of card with ava loggo-->
 		<div class="bg-indigo-500 w-1/6 justify-between flex flex-col py-2">
-			<img class="h-8 sm:h-12" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
-			<img class="h-8 sm:h-12" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
-			<img class="h-8 sm:h-12" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
-			<img class="h-8 sm:h-12" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
+			<img class="h-5 sm:h-7" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
+			<img class="h-5 sm:h-7" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
+			<img class="h-5 sm:h-7" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
+			<img class="h-5 sm:h-7" src="/assets/Avax_logo.svg" alt="avalanche crypto blockchain logo" />
 		</div>
 	</main>
 </div>
