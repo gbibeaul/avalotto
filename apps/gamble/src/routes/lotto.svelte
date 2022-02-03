@@ -39,7 +39,7 @@
 	}
 </script>
 
-<div class="h-full main">
+<div class="h-screen main">
 	{#if showAnimation}
 		<div class="fixed w-full">
 			<LottiePlayer

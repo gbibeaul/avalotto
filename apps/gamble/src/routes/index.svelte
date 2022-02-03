@@ -28,7 +28,7 @@
 	};
 </script>
 
-<main class="main pt-[108px] h-full">
+<main class="main pt-[108px] h-screen overflow-scroll">
 	<header class="flex py-8 fixed top-0 right-0 items-center  w-full justify-between px-8">
 		<a class="text-white text-xl" href="/docs">Docs</a>
 
@@ -115,7 +115,6 @@
 
 <style>
 	.main {
-		height: 300%;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
