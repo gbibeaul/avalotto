@@ -152,7 +152,7 @@
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: cover;
-			background-image: url('/assets/SnowyPalaceBackground4k.webp');
+			background-image: url('/assets/SnowyPalaceBackgroundUhd.webp');
 		}
 	}
 </style>
