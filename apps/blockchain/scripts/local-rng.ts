@@ -36,7 +36,6 @@ const deliverRng = async () => {
     data: [rng],
   } = await rngCall.json();
 
-  console.log(rng)
 
   const provenance = await oracle.signMessage(JSON.stringify(rngCall.body));
 

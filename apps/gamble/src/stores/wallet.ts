@@ -15,7 +15,6 @@ const createWallet = () => {
 	const updateWalletAddress = (wallets: string[]) => {
 		if (wallets.length === 0) {
 			fetch('/api/remove-metamask');
-			wallet.update((s) => ({ ...s, walletAddress: '' }));
 			return;
 		}
 		const walletAddress = wallets[0];
@@ -52,13 +51,12 @@ export const requestAccount = () => {
 };
 
 export const disconnectAccount = () => {
-	window.ethereum
-		.request({
-			method: 'wallet_requestPermissions',
-			params: [
-				{
-					eth_accounts: {}
-				}
-			]
-		})
+	window.ethereum.request({
+		method: 'wallet_requestPermissions',
+		params: [
+			{
+				eth_accounts: {}
+			}
+		]
+	});
 };

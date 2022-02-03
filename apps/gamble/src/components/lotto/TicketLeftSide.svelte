@@ -3,7 +3,7 @@
 	import Play from './Play.svelte';
 	import { fade } from 'svelte/transition';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
-	import { walletStore } from '../../stores/wallet';
+	import { session } from '$app/stores';
 	import { withPrevious } from '../../helpers/withPrevious.helpers';
 
 	let jackpot: BigNumber;
@@ -15,10 +15,6 @@
 		jackpot = value.jackpot;
 	});
 
-	walletStore.subscribe((value) => {
-		// console.log(value)
-	})
-
 	const getRandom = () => Math.floor(Math.random() * 100);
 
 	const handleAddPlay = () => {
@@ -27,6 +23,12 @@
 
 	const handleNewPlay = () => {
 		lottoStore.resetState();
+	};
+
+	const handleRequestAccount = () => {
+		window.ethereum.request({ method: 'eth_requestAccounts' }).then((wallets) => {
+			session.update((s) => ({ ...s, walletAddress: wallets[0] }));
+		});
 	};
 
 	const handleRemovePLay = (index) => {
@@ -43,9 +45,8 @@
 	}
 
 	$: if ($currentStep === LottoSteps.SELECT_PLAYS) {
-		lottoStore.setPlays(plays)
+		lottoStore.setPlays(plays);
 	}
-
 </script>
 
 <div class="justify-center flex lg:w-4/6" class:hide={$currentStep === LottoSteps.REVIEW_TICKET}>
@@ -59,8 +60,8 @@
 			</em>
 		</hgroup>
 		{#if $currentStep === LottoSteps.SELECT_PLAYS}
-			{#if $walletStore.walletAddress.length > 0 }
-				<section class="bg-white flex justify-center flex-col  px-8" >
+			{#if $session.walletAddress}
+				<section class="bg-white flex justify-center flex-col  px-8">
 					{#each plays as [num1, num2, num3], i}
 						<Play
 							removePlay={() => handleRemovePLay(i)}
@@ -81,8 +82,14 @@
 					</button>
 				</section>
 			{:else}
-				<section class="bg-white flex justify-center flex-col  px-8">
-					<strong class="font-bold flex justify-center text-sm">Please connect your wallet</strong>
+				<section class="bg-white flex h-24 items-center justify-center flex-col ">
+					<button
+						aria-label="request account"
+						on:click={handleRequestAccount}
+						class="w-40 bg-avaloto rounded text-indigo-500 border-indigo-500 border-2 h-16"
+					>
+						Connect Wallet
+					</button>
 				</section>
 			{/if}
 		{/if}

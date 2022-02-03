@@ -4,14 +4,14 @@
 	import FaLongArrowAltLeft from 'svelte-icons/fa/FaLongArrowAltLeft.svelte';
 	import { format } from 'date-fns';
 	import { lottoStore, LottoSteps } from '../../stores/lotto';
-	import { walletStore } from '../../stores/wallet';
 	import { getShortenedAddress } from '../../helpers/display.helpers';
+	import { session } from '$app/stores';
+
 
 	export let isViewOnly = false;
 
 	export let hash = $lottoStore.txHash;
 	export let plays = $lottoStore.plays;
-	export let wallet = $walletStore.walletAddress;
 	export let date = new Date();
 
 	// handle visibility based on current step and screen size
@@ -21,7 +21,6 @@
 	$: if (!isViewOnly) {
 		hash = $lottoStore.txHash;
 		plays = $lottoStore.plays;
-		wallet = $walletStore.walletAddress;
 	}
 
 	let currentStep: LottoSteps;
@@ -112,7 +111,7 @@
 			</div>
 
 			<div class="flex  justify-center border-solid border-2 border-black font uppercase mb-8">
-				connected wallet: {getShortenedAddress(wallet)}
+				connected wallet: {getShortenedAddress($session.walletAddress ??  '')}
 			</div>
 
 			<!-- row evening gamblefi -->
