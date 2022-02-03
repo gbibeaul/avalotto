@@ -1,5 +1,4 @@
 <script context="module">
-	import { walletStore } from '../stores/wallet';
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { notificationStore } from '../stores/notification';
 
@@ -7,9 +6,7 @@
 	import { lottoProvider } from '../transport/lotto';
 
 	export async function load({ session }) {
-		const { walletAddress = '', notifications } = session;
-		console.log(walletAddress)
-		walletStore.updateWalletAddress([walletAddress]);
+		const { notifications } = session;
 
 		const lotto = await lottoProvider();
 		const jackpot = await lotto.getCurrentJackpot();

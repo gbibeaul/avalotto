@@ -6,6 +6,8 @@ export async function post({ request }) {
 
 	await supabase.from('wallets_ids').upsert({ id: walletAddress });
 
+	console.log('getting called')
+
 	return {
 		status: 201,
 		headers: {

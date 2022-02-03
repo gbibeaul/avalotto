@@ -21,6 +21,8 @@ export async function handle({ event, resolve }) {
 	const rawCookie = await event.request.headers.get('cookie');
 	const walletAddress = getCookie('walletAddress', rawCookie);
 
+	console.log(walletAddress, 'in handle')
+
 	event.locals.walletAddress = walletAddress.length > 0 ? walletAddress : null;
 	const response = await resolve(event);
 
