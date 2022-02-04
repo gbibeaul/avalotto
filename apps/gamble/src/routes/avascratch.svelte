@@ -26,7 +26,7 @@
 		const ticketFullyScratched = currentTicket.numbers.every((number) => number.scratched);
 		if (ticketFullyScratched) {
 			setTimeout(() => {
-				currentScreen = 'WINNER';
+				nextScreen();
 			}, 5000);
 		}
 	}
@@ -35,20 +35,30 @@
 		const number = event.detail.number;
 		tickets = generateTickets(number);
 		currentTicket = tickets[0];
-		currentScreen = 'SCRATCH_OFF';
+		nextScreen();
 	}
 
 	function handleWinnerClaimNft() {
-		currentScreen = 'CLAIM_NFT';
+		nextScreen();
 	}
 
 	function handlePlayNext() {
 		if (currentTicketIndex + 1 === numTickets) {
-			currentScreen = 'BUY_TICKETS';
+			nextScreen();
 		} else {
 			currentTicket = tickets[currentTicketIndex + 1];
-			currentScreen = 'SCRATCH_OFF';
+			const scratchOffScreenIndex = screens.findIndex((screen) => screen === 'SCRATCH_OFF');
+			currentScreen = screens[scratchOffScreenIndex];
 		}
+	}
+
+	function nextScreen() {
+		if (currentScreenIndex < numScreens - 1) {
+			currentScreen = screens[currentScreenIndex + 1];
+			return;
+		}
+
+		currentScreen = screens[0];
 	}
 
 	$: showTitle = currentScreen == 'BUY_TICKETS' || currentScreen === 'SCRATCH_OFF';
@@ -58,6 +68,8 @@
 	$: claimNft = currentScreen === 'CLAIM_NFT';
 	$: currentTicketIndex = tickets.findIndex((ticket) => ticket === currentTicket);
 	$: numTickets = tickets.length;
+	$: currentScreenIndex = screens.findIndex((screen) => screen === currentScreen);
+	$: numScreens = screens.length;
 </script>
 
 <div class="flex justify-center h-screen items-center page-container">
