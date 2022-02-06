@@ -22,6 +22,20 @@
 	};
 
 	const handleRequestAccount = () => {
+		if (window.ethereum) {
+			handleEthereum();
+		} else {
+			window.addEventListener('ethereum#initialized', handleEthereum, {
+				once: true
+			});
+
+			// If the event is not dispatched by the end of the timeout,
+			// the user probably doesn't have MetaMask installed.
+			setTimeout(handleEthereum, 3000); // 3 seconds
+		}
+	};
+
+	const handleEthereum = () => {
 		window.ethereum.request({ method: 'eth_requestAccounts' }).then((wallets) => {
 			session.update((s) => ({ ...s, walletAddress: wallets[0] }));
 		});
@@ -52,13 +66,14 @@
 					{getShortenedAddress($session.walletAddress ?? '')}
 				</button>
 			{:else}
-				<button
+				<!-- <button
 					aria-label="request account"
 					on:click={handleRequestAccount}
 					class="text-white border-white border-2 py-2 px-6 rounded-lg flex justify-center items-center "
 				>
 					Connect Wallet
-				</button>
+				</button> -->
+				<a href="https://metamask.app.link/dapp/gamebit.app" class="text-white" >Connet</a>
 			{/if}
 		</div>
 	</header>
