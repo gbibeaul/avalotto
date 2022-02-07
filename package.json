@@ -15,6 +15,7 @@
     "start:admin": "yarn workspace @gamble/admin run dev",
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
     "dev": "yarn deploy:dev && yarn workspace gamble run dev",
+    "dev:admin": "yarn deploy:dev && yarn workspace admin run dev",
     "dev:fuji": "yarn workspace gamble run dev",
     "dev:gamble": "yarn workspace gamble run dev"
   },
@@ -22,6 +23,7 @@
     "npm-run-all": "^4.1.5",
     "turbo": "^1.0.6"
   },
+  "packageManager": "yarn@3.1.1",
   "turbo": {
     "baseBranch": "origin/main",
     "pipeline": {
@@ -41,6 +43,5 @@
         ]
       }
     }
-  },
-  "packageManager": "yarn@3.1.1"
+  }
 }

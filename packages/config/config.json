@@ -31,6 +31,13 @@
         "owner": "0x0",
         "trustedEntity": "0x0",
         "address": "0x0"
+      },
+      "LottoWinnerMock": {
+        "name": "LottoWinnerMock",
+        "owner": "0x5539f3cc20035c7C76Fb07b8085287B788b0F69E",
+        "trustedEntity": "0x414d820a17a5c4f30fdf175aa7eda540661a9a3c",
+        "address": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
+        "trustedParty": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38"
       }
     }
   },
@@ -81,27 +88,27 @@
       "GMBT": {
         "name": "GMBT",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0xf5059a5D33d5853360D16C683c16e67980206f36"
+        "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x998abeb3E57409262aE5b751f60747921B33613E"
+        "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
       },
       "Governance": {
         "name": "Governance",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x95401dc811bb5740090279Ba06cfA8fcF6113778"
+        "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
       },
       "Treasury": {
         "name": "Treasury",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x70e0bA845a1A0F2DA3359C97E0285013525FFC49"
+        "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
       },
       "Infra": {
         "name": "Infra",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x4826533B4897376654Bb4d4AD88B7faFD0C98528"
+        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
       },
       "Lotto": {
         "name": "Lotto",
@@ -111,8 +118,8 @@
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00",
-        "trustedParty": "0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00"
+        "address": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+        "trustedParty": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F"
       }
     }
   }

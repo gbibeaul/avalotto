@@ -1,0 +1,8 @@
+{
+  "name": "@gamble/gamebit-authorizations",
+  "version": "1.0.0",
+  "description": "The resulting bytecode and ABI for lotto contract protocol",
+  "license": "MIT",
+  "main": "GamebitAuthorizations.json",
+  "types": "Lotto.json"
+}
