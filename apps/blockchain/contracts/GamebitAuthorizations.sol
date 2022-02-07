@@ -179,7 +179,6 @@ contract GamebitAuthorizations {
     /**
         View Funcs
      */
-
     function isStaffOrGovApproved(address _requester)
         public
         view
@@ -190,6 +189,10 @@ contract GamebitAuthorizations {
         } else {
             return governance == _requester;
         }
+    }
+
+    function isStaff(address _staff) public view returns (bool) {
+        return staff[_staff];
     }
 
     function isGameAuthorized(address _game) public view returns (bool) {

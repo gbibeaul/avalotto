@@ -2,7 +2,6 @@ import configuration from '@gamble/config';
 import { abi as lottoWinnerMockAbi } from '@gamble/lotto-mock-winner';
 import { abi as lottoAbi } from '@gamble/lotto';
 
-
 enum Network {
 	Fuji = 'https://api.avax-test.network/ext/bc/C/rpc',
 	Avalanche = 'https://api.avax.network/ext/bc/C/rpc',
@@ -19,7 +18,7 @@ const abiMap = {
 	[LottoContractMode.Lotto]: lottoAbi
 };
 
-export function isNetwork(value: string | boolean) : value is Network {
+export function isNetwork(value: string | boolean): value is Network {
 	return (value as Network) in Network;
 }
 
@@ -28,12 +27,12 @@ export function isLottoContractMode(value: string | boolean): value is LottoCont
 }
 
 export const networkParser = () => {
-	if(!isNetwork(import.meta.env.VITE_AVALANCHE_NETWORK)) {
-		throw 'Network id not set'
+	if (!isNetwork(import.meta.env.VITE_AVALANCHE_NETWORK)) {
+		throw 'Network id not set';
 	}
 
-	return import.meta.env.VITE_AVALANCHE_NETWORK
-}
+	return import.meta.env.VITE_AVALANCHE_NETWORK;
+};
 
 export const lottoConfigParser = () => {
 	if (!isNetwork(import.meta.env.VITE_AVALANCHE_NETWORK)) {
@@ -53,5 +52,3 @@ export const lottoConfigParser = () => {
 		networkAddress: Network[network]
 	};
 };
-
-
