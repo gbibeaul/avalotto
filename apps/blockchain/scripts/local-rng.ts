@@ -36,7 +36,6 @@ const deliverRng = async () => {
     data: [rng],
   } = await rngCall.json();
 
-
   const provenance = await oracle.signMessage(JSON.stringify(rngCall.body));
 
   await Lotto.functions.weeklyDraw();

@@ -138,24 +138,9 @@ export const setupGame = async () => {
     ethers.utils.parseEther("0.05")
   );
 
-  await mineEmptyBlocks(1);
-
-  await gamebitAuthorization.functions.editGamePlayProfitAuth(
-    lotto.address,
-    true
-  );
-
-  await mineEmptyBlocks(1);
-
   config.Local.contracts.LottoWinnerMock.owner = owner.address;
   config.Local.contracts.LottoWinnerMock.trustedParty = lotto.address;
   config.Local.contracts.LottoWinnerMock.address = lotto.address;
-
-  await gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
-
-  await mineEmptyBlocks(1);
-
-  await gamebitAuthorization.functions.changeRng(owner.address);
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
 };
