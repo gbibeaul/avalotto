@@ -4,17 +4,26 @@ import { abi as lottoAbi } from "@gamble/lotto";
 import { abi as gamebitAuthorizationAbi } from "@gamble/gamebit-authorizations";
 import { abi as infraAbi } from "@gamble/infra";
 
-enum NetworkAddress {
+export enum NetworkAddress {
   Fuji = "https://api.avax-test.network/ext/bc/C/rpc",
   Avalanche = "https://api.avax.network/ext/bc/C/rpc",
   Local = "http://127.0.0.1:8545/",
 }
 
-type Network = "Local" | "Fuji" | "Avalanche";
+export type Network = "Local" | "Fuji" | "Avalanche";
 
-type LottoContractMode = "Lotto" | "LottoWinnerMock";
+export type LottoContractMode = "Lotto" | "LottoWinnerMock";
 
-type EnvVar = string | undefined;
+export type ContractKey = keyof typeof configuration.Local.contracts;
+
+export type GamebitContract = {
+  name: string;
+  owner: string;
+  address: string;
+  contractType: string;
+};
+
+export type EnvVar = string | undefined;
 
 export function isNetwork(value: EnvVar): value is Network {
   return value === "Fuji" || value === "Avalanche" || value === "Local";
@@ -22,6 +31,12 @@ export function isNetwork(value: EnvVar): value is Network {
 
 export function isLottoContractMode(value: EnvVar): value is LottoContractMode {
   return value === "Lotto" || value === "LottoWinnerMock";
+}
+
+export function isContractInConfig(
+  contractName: string
+): contractName is ContractKey {
+  return contractName in configuration.Local.contracts;
 }
 
 export const networkParser = () => {

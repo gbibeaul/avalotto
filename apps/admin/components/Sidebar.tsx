@@ -14,14 +14,15 @@ import {
 } from "@heroicons/react/outline";
 
 import { useSidebar } from "hooks/sidebar";
+import { useRouter } from "next/router";
 
 const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "History", href: "#", icon: ClockIcon, current: false },
-  { name: "Balances", href: "#", icon: ScaleIcon, current: false },
-  { name: "Games", href: "#", icon: CreditCardIcon, current: false },
-  { name: "Users", href: "#", icon: UserGroupIcon, current: false },
-  { name: "Reports", href: "#", icon: DocumentReportIcon, current: false },
+  { name: "Home", href: "/", icon: HomeIcon },
+  { name: "History", href: "#", icon: ClockIcon },
+  { name: "Balances", href: "#", icon: ScaleIcon },
+  { name: "Games", href: "/games", icon: CreditCardIcon },
+  { name: "Users", href: "#", icon: UserGroupIcon },
+  { name: "Reports", href: "#", icon: DocumentReportIcon },
 ];
 const secondaryNavigation = [
   { name: "Settings", href: "#", icon: CogIcon },
@@ -35,6 +36,15 @@ function classNames(...classes: string[]) {
 
 export const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useSidebar();
+  const router = useRouter();
+
+  const isCurrentRoute = (href: string) => {
+    if (href === "/") {
+      return router.pathname === "/";
+    }
+    return router.pathname.startsWith(href);
+  };
+
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -76,7 +86,7 @@ export const Sidebar = () => {
                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                   <button
                     type="button"
-                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white cursor-pointer"
                     onClick={() => setSidebarOpen()}
                   >
                     <span className="sr-only">Close sidebar</span>
@@ -90,39 +100,41 @@ export const Sidebar = () => {
               >
                 <div className="px-2 space-y-1">
                   {navigation.map((item) => (
-                    <a
+                    <div
                       key={item.name}
-                      href={item.href}
+                      onClick={() => router.push(item.href)}
                       className={classNames(
-                        item.current
+                        isCurrentRoute(item.href)
                           ? "bg-gray-800 text-white"
                           : "text-cyan-100 hover:text-white hover:bg-gray-600",
-                        "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                        "group flex items-center px-2 py-2 text-base font-medium rounded-md cursor-pointer"
                       )}
-                      aria-current={item.current ? "page" : undefined}
+                      aria-current={
+                        isCurrentRoute(item.href) ? "page" : undefined
+                      }
                     >
                       <item.icon
                         className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200"
                         aria-hidden="true"
                       />
                       {item.name}
-                    </a>
+                    </div>
                   ))}
                 </div>
                 <div className="mt-6 pt-6">
                   <div className="px-2 space-y-1">
                     {secondaryNavigation.map((item) => (
-                      <a
+                      <div
                         key={item.name}
-                        href={item.href}
-                        className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-cyan-100 hover:text-white hover:bg-gray-600"
+                        onClick={() => router.push(item.href)}
+                        className="cursor-pointer group flex items-center px-2 py-2 text-base font-medium rounded-md text-cyan-100 hover:text-white hover:bg-gray-600"
                       >
                         <item.icon
                           className="mr-4 h-6 w-6 text-cyan-200"
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -143,39 +155,41 @@ export const Sidebar = () => {
           >
             <div className="px-2 space-y-1">
               {navigation.map((item) => (
-                <a
+                <div
                   key={item.name}
-                  href={item.href}
+                  onClick={() => router.push(item.href)}
                   className={classNames(
-                    item.current
+                    isCurrentRoute(item.href)
                       ? "bg-gray-800 text-white"
                       : "text-cyan-100 hover:text-white hover:bg-gray-600",
-                    "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
+                    "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md cursor-pointer"
                   )}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={
+                    router.asPath.includes(item.href) ? "page" : undefined
+                  }
                 >
                   <item.icon
                     className="mr-4 flex-shrink-0 h-6 w-6 text-cyan-200"
                     aria-hidden="true"
                   />
                   {item.name}
-                </a>
+                </div>
               ))}
             </div>
             <div className="mt-6 pt-6">
               <div className="px-2 space-y-1">
                 {secondaryNavigation.map((item) => (
-                  <a
+                  <div
                     key={item.name}
-                    href={item.href}
-                    className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-gray-600"
+                    onClick={() => router.push(item.href)}
+                    className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-gray-600 cursor-pointer"
                   >
                     <item.icon
                       className="mr-4 h-6 w-6 text-cyan-200"
                       aria-hidden="true"
                     />
                     {item.name}
-                  </a>
+                  </div>
                 ))}
               </div>
             </div>

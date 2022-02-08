@@ -4,40 +4,47 @@
       "GMBT": {
         "name": "GMBT",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Governance": {
         "name": "Governance",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Infra": {
         "name": "Infra",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Treasury": {
         "name": "Treasury",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Lotto": {
         "name": "Lotto",
         "owner": "0x0",
         "trustedEntity": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Game"
       },
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0x5539f3cc20035c7C76Fb07b8085287B788b0F69E",
         "trustedEntity": "0x414d820a17a5c4f30fdf175aa7eda540661a9a3c",
         "address": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
-        "trustedParty": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38"
+        "trustedParty": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
+        "contractType": "Game"
       }
     }
   },
@@ -46,40 +53,47 @@
       "GMBT": {
         "name": "GMBT",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Governance": {
         "name": "Governance",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Treasury": {
         "name": "Treasury",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Infra": {
         "name": "Infra",
         "owner": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Protocol"
       },
       "Lotto": {
         "name": "Lotto",
         "owner": "0x0",
         "trustedEntity": "0x0",
-        "address": "0x0"
+        "address": "0x0",
+        "contractType": "Game"
       },
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0x5539f3cc20035c7C76Fb07b8085287B788b0F69E",
         "trustedEntity": "0x414d820a17a5c4f30fdf175aa7eda540661a9a3c",
         "address": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
-        "trustedParty": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38"
+        "trustedParty": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
+        "contractType": "Game"
       }
     }
   },
@@ -88,38 +102,45 @@
       "GMBT": {
         "name": "GMBT",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+        "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+        "contractType": "Protocol"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+        "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+        "contractType": "Protocol"
       },
       "Governance": {
         "name": "Governance",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+        "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+        "contractType": "Protocol"
       },
       "Treasury": {
         "name": "Treasury",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
+        "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+        "contractType": "Protocol"
       },
       "Infra": {
         "name": "Infra",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+        "contractType": "Protocol"
       },
       "Lotto": {
         "name": "Lotto",
         "owner": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
-        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+        "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "contractType": "Game"
       },
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
-        "trustedParty": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F"
+        "address": "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
+        "trustedParty": "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
+        "contractType": "Game"
       }
     }
   }
