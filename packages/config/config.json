@@ -138,8 +138,8 @@
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
         "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "address": "0x4826533B4897376654Bb4d4AD88B7faFD0C98528",
-        "trustedParty": "0x4826533B4897376654Bb4d4AD88B7faFD0C98528",
+        "address": "0x2bdCC0de6bE1f7D2ee689a0342D76F52E8EFABa3",
+        "trustedParty": "0x2bdCC0de6bE1f7D2ee689a0342D76F52E8EFABa3",
         "contractType": "Game"
       }
     }

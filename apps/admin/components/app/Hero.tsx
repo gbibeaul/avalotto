@@ -9,7 +9,7 @@ export const Hero = () => {
         aria-hidden="true"
       />
       <div className="max-w-7xl mx-auto lg:px-48">
-        <div className="lg:grid lg:grid-cols-12">
+        <div className="lg:grid lg:grid-cols-12 p-8">
           <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
             <div className="max-w-md mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
               <div className="hidden lg:block aspect-w-10 flex justify-center aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1">
