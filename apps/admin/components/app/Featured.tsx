@@ -74,7 +74,7 @@ export const Featured = () => {
 
         <div className="mt-8 text-sm md:hidden">
           <a href="#" className="font-medium text-white hover:text-white">
-            Shop the collection<span aria-hidden="true"> &rarr;</span>
+            See all games<span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
       </div>
