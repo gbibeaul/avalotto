@@ -41,4 +41,11 @@ export default NextAuth({
     },
   },
   secret: process.env.NEXT_AUTH_SECRET,
+  pages: {
+    signIn: "/admin/auth",
+    signOut: "/admin/auth",
+    error: "/admin/auth",
+    verifyRequest: "/admin/auth", // (used for check email message)
+    newUser: "/admin/auth",
+  },
 });
