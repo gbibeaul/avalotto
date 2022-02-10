@@ -39,7 +39,7 @@ export const Hero = () => {
                 bonuses. Visit us today and start playing to earn!
               </p>
               <a
-                className="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
+                className="hidden w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
                 href="#"
               >
                 Connect your wallet
