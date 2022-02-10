@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import FaBell from 'svelte-icons/fa/FaBell.svelte';
 	import FaWallet from 'svelte-icons/fa/FaWallet.svelte';
+	import { providers } from 'ethers';
 	import NotificationPanel from '../components/NotificationPanel.svelte';
 	import { getShortenedAddress } from '../helpers/display.helpers';
 	import { goto } from '$app/navigation';
@@ -21,10 +22,35 @@
 		notificationStore.toggleNotificationMenu(true);
 	};
 
-	const handleRequestAccount = () => {
-		window.ethereum.request({ method: 'eth_requestAccounts' }).then((wallets) => {
-			session.update((s) => ({ ...s, walletAddress: wallets[0] }));
+	var account;
+
+	const handleRequestAccount = async () => {
+		const provider = new WalletConnectProvider.default({
+			rpc: {
+				43113: 'https://api.avax-test.network/ext/bc/C/rpc/',
+				3: 'https://ropsten.mycustomnode.com',
+				100: 'https://dai.poa.network'
+				// ...
+			},
+
+			qrcodeModalOptions: {
+				mobileLinks: ['metamask']
+			}
+
+			// bridge: 'https://bridge.walletconnect.org',
 		});
+
+		await provider.enable();
+
+		const web3Provider = new providers.Web3Provider(provider);
+
+		// web3Provider;
+		// var accounts = await web3.eth.getAccounts(); // get all connected accounts
+		// account = accounts[0]; // get the primary account
+
+		// window.ethereum.request({ method: 'eth_requestAccounts' }).then((wallets) => {
+		// 	session.update((s) => ({ ...s, walletAddress: wallets[0] }));
+		// });
 	};
 </script>
 
