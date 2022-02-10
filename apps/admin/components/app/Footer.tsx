@@ -2,7 +2,7 @@ import { CreditCardIcon } from "@heroicons/react/outline";
 
 export const Footer = () => {
   return (
-    <footer className="bg-black fixed bottom-0 left-0 w-full md:hidden">
+    <footer className="absolute bottom-0 left-0 w-full md:hidden">
       <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 md:flex md:items-center md:justify-between ">
         <div className="flex justify-center items-center">
           <button

@@ -3,9 +3,9 @@ import Image from "next/image";
 
 export const Hero = () => {
   return (
-    <div className="relative py-16 bg-black flex justify-center">
+    <div className="relative py-16 flex justify-center">
       <div
-        className="hidden absolute top-0 inset-x-0 h-1/4 bg-black lg:block"
+        className="hidden absolute top-0 inset-x-0 h-1/4 lg:block"
         aria-hidden="true"
       />
       <div className="max-w-7xl mx-auto lg:px-48">

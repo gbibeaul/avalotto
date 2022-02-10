@@ -8,7 +8,10 @@ import { useAccount } from "wagmi";
 export const Navbar = () => {
   const [{ data: accountData }] = useAccount();
   return (
-    <Disclosure as="nav" className="sticky top-0 z-20 bg-black">
+    <Disclosure
+      as="nav"
+      className="sticky top-0 z-20 mt-[-700px] bg-black/[0.35]"
+    >
       {({ open }) => (
         <>
           <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-8 md:max-w-5xl">
