@@ -1,7 +1,9 @@
-import styles from "./Hero.module.css";
+import styles from "styles/Animations.module.css";
 import Image from "next/image";
+import { useConnectModal } from "./Layout";
 
 export const Hero = () => {
+  const [_, setOpen] = useConnectModal();
   return (
     <div className="relative py-16 flex justify-center">
       <div
@@ -38,12 +40,12 @@ export const Hero = () => {
                 We offer the best in crypto gaming with unmatched rewards and
                 bonuses. Visit us today and start playing to earn!
               </p>
-              <a
+              <button
+                onClick={() => setOpen(true)}
                 className="hidden lg:block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
-                href="#"
               >
                 Connect your wallet
-              </a>
+              </button>
             </div>
           </div>
         </div>

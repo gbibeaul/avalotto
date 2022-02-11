@@ -4,13 +4,16 @@ import { SearchIcon } from "@heroicons/react/solid";
 import { CreditCardIcon } from "@heroicons/react/solid";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useAccount } from "wagmi";
+import { useConnectModal } from "./Layout";
 
 export const Navbar = () => {
   const [{ data: accountData }] = useAccount();
+  const [_, setOpen] = useConnectModal();
+
   return (
     <Disclosure
       as="nav"
-      className="sticky top-0 z-20 mt-[-700px] bg-black/[0.35]"
+      className="sticky top-0 z-20 mt-[-100%]  md:mt-[-700px] bg-black/[0.35]"
     >
       {({ open }) => (
         <>
@@ -142,6 +145,7 @@ export const Navbar = () => {
                   ) : (
                     <button
                       type="button"
+                      onClick={() => setOpen(true)}
                       className="ml-4 inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                     >
                       <CreditCardIcon
