@@ -27,8 +27,8 @@ export const ConnectModal: React.VFC = () => {
 
   console.log(accountData?.address);
 
-  const handleConnect = () => {
-    connect(connectData.connectors[0]);
+  const handleConnect = async () => {
+    await connect(connectData.connectors[0]);
     setStep(2);
     setOpen(false);
   };
