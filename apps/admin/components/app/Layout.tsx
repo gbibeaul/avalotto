@@ -4,7 +4,7 @@ import { Navbar } from "components/app/Navbar";
 import { Footer } from "components/app/Footer";
 import { ConnectModal } from "components/app/ConnectModal";
 
-const [hook, ConnetModalProvider] = createStateContext(true);
+const [hook, ConnetModalProvider] = createStateContext(false);
 
 export const Layout: React.FC = ({ children }) => {
   return (
