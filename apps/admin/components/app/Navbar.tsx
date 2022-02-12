@@ -54,17 +54,16 @@ export const Navbar = () => {
                         Games
                       </span>
                     </Link>
-                    <Link href="/events">
+                    <Link href="/">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Counter
                       </span>
                     </Link>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Events
-                    </a>
+                    <Link href="/events">
+                      <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Events
+                      </span>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -124,32 +123,28 @@ export const Navbar = () => {
             <div className="px-2 pt-2 pb-3 space-y-1">
               {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                as="span"
+                className="cursor-pointer bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Dashboard
+                <Link href="/">Dashboard</Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                as="span"
+                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Games
+                <Link href="/games">Games</Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                as="span"
+                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Counter
+                <Link href="/">Counter</Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                as="span"
+                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Events
+                <Link href="/events">Events</Link>
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>

@@ -1,24 +1,25 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const products = [
   {
     id: 1,
     name: "Avascratch",
-    href: "#",
+    href: "/",
     imageSrc: "/Avascratch.jpg",
     imageAlt: "Hand stitched, orange leather long wallet.",
   },
   {
     id: 2,
     name: "Avalotto",
-    href: "#",
+    href: "/games/lotto",
     imageSrc: "/Avalotto.jpg",
     imageAlt: "Hand stitched, orange leather long wallet.",
   },
   {
     id: 3,
     name: "NFT Battle",
-    href: "#",
+    href: "/",
     imageSrc: "/NftBattle.jpg",
     imageAlt: "Hand stitched, orange leather long wallet.",
   },
@@ -42,26 +43,25 @@ export const Featured = () => {
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
           {products.map((product) => (
-            <div
-              key={product.id}
-              className="group relative drop-shadow-[0_70px_70px_rgba(242,180,176,0.25)]"
-            >
-              <div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden group-hover:opacity-75 lg:h-72 xl:h-80">
-                <Image
-                  src={product.imageSrc}
-                  alt={product.imageAlt}
-                  height={800}
-                  width={600}
-                  className="w-full h-full object-center object-cover"
-                />
+            <Link href={product.href}>
+              <div
+                key={product.id}
+                className="group cursor-pointer relative drop-shadow-[0_70px_70px_rgba(242,180,176,0.25)]"
+              >
+                <div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden group-hover:opacity-75 lg:h-72 xl:h-80">
+                  <Image
+                    src={product.imageSrc}
+                    alt={product.imageAlt}
+                    height={800}
+                    width={600}
+                    className="w-full h-full object-center object-cover"
+                  />
+                </div>
+                <h3 className="mt-4 text-sm text-white cursor-pointer">
+                  <span> {product.name}</span>
+                </h3>
               </div>
-              <h3 className="mt-4 text-sm text-white">
-                <a href={product.href}>
-                  <span className="absolute inset-0" />
-                  {product.name}
-                </a>
-              </h3>
-            </div>
+            </Link>
           ))}
         </div>
 

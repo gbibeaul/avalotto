@@ -25,7 +25,7 @@ class MyDocument extends Document {
     return (
       <Html className="h-full">
         <Head />
-        <body className="h-full">
+        <body className="h-full bg-black">
           <Main />
           <NextScript />
         </body>
