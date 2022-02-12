@@ -1,6 +1,6 @@
 import { NextPage, NextPageContext } from "next";
 import { getSession } from "next-auth/react";
-import { AdminLayout } from "components/AdminLayout";
+import { AdminLayout } from "components/admin/AdminLayout";
 import { useIsStaff } from "hooks/user";
 import useSWR from "swr";
 import fetchAPI from "tranport/fetcher";
