@@ -1,6 +1,6 @@
 import styles from "styles/Animations.module.css";
 import Image from "next/image";
-import { useConnectModal } from "./Layout";
+import { useConnectModal } from "hooks/user";
 import { useAccount } from "wagmi";
 
 export const Hero = () => {

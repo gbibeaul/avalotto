@@ -1,10 +1,10 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure, Menu } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 import { CreditCardIcon } from "@heroicons/react/solid";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useAccount } from "wagmi";
-import { useConnectModal } from "./Layout";
+import { useConnectModal } from "hooks/user";
 
 export const Navbar = () => {
   const [{ data: accountData }] = useAccount();
@@ -44,24 +44,21 @@ export const Navbar = () => {
               <div className="flex items-center px-2 md:px-0">
                 <div className="hidden md:block md:ml-6">
                   <div className="flex md:space-x-1 lg:space-x-4 ">
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Dashboard
-                    </a>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Games
-                    </a>
-                    <a
-                      href="#"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Counter
-                    </a>
+                    <Link href="/">
+                      <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Dashboard
+                      </span>
+                    </Link>
+                    <Link href="/games">
+                      <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Games
+                      </span>
+                    </Link>
+                    <Link href="/events">
+                      <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Counter
+                      </span>
+                    </Link>
                     <a
                       href="#"
                       className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"

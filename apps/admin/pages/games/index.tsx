@@ -9,8 +9,6 @@ import { HomePageLayout } from "components/app/HomepageLayout";
 
 const IndexPage = () => (
   <HomePageLayout>
-    <Hero />
-    <Features />
     <Featured />
   </HomePageLayout>
 );

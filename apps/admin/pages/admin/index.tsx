@@ -1,4 +1,3 @@
-import { ScaleIcon } from "@heroicons/react/outline";
 import { NextPage, NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { AdminLayout } from "components/admin/AdminLayout";

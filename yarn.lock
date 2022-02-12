@@ -5146,6 +5146,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-hot-toast: ^2.2.0
+    react-icons: ^4.3.1
     react-lottie-player: ^1.4.1
     react-use: ^17.3.2
     swr: ^1.2.1
@@ -18154,6 +18155,15 @@ __metadata:
     react: ">=16"
     react-dom: ">=16"
   checksum: bb34ddc8ada14cbd75a37f14d2563412174e23276eb05e9fb23a031b6d8374ca190cefa1940692f4371529ddafeb2d4b8d3e5023187c2851ec8cb247461553ee
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "react-icons@npm:4.3.1"
+  peerDependencies:
+    react: "*"
+  checksum: 2cc608acdd3e906aa3aaee290b8398220639677c949382d86e554020e5dab6a9f1ed7484418aa5272cb5c5c018e1fc9a323d433d901697a76530029f9ecb1263
   languageName: node
   linkType: hard
 

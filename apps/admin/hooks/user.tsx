@@ -3,6 +3,9 @@ import * as React from "react";
 import { useAccount } from "wagmi";
 import useSWR from "swr";
 import { signOut } from "next-auth/react";
+import { createStateContext } from "react-use";
+
+const [hook, Provider] = createStateContext(false);
 
 export const useIsStaff = (forceLogout = false) => {
   const auth = authorizationProvider();
@@ -18,3 +21,6 @@ export const useIsStaff = (forceLogout = false) => {
 
   return data;
 };
+
+export const useConnectModal = hook;
+export const ConnectModalProvider = Provider;

@@ -1,26 +1,21 @@
 import Image from "next/image";
-import { createStateContext } from "react-use";
 import { Navbar } from "components/app/Navbar";
 import { Footer } from "components/app/Footer";
 import { ConnectModal } from "components/app/ConnectModal";
+import { ConnectModalProvider } from "hooks/user";
 
-const [hook, ConnetModalProvider] = createStateContext(false);
-
-export const Layout: React.FC = ({ children }) => {
+export const GameLayout: React.FC = ({ children }) => {
   return (
-    <ConnetModalProvider>
+    <ConnectModalProvider>
       <ConnectModal />
-
-      <main className="bg-black f-full">
+      <main className="bg-black h-full f-full">
         <div className="sticky top-0 bg-black -z-index-20 flex justify-end overflow-hidden">
           <Image src="/Flare1.svg" height={700} width={700} />
         </div>
         <Navbar />
-        {children}
+        <section className="relative flex justify-center">{children}</section>
         <Footer />
       </main>
-    </ConnetModalProvider>
+    </ConnectModalProvider>
   );
 };
-
-export const useConnectModal = hook;

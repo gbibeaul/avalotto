@@ -1,8 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useTimeoutFn } from "react-use";
 import styles from "styles/Animations.module.css";
-import { useConnectModal } from "./Layout";
+import { useConnectModal } from "hooks/user";
 import { useAccount, useConnect } from "wagmi";
 
 export const ConnectModal: React.VFC = () => {
@@ -25,8 +24,6 @@ export const ConnectModal: React.VFC = () => {
     }
   }, [open, accountData?.address]);
 
-  console.log(accountData?.address);
-
   const handleConnect = async () => {
     await connect(connectData.connectors[0]);
     setStep(2);
@@ -35,6 +32,7 @@ export const ConnectModal: React.VFC = () => {
 
   const handleDisconnect = async () => {
     setOpen(false);
+    setStep(0);
     await disconnect();
   };
 

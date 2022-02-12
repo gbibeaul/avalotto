@@ -22,13 +22,6 @@ const products = [
     imageSrc: "/NftBattle.jpg",
     imageAlt: "Hand stitched, orange leather long wallet.",
   },
-  {
-    id: 4,
-    name: "Avalotto",
-    href: "#",
-    imageSrc: "/Avalotto.jpg",
-    imageAlt: "Hand stitched, orange leather long wallet.",
-  },
 ];
 
 export const Featured = () => {
