@@ -10,7 +10,12 @@ export const HomePageLayout: React.FC = ({ children }) => {
       <ConnectModal />
       <main className="bg-black f-full h-full">
         <div className="sticky top-0 bg-black -z-index-20 flex justify-end overflow-hidden">
-          <Image src="/Flare1.svg" height={700} width={700} />
+          <Image
+            alt="flare in the background indicating a dimmed light"
+            src="/Flare1.svg"
+            height={700}
+            width={700}
+          />
         </div>
         <Navbar />
         {children}

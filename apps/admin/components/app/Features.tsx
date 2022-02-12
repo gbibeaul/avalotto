@@ -35,7 +35,12 @@ export const Features = () => {
               <div key={feature.name} className="pt-6">
                 <div className="flow-root rounded-lg px-6 pb-8">
                   <div className="-mt-6">
-                    <Image src={feature.icon} height={60} width={60} />
+                    <Image
+                      alt={feature.description}
+                      src={feature.icon}
+                      height={60}
+                      width={60}
+                    />
                     <h3 className="mt-8 text-lg font-medium text-white tracking-tight">
                       {feature.name}
                     </h3>

@@ -44,22 +44,22 @@ export const Navbar = () => {
               <div className="flex items-center px-2 md:px-0">
                 <div className="hidden md:block md:ml-6">
                   <div className="flex md:space-x-1 lg:space-x-4 ">
-                    <Link href="/">
+                    <Link passHref href="/">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Dashboard
                       </span>
                     </Link>
-                    <Link href="/games">
+                    <Link passHref href="/games">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Games
                       </span>
                     </Link>
-                    <Link href="/">
+                    <Link passHref href="/">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Counter
                       </span>
                     </Link>
-                    <Link href="/events">
+                    <Link passHref href="/events">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Events
                       </span>

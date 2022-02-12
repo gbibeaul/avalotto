@@ -10,7 +10,12 @@ export const GameLayout: React.FC = ({ children }) => {
       <ConnectModal />
       <main className="bg-black h-full f-full">
         <div className="sticky top-0 bg-black -z-index-20 flex justify-end overflow-hidden">
-          <Image src="/Flare1.svg" height={700} width={700} />
+          <Image
+            alt="Flare in the background showing a dimmed light"
+            src="/Flare1.svg"
+            height={700}
+            width={700}
+          />
         </div>
         <Navbar />
         <section className="relative flex justify-center">{children}</section>
