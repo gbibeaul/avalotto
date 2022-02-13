@@ -2,34 +2,31 @@ import { NextPage, NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { AdminLayout } from "components/admin/AdminLayout";
 import { useIsStaff } from "hooks/user";
-import useSWR from "swr";
-import fetchAPI from "tranport/fetcher";
-import type { GamebitContract } from "utils/config.utils";
-import { Card } from "components/admin/Card";
+import { GamebitContract, getGameByName } from "utils/config.utils";
 import { getShortenedAddress } from "utils/display.utils";
-import { useRouter } from "next/router";
-import { Actions } from "components/admin/Actions";
+import { Authorizations } from "components/admin/Authorizations";
 
-const Home: NextPage = () => {
-  const { query } = useRouter();
-  const { data } = useSWR<GamebitContract>(
-    `/games?gameId=${query.gameId}`,
-    fetchAPI
-  );
+const Home: NextPage<{ gameData: GamebitContract }> = ({ gameData }) => {
   useIsStaff(true);
 
-  if (!data) {
+  if (!gameData) {
     return <AdminLayout></AdminLayout>;
   }
   return (
     <AdminLayout>
       <main className="flex-1 p-8">
         <div className="flex-1 min-w-0">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate mb-8">
-            {data.name} - {getShortenedAddress(data.address)}
+          <h2 className="text-5xl font-bold leading-7 text-white sm:text-3xl sm:truncate mb-8">
+            {gameData.name} - {getShortenedAddress(gameData.address)}
           </h2>
         </div>
-        <Actions />
+        <p className="text-sm text-white sm:text-3xl sm:truncate mb-8">
+          Authorizations
+        </p>
+        <Authorizations
+          gameAddress={gameData.address}
+          gameName={gameData.name}
+        />
       </main>
     </AdminLayout>
   );
@@ -47,9 +44,12 @@ export async function getServerSideProps(context: NextPageContext) {
       },
     };
   }
+  const gameData = getGameByName(String(context.query.gameId));
+
   return {
     props: {
       session,
+      gameData,
     },
   };
 }

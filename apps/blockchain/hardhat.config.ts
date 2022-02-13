@@ -3,7 +3,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers";
 import "@nomiclabs/hardhat-waffle";
 import "hardhat-erc1820";
-import '@openzeppelin/hardhat-upgrades';
+import "@openzeppelin/hardhat-upgrades";
 
 // When using the hardhat network, you may choose to fork Fuji or Avalanche Mainnet
 // This will allow you to debug contracts using the hardhat network while keeping the current network state
@@ -22,8 +22,6 @@ const forkingData = FORK_FUJI
       url: "https://api.avax.network/ext/bc/C/rpc",
     }
   : undefined;
-
-
 
 export default {
   solidity: {
@@ -76,7 +74,9 @@ export default {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       gasPrice: 225000000000,
       chainId: 43113,
-      accounts: ['2ac9a55463b73c85f63fb1c366f76a0cd54eb65fca0c6f914d5615c3c635fd1c'],
+      accounts: [
+        "dd5d1680a29ab490d6c3574a263b3676d412ff9cccb6943d79a6470459f43b9e",
+      ],
     },
     mainnet: {
       url: "https://api.avax.network/ext/bc/C/rpc",

@@ -15,7 +15,7 @@
     "start:admin": "yarn workspace @gamble/admin run dev",
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
     "dev": "yarn deploy:dev && yarn workspace gamble run dev",
-    "dev:admin": "yarn deploy:dev && yarn workspace admin run dev",
+    "dev:admin": "yarn workspace admin run dev",
     "dev:fuji": "yarn workspace gamble run dev",
     "dev:gamble": "yarn workspace gamble run dev"
   },

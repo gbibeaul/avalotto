@@ -18,6 +18,7 @@ export type ContractKey = keyof typeof configuration.Local.contracts;
 
 export type GamebitContract = {
   name: string;
+  description: string;
   owner: string;
   address: string;
   contractType: string;
@@ -110,5 +111,23 @@ export const treasuryConfigParser = () => {
     address: configuration[network].contracts.Infra.address,
     abi: infraAbi,
     networkAddress: NetworkAddress[network],
+  };
+};
+
+export const getGameByName = (name: string) => {
+  if (!isNetwork(process.env.NEXT_PUBLIC_AVALANCHE_NETWORK)) {
+    throw new Error("Invalid network");
+  }
+
+  if (!isContractInConfig(name)) {
+    throw new Error("Invalid contract name");
+  }
+
+  const network: Network = process.env.NEXT_PUBLIC_AVALANCHE_NETWORK;
+
+  const game = configuration[network].contracts[name];
+
+  return {
+    ...game,
   };
 };
