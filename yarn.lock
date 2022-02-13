@@ -2440,6 +2440,8 @@ __metadata:
     "@appliedblockchain/chainlink-plugins-fund-link": ^0.0.3
     "@babel/preset-typescript": ^7.16.0
     "@defi-wonderland/smock": ^2.0.7
+    "@gamble/config": "workspace:^"
+    "@gamble/gamebit-authorizations": "workspace:^"
     "@gamble/infra": "workspace:^"
     "@nomiclabs/hardhat-ethers": ^2.0.3
     "@nomiclabs/hardhat-waffle": ^2.0.1

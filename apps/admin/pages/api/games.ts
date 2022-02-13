@@ -27,8 +27,6 @@ const games = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(400);
       }
 
-      console.log(config[network].contracts);
-
       const games = Object.values(config[network].contracts).filter(
         (contract) => contract.contractType === "Game"
       );

@@ -4,12 +4,6 @@ import fs from "fs-extra";
 
 const CONFIG_PATH = "../../packages/config/config.json";
 
-const mineEmptyBlocks = async (numberOfBlocks: number) => {
-  for (let i = 0; i < numberOfBlocks; i++) {
-    await ethers.provider.send("evm_mine", []);
-  }
-};
-
 export const deployToken = async () => {
   const GMBT = await ethers.getContractFactory("GamebitToken");
 
@@ -77,8 +71,10 @@ export const deployInfra = async (authorisationAddress) => {
 
 export const deployGamebit = async () => {
   const config = await fs.readJson(CONFIG_PATH);
+  console.log("hello");
 
   const [owner] = await ethers.getSigners();
+  console.log(await owner.getBalance());
 
   const gbmt = await deployToken();
   const governance = await deployGovernance(gbmt.address);
@@ -89,24 +85,26 @@ export const deployGamebit = async () => {
   );
   const infra = await deployInfra(gamebitAuthorization.address);
 
-  // in Fuji the owner provides the RNG oracles but that should never be the case in prod
-  gamebitAuthorization.functions.changeRng(owner);
-
   config.Fuji.contracts.GMBT.owner = owner.address;
   config.Fuji.contracts.GMBT.address = gbmt.address;
+  console.log(config.Fuji.contracts.GMBT);
 
   config.Fuji.contracts.Governance.owner = owner.address;
   config.Fuji.contracts.Governance.address = governance.address;
+  console.log(config.Fuji.contracts.Governance);
 
   config.Fuji.contracts.GamebitAuthorizations.owner = owner.address;
   config.Fuji.contracts.GamebitAuthorizations.address =
     gamebitAuthorization.address;
+  console.log(config.Fuji.contracts.GamebitAuthorizations);
 
   config.Fuji.contracts.Treasury.owner = owner.address;
   config.Fuji.contracts.Treasury.address = treasury.address;
+  console.log(config.Fuji.contracts.Treasury);
 
   config.Fuji.contracts.Infra.owner = owner.address;
   config.Fuji.contracts.Infra.address = infra.address;
+  console.log(config.Fuji.contracts.Infra);
 
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
   return {
@@ -136,28 +134,14 @@ export const setupGame = async () => {
   );
   await lotto.deployed();
 
-  await gamebitAuthorization.functions.addAuthorizedGame(
-    lotto.address,
-    ethers.utils.parseEther("0.05")
-  );
-
-  await gamebitAuthorization.functions.editGamePlayProfitAuth(
-    lotto.address,
-    true
-  );
-
   config.Fuji.contracts.LottoWinnerMock.owner = owner.address;
   config.Fuji.contracts.LottoWinnerMock.trustedParty = lotto.address;
   config.Fuji.contracts.LottoWinnerMock.address = lotto.address;
 
-  await gamebitAuthorization.functions.editGameRngAuth(lotto.address, true);
-
-  await gamebitAuthorization.functions.changeRng(owner.address);
-
   await fs.writeJson(CONFIG_PATH, config, { spaces: 2 });
 };
 
-setupGame()
+deployGamebit()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);

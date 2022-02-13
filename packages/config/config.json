@@ -52,32 +52,32 @@
     "contracts": {
       "GMBT": {
         "name": "GMBT",
-        "owner": "0x0",
-        "address": "0x0",
+        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
+        "address": "0x4F82892604C1323cBa2E4c8E5fF8a96c8d8A5000",
         "contractType": "Protocol"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
-        "owner": "0x0",
-        "address": "0x0",
+        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
+        "address": "0xA03e216F4a43E00475dc160beB470372A2c3bC37",
         "contractType": "Protocol"
       },
       "Governance": {
         "name": "Governance",
-        "owner": "0x0",
-        "address": "0x0",
+        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
+        "address": "0x267A4487F208c9D075b047f94186f2C842e4aB86",
         "contractType": "Protocol"
       },
       "Treasury": {
         "name": "Treasury",
-        "owner": "0x0",
-        "address": "0x0",
+        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
+        "address": "0xaEABe4B12B95Ce0518d8327cb1eA1793c93bD5ec",
         "contractType": "Protocol"
       },
       "Infra": {
         "name": "Infra",
-        "owner": "0x0",
-        "address": "0x0",
+        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
+        "address": "0x4dEf87988BFB5Fc34fD52eD0DFe49e16355Cb84f",
         "contractType": "Protocol"
       },
       "Lotto": {
@@ -89,10 +89,10 @@
       },
       "LottoWinnerMock": {
         "name": "LottoWinnerMock",
-        "owner": "0x5539f3cc20035c7C76Fb07b8085287B788b0F69E",
+        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
         "trustedEntity": "0x414d820a17a5c4f30fdf175aa7eda540661a9a3c",
-        "address": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
-        "trustedParty": "0xe7480440CA5dC0ACAFd2afbdfd8d8D102F409E38",
+        "address": "0x5820dD949768F2235C40305821A3482CF66df6e8",
+        "trustedParty": "0x5820dD949768F2235C40305821A3482CF66df6e8",
         "contractType": "Game"
       }
     }

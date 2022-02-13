@@ -5,7 +5,6 @@ import { useIsStaff } from "hooks/user";
 import useSWR from "swr";
 import fetchAPI from "tranport/fetcher";
 import type { GamebitContract } from "utils/config.utils";
-import { Card } from "components/Card";
 import { getShortenedAddress } from "utils/display.utils";
 import { useRouter } from "next/router";
 import { Actions } from "components/Actions";
