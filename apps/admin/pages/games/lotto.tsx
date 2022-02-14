@@ -6,7 +6,7 @@ import { usePlays, PlaysProvider } from "hooks/lotto";
 const NewPlay = () => {
   const [plays, dispatch] = usePlays();
 
-  if (plays.length >= 5) {
+  if (plays.length >= 3) {
     return <></>;
   }
 
