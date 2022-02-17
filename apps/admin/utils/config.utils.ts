@@ -3,12 +3,43 @@ import { abi as lottoWinnerMockAbi } from "@gamble/lotto-mock-winner";
 import { abi as lottoAbi } from "@gamble/lotto";
 import { abi as gamebitAuthorizationAbi } from "@gamble/gamebit-authorizations";
 import { abi as infraAbi } from "@gamble/infra";
+import { Chain } from "wagmi";
 
 export enum NetworkAddress {
   Fuji = "https://api.avax-test.network/ext/bc/C/rpc",
   Avalanche = "https://api.avax.network/ext/bc/C/rpc",
   Local = "http://127.0.0.1:8545/",
 }
+
+const chains: { [key in keyof typeof NetworkAddress]: Chain[] } = {
+  Fuji: [
+    {
+      id: 43113,
+      name: "Avalanche FUJI C-Chain",
+      rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+      testnet: true,
+      blockExplorers: [
+        { name: "testnet", url: "https://testnet.snowtrace.io/" },
+      ],
+    },
+  ],
+  Avalanche: [
+    {
+      id: 43114,
+      name: "Avalanche Network",
+      rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
+      blockExplorers: [{ name: "avalanche", url: "https://snowtrace.io/" }],
+    },
+  ],
+  Local: [
+    {
+      id: 43112,
+      name: "Hardhat test",
+      rpcUrls: ["http://127.0.0.1:8545/"],
+      testnet: true,
+    },
+  ],
+};
 
 export type Network = "Local" | "Fuji" | "Avalanche";
 
@@ -47,6 +78,14 @@ export const networkParser = () => {
 
   return process.env.NEXT_PUBLIC_AVALANCHE_NETWORK;
 };
+
+export const getChains = () => {
+  if (!isNetwork(process.env.NEXT_PUBLIC_AVALANCHE_NETWORK)) {
+    throw "Network id not set";
+  }
+
+  return chains[process.env.NEXT_PUBLIC_AVALANCHE_NETWORK];
+}
 
 /**
  *
