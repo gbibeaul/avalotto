@@ -131,16 +131,19 @@ export const ConnectModal: React.VFC = () => {
                     </div>
                   )}
                   <div className="flex  justify-center mt-8 animate-pulse">
-                    {connectData.connectors.map((connector) => (
-                      <button
-                        key={connector.id}
-                        type="button"
-                        onClick={() => handleConnect(connector)}
-                        className=" w-1/2 items-center px-4 py-2 first:rounded-l-md last:rounded-r-md border border-gray-300 text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-white"
-                      >
-                        {connector.name}
-                      </button>
-                    ))}
+                    {connectData.connectors.map(
+                      (connector) =>
+                        connector.ready && (
+                          <button
+                            key={connector.id}
+                            type="button"
+                            onClick={() => handleConnect(connector)}
+                            className=" w-1/2 items-center px-4 py-2 first:rounded-l-md last:rounded-r-md border border-gray-300 text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-white"
+                          >
+                            {connector.name}
+                          </button>
+                        )
+                    )}
                   </div>
                 </>
               )}
