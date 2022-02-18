@@ -14,6 +14,9 @@ export const Hero = () => {
         aria-hidden="true"
       />
       <div className="max-w-7xl mx-auto lg:px-48">
+        <video autoPlay muted>
+          <source src="Videos/Gamebit_mint.mp4" type="video/mp4" />
+        </video>
         <div className="lg:grid lg:grid-cols-12 p-8">
           <div className="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
             <div className="max-w-md mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
