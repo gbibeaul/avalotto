@@ -243,4 +243,8 @@ contract GamebitAuthorizations {
     function isAuditor(address _auditor) public view returns (bool) {
         return auditor == _auditor;
     }
+
+    function getRngOracleAddress() public view returns (address) {
+        return rngOracle;
+    }
 }

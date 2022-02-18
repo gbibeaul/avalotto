@@ -4,9 +4,11 @@
 import {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
+  Overrides,
   PayableOverrides,
   PopulatedTransaction,
   Signer,
@@ -21,6 +23,7 @@ export interface GameInstanceInterface extends utils.Interface {
   functions: {
     "getJackpot()": FunctionFragment;
     "play()": FunctionFragment;
+    "receiveRng(uint256,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -28,9 +31,14 @@ export interface GameInstanceInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "play", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "receiveRng",
+    values: [BigNumberish, BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "getJackpot", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "play", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "receiveRng", data: BytesLike): Result;
 
   events: {
     "RngReceived(uint256)": EventFragment;
@@ -82,6 +90,12 @@ export interface GameInstance extends BaseContract {
     play(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    receiveRng(
+      _rng: BigNumberish,
+      _requestId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   getJackpot(overrides?: CallOverrides): Promise<BigNumber>;
@@ -90,10 +104,22 @@ export interface GameInstance extends BaseContract {
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  receiveRng(
+    _rng: BigNumberish,
+    _requestId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     getJackpot(overrides?: CallOverrides): Promise<BigNumber>;
 
     play(overrides?: CallOverrides): Promise<void>;
+
+    receiveRng(
+      _rng: BigNumberish,
+      _requestId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   filters: {
@@ -110,6 +136,12 @@ export interface GameInstance extends BaseContract {
     play(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    receiveRng(
+      _rng: BigNumberish,
+      _requestId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -117,6 +149,12 @@ export interface GameInstance extends BaseContract {
 
     play(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    receiveRng(
+      _rng: BigNumberish,
+      _requestId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -3,6 +3,7 @@ pragma solidity ^0.8.10;
 import "../Treasury/ITreasury.sol";
 import "../Authorization/IGamebitAuthorizations.sol";
 import "../Auditor/IAuditor.sol";
+import "hardhat/console.sol";
 
 abstract contract Game {
     ITreasury treasury;
@@ -26,6 +27,14 @@ abstract contract Game {
         treasuryContract = payable(_treasury);
         gamebitAuth = IGamebitAuthorization(_gamitAuth);
         auditor = IAuditor(_auditor);
+    }
+
+    modifier onlyRngOracle() {
+        require(
+            gamebitAuth.isOfficialRng(msg.sender),
+            "Only the rng oracle can provide RNG"
+        );
+        _;
     }
 
     function acceptPlay(uint256 _amount, uint256 _profit)
@@ -66,11 +75,20 @@ abstract contract Game {
         auditor.getRequest(1);
         currentRequestId = auditor.logRNGRequest(currentRequestNonce);
         emit RngRequested(currentRequestId);
+        currentRequestNonce++;
     }
 
-    function consumeRng(uint256 _rng, uint256 _requestId) internal virtual {
+    function receiveRng(uint256 _rng, uint256 _requestId)
+        public
+        onlyRngOracle
+        returns (uint256)
+    {
         require(currentRequestId == _requestId, "Invalid request id");
         auditor.consumeRNG(_rng, _requestId);
         emit RngReceived(_rng);
+        useRng(_rng, _requestId);
+        return _rng;
     }
+
+    function useRng(uint256 _rng, uint256 _requestId) internal virtual {}
 }

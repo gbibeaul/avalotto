@@ -33,6 +33,30 @@ const _abi = [
     name: "RngRequested",
     type: "event",
   },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_rng",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_requestId",
+        type: "uint256",
+      },
+    ],
+    name: "receiveRng",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
 export class Game__factory {

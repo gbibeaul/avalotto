@@ -66,7 +66,7 @@ export interface AuditorInterface extends utils.Interface {
     "getFullfillment(uint256)": FunctionFragment;
     "getRequest(uint256)": FunctionFragment;
     "getRequestState(uint256)": FunctionFragment;
-    "requestRNG(uint256)": FunctionFragment;
+    "logRNGRequest(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -94,7 +94,7 @@ export interface AuditorInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "requestRNG",
+    functionFragment: "logRNGRequest",
     values: [BigNumberish]
   ): string;
 
@@ -116,7 +116,10 @@ export interface AuditorInterface extends utils.Interface {
     functionFragment: "getRequestState",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "requestRNG", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "logRNGRequest",
+    data: BytesLike
+  ): Result;
 
   events: {
     "RNGConsumed(uint256,address,uint256)": EventFragment;
@@ -211,7 +214,7 @@ export interface Auditor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[number]>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -250,7 +253,7 @@ export interface Auditor extends BaseContract {
     overrides?: CallOverrides
   ): Promise<number>;
 
-  requestRNG(
+  logRNGRequest(
     _requestNonce: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -289,7 +292,7 @@ export interface Auditor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<number>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -359,7 +362,7 @@ export interface Auditor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -399,7 +402,7 @@ export interface Auditor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

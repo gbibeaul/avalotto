@@ -11,6 +11,19 @@ import type {
 
 const _abi = [
   {
+    inputs: [],
+    name: "getRngOracleAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -76,25 +89,6 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "_rng",
-        type: "address",
-      },
-    ],
-    name: "isAuthorizedRNG",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
         name: "_game",
         type: "address",
       },
@@ -138,6 +132,25 @@ const _abi = [
       },
     ],
     name: "isGamePlayProfitAuthorized",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_rng",
+        type: "address",
+      },
+    ],
+    name: "isGameRngAuthorized",
     outputs: [
       {
         internalType: "bool",

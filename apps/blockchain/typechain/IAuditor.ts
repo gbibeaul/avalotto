@@ -68,7 +68,7 @@ export interface IAuditorInterface extends utils.Interface {
     "getFullfillment(uint256)": FunctionFragment;
     "getRequest(uint256)": FunctionFragment;
     "getRequestState(uint256)": FunctionFragment;
-    "requestRNG(uint256)": FunctionFragment;
+    "logRNGRequest(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -96,7 +96,7 @@ export interface IAuditorInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "requestRNG",
+    functionFragment: "logRNGRequest",
     values: [BigNumberish]
   ): string;
 
@@ -118,7 +118,10 @@ export interface IAuditorInterface extends utils.Interface {
     functionFragment: "getRequestState",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "requestRNG", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "logRNGRequest",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -184,7 +187,7 @@ export interface IAuditor extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -223,7 +226,7 @@ export interface IAuditor extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  requestRNG(
+  logRNGRequest(
     _requestNonce: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -262,7 +265,7 @@ export interface IAuditor extends BaseContract {
       overrides?: CallOverrides
     ): Promise<number>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -304,7 +307,7 @@ export interface IAuditor extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -344,7 +347,7 @@ export interface IAuditor extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    requestRNG(
+    logRNGRequest(
       _requestNonce: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

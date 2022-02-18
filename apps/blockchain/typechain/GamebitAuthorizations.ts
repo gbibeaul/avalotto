@@ -32,6 +32,7 @@ export interface GamebitAuthorizationsInterface extends utils.Interface {
     "editGameRngAuth(address,bool)": FunctionFragment;
     "enableStaff()": FunctionFragment;
     "getMinGameProfit(address)": FunctionFragment;
+    "getRngOracleAddress()": FunctionFragment;
     "isAmountEnoughProfit(address,uint256)": FunctionFragment;
     "isAuditor(address)": FunctionFragment;
     "isGameAuthorized(address)": FunctionFragment;
@@ -86,6 +87,10 @@ export interface GamebitAuthorizationsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getMinGameProfit",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRngOracleAddress",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "isAmountEnoughProfit",
@@ -172,6 +177,10 @@ export interface GamebitAuthorizationsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getMinGameProfit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRngOracleAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -319,6 +328,8 @@ export interface GamebitAuthorizations extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getRngOracleAddress(overrides?: CallOverrides): Promise<[string]>;
+
     isAmountEnoughProfit(
       _game: string,
       _amount: BigNumberish,
@@ -446,6 +457,8 @@ export interface GamebitAuthorizations extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getRngOracleAddress(overrides?: CallOverrides): Promise<string>;
+
   isAmountEnoughProfit(
     _game: string,
     _amount: BigNumberish,
@@ -553,6 +566,8 @@ export interface GamebitAuthorizations extends BaseContract {
       _game: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getRngOracleAddress(overrides?: CallOverrides): Promise<string>;
 
     isAmountEnoughProfit(
       _game: string,
@@ -677,6 +692,8 @@ export interface GamebitAuthorizations extends BaseContract {
       _game: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getRngOracleAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     isAmountEnoughProfit(
       _game: string,
@@ -803,6 +820,10 @@ export interface GamebitAuthorizations extends BaseContract {
 
     getMinGameProfit(
       _game: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getRngOracleAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

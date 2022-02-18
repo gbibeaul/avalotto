@@ -50,8 +50,13 @@ beforeEach(async function () {
   );
 
   authorization.addAuthorizedGame(Game.address, utils.parseEther("0.05"));
+  await mineEmptyBlocks(1);
   authorization.editGamePlayProfitAuth(Game.address, true);
+  await mineEmptyBlocks(1);
   authorization.editGameRngAuth(Game.address, true);
+  await mineEmptyBlocks(1);
+  authorization.functions.changeRng(await deployerStaff.getAddress());
+  await mineEmptyBlocks(1);
 });
 
 describe("Gamebit Game", () => {
@@ -63,17 +68,41 @@ describe("Gamebit Game", () => {
 
   it("requests an RNG when the draw is called", async () => {
     await Game.connect(nonStaff).play({ value: BigNumber.from(1) });
-    await mineEmptyBlocks(2);
+    await mineEmptyBlocks(1);
     await Game.connect(nonStaff).play({ value: BigNumber.from(1) });
-    await mineEmptyBlocks(2);
+    await mineEmptyBlocks(1);
 
     const test = await auditor.functions.getRequest(BigNumber.from(1));
 
     expect(test[0][0]).toEqual(Game.address);
+  });
 
-    // const rngId = await Game.getCurrentRngRequestId();
-    // console.log(rngId);
+  it("lets the oracle fullfill a RNG request and the game consume it", async () => {
+    await Game.connect(nonStaff).play({ value: BigNumber.from(1) });
+    await mineEmptyBlocks(1);
+    await Game.connect(nonStaff).play({ value: BigNumber.from(1) });
+    await mineEmptyBlocks(1);
 
-    // expect(rngId).toEqual(BigNumber.from(1));
+    const rng = BigNumber.from(Math.floor(Math.random() * 100));
+    const requestId = BigNumber.from(1);
+
+    await auditor
+      .connect(deployerStaff)
+      .functions.fullfillRNG(BigNumber.from(1), rng, requestId);
+
+    await mineEmptyBlocks(1);
+
+    const [fullfill] = await auditor.functions.getFullfillment(requestId);
+
+    await mineEmptyBlocks(1);
+
+    await Game.connect(deployerStaff).functions.receiveRng(rng, requestId);
+
+    await mineEmptyBlocks(1);
+
+    const [consumption] = await auditor.functions.getConsumption(requestId);
+
+    expect(fullfill[2]).toEqual(rng);
+    expect(consumption[1]).toEqual(rng);
   });
 });

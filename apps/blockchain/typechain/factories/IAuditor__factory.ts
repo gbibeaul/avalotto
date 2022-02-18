@@ -183,7 +183,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "requestRNG",
+    name: "logRNGRequest",
     outputs: [
       {
         internalType: "uint256",

@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 
 import "../Authorization/IGamebitAuthorizations.sol";
+import "hardhat/console.sol";
 
 contract Auditor {
     constructor(address _gamebitAuthorizations) {
@@ -93,15 +94,16 @@ contract Auditor {
         onlyRngAuthorizedGame
     {
         require(
+            requestState[_requestId] == RequestState.FULLFILLED,
+            "Request must be fullfilled before consumption"
+        );
+
+        require(
             fullfillment[_requestId].fullfillmentValue == _consumptionValue,
             "Invalid RNG"
         );
-        require(
-            requestState[_requestId] == RequestState.FULLFILLED,
-            "This request is not in fullfilled state, only fullfilled requests can be consumed"
-        );
 
-        consumption[currentId] = RNGConsumption(
+        consumption[_requestId] = RNGConsumption(
             block.timestamp,
             _consumptionValue
         );
@@ -121,12 +123,12 @@ contract Auditor {
             requestState[_requestId] == RequestState.REQUESTED,
             "This request is not in requested state, only requested non consumed requests can be fullfilled"
         );
-
-        fullfillment[currentId] = RNGFullfillment(
+        fullfillment[_requestId] = RNGFullfillment(
             _fullfillmentNonce,
             block.timestamp,
             _fullfillmentValue
         );
+        requestState[_requestId] = RequestState.FULLFILLED;
         emit RNGFullfilled(currentId, msg.sender, _fullfillmentValue);
     }
 

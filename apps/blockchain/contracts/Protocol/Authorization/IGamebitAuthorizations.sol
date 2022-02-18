@@ -25,6 +25,8 @@ interface IGamebitAuthorization {
 
     function isAuditor(address _auditor) external view returns (bool);
 
+    function getRngOracleAddress() external view returns (address);
+
     function isStaffOrGovApproved(address _requester)
         external
         view

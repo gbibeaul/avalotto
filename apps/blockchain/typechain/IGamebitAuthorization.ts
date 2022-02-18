@@ -18,13 +18,14 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface IGamebitAuthorizationInterface extends utils.Interface {
   contractName: "IGamebitAuthorization";
   functions: {
+    "getRngOracleAddress()": FunctionFragment;
     "isAmountEnoughProfit(address,uint256)": FunctionFragment;
     "isAuditor(address)": FunctionFragment;
     "isAuthorizedOracle(address)": FunctionFragment;
-    "isAuthorizedRNG(address)": FunctionFragment;
     "isGameAuthorized(address)": FunctionFragment;
     "isGameGameProfitAuthorized(address)": FunctionFragment;
     "isGamePlayProfitAuthorized(address)": FunctionFragment;
+    "isGameRngAuthorized(address)": FunctionFragment;
     "isOfficialOracle(address)": FunctionFragment;
     "isOfficialRng(address)": FunctionFragment;
     "isStaff(address)": FunctionFragment;
@@ -33,16 +34,16 @@ export interface IGamebitAuthorizationInterface extends utils.Interface {
   };
 
   encodeFunctionData(
+    functionFragment: "getRngOracleAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "isAmountEnoughProfit",
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "isAuditor", values: [string]): string;
   encodeFunctionData(
     functionFragment: "isAuthorizedOracle",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isAuthorizedRNG",
     values: [string]
   ): string;
   encodeFunctionData(
@@ -55,6 +56,10 @@ export interface IGamebitAuthorizationInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "isGamePlayProfitAuthorized",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isGameRngAuthorized",
     values: [string]
   ): string;
   encodeFunctionData(
@@ -76,16 +81,16 @@ export interface IGamebitAuthorizationInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "getRngOracleAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "isAmountEnoughProfit",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isAuditor", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isAuthorizedOracle",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isAuthorizedRNG",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -98,6 +103,10 @@ export interface IGamebitAuthorizationInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "isGamePlayProfitAuthorized",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isGameRngAuthorized",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -149,6 +158,8 @@ export interface IGamebitAuthorization extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    getRngOracleAddress(overrides?: CallOverrides): Promise<[string]>;
+
     isAmountEnoughProfit(
       _game: string,
       _amount: BigNumberish,
@@ -159,11 +170,6 @@ export interface IGamebitAuthorization extends BaseContract {
 
     isAuthorizedOracle(
       _oracle: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    isAuthorizedRNG(
-      _rng: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -179,6 +185,11 @@ export interface IGamebitAuthorization extends BaseContract {
 
     isGamePlayProfitAuthorized(
       _game: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    isGameRngAuthorized(
+      _rng: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -199,6 +210,8 @@ export interface IGamebitAuthorization extends BaseContract {
     ): Promise<[boolean]>;
   };
 
+  getRngOracleAddress(overrides?: CallOverrides): Promise<string>;
+
   isAmountEnoughProfit(
     _game: string,
     _amount: BigNumberish,
@@ -212,8 +225,6 @@ export interface IGamebitAuthorization extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  isAuthorizedRNG(_rng: string, overrides?: CallOverrides): Promise<boolean>;
-
   isGameAuthorized(_game: string, overrides?: CallOverrides): Promise<boolean>;
 
   isGameGameProfitAuthorized(
@@ -223,6 +234,11 @@ export interface IGamebitAuthorization extends BaseContract {
 
   isGamePlayProfitAuthorized(
     _game: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  isGameRngAuthorized(
+    _rng: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -243,6 +259,8 @@ export interface IGamebitAuthorization extends BaseContract {
   ): Promise<boolean>;
 
   callStatic: {
+    getRngOracleAddress(overrides?: CallOverrides): Promise<string>;
+
     isAmountEnoughProfit(
       _game: string,
       _amount: BigNumberish,
@@ -256,8 +274,6 @@ export interface IGamebitAuthorization extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    isAuthorizedRNG(_rng: string, overrides?: CallOverrides): Promise<boolean>;
-
     isGameAuthorized(
       _game: string,
       overrides?: CallOverrides
@@ -270,6 +286,11 @@ export interface IGamebitAuthorization extends BaseContract {
 
     isGamePlayProfitAuthorized(
       _game: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    isGameRngAuthorized(
+      _rng: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -293,6 +314,8 @@ export interface IGamebitAuthorization extends BaseContract {
   filters: {};
 
   estimateGas: {
+    getRngOracleAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     isAmountEnoughProfit(
       _game: string,
       _amount: BigNumberish,
@@ -303,11 +326,6 @@ export interface IGamebitAuthorization extends BaseContract {
 
     isAuthorizedOracle(
       _oracle: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    isAuthorizedRNG(
-      _rng: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -323,6 +341,11 @@ export interface IGamebitAuthorization extends BaseContract {
 
     isGamePlayProfitAuthorized(
       _game: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isGameRngAuthorized(
+      _rng: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -344,6 +367,10 @@ export interface IGamebitAuthorization extends BaseContract {
   };
 
   populateTransaction: {
+    getRngOracleAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isAmountEnoughProfit(
       _game: string,
       _amount: BigNumberish,
@@ -360,11 +387,6 @@ export interface IGamebitAuthorization extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    isAuthorizedRNG(
-      _rng: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     isGameAuthorized(
       _game: string,
       overrides?: CallOverrides
@@ -377,6 +399,11 @@ export interface IGamebitAuthorization extends BaseContract {
 
     isGamePlayProfitAuthorized(
       _game: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isGameRngAuthorized(
+      _rng: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
