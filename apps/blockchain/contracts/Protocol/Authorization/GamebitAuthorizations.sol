@@ -10,9 +10,9 @@ contract GamebitAuthorizations {
     mapping(address => uint256) minGameProfit;
     mapping(address => bool) isOracle;
     address rngOracle;
+    address auditor;
     address governance;
     address[] oracles;
-    address GamebitInfra;
 
     bool staffEnabled = true;
 
@@ -91,10 +91,6 @@ contract GamebitAuthorizations {
         onlyStaffOrGovernance
     {
         minGameProfit[_game] = _minGameProfit;
-    }
-
-    function updateInfraAddress(address _infra) public onlyStaffOrGovernance {
-        GamebitInfra = _infra;
     }
 
     /**
@@ -176,6 +172,10 @@ contract GamebitAuthorizations {
         isOracle[_oracle] = false;
     }
 
+    function changeAuditor(address _auditor) public onlyStaffOrGovernance {
+        auditor = _auditor;
+    }
+
     /**
         View Funcs
      */
@@ -199,6 +199,7 @@ contract GamebitAuthorizations {
         return games[_game];
     }
 
+    // is a game authorized to use the RNGs
     function isGameRngAuthorized(address _game) public view returns (bool) {
         return rngAuthorized[_game];
     }
@@ -209,10 +210,6 @@ contract GamebitAuthorizations {
 
     function isOfficialRng(address _rng) public view returns (bool) {
         return rngOracle == _rng;
-    }
-
-    function isOfficialInfra(address _infra) public view returns (bool) {
-        return GamebitInfra == _infra;
     }
 
     function isGamePlayProfitAuthorized(address _game)
@@ -238,44 +235,12 @@ contract GamebitAuthorizations {
     {
         return minGameProfit[_game] <= _amount;
     }
-}
 
-interface IGamebitAuthorization {
-    function isGameAuthorized(address _game) external view returns (bool);
+    function getMinGameProfit(address _game) public view returns (uint256) {
+        return minGameProfit[_game];
+    }
 
-    function isAuthorizedRNG(address _rng) external view returns (bool);
-
-    function isGamePlayProfitAuthorized(address _game)
-        external
-        view
-        returns (bool);
-
-    function isGameGameProfitAuthorized(address _game)
-        external
-        view
-        returns (bool);
-
-    function updateInfraAddress(address _infra) external;
-
-    function isOfficialInfra(address _infra) external view returns (bool);
-
-    function isAuthorizedOracle(address _oracle) external view returns (bool);
-
-    function isStaff(address _staff) external view returns (bool);
-
-    function isStaffEnabled() external view returns (bool);
-
-    function isOfficialRng(address _rng) external view returns (bool);
-
-    function isOfficialOracle(address _oracle) external view returns (bool);
-
-    function isStaffOrGovApproved(address _requester)
-        external
-        view
-        returns (bool);
-
-    function isAmountEnoughProfit(address _game, uint256 _amount)
-        external
-        view
-        returns (bool);
+    function isAuditor(address _auditor) public view returns (bool) {
+        return auditor == _auditor;
+    }
 }

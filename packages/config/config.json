@@ -52,32 +52,32 @@
     "contracts": {
       "GMBT": {
         "name": "GMBT",
-        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
-        "address": "0x4F82892604C1323cBa2E4c8E5fF8a96c8d8A5000",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
         "contractType": "Protocol"
       },
       "GamebitAuthorizations": {
         "name": "GamebitAuthorizations",
-        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
-        "address": "0xA03e216F4a43E00475dc160beB470372A2c3bC37",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
         "contractType": "Protocol"
       },
       "Governance": {
         "name": "Governance",
-        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
-        "address": "0x267A4487F208c9D075b047f94186f2C842e4aB86",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
         "contractType": "Protocol"
       },
       "Treasury": {
         "name": "Treasury",
-        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
-        "address": "0xaEABe4B12B95Ce0518d8327cb1eA1793c93bD5ec",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
         "contractType": "Protocol"
       },
       "Infra": {
         "name": "Infra",
-        "owner": "0xF0259a18C41AbFe00329707795B23f0a56bfF30B",
-        "address": "0x4dEf87988BFB5Fc34fD52eD0DFe49e16355Cb84f",
+        "owner": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
         "contractType": "Protocol"
       },
       "Lotto": {

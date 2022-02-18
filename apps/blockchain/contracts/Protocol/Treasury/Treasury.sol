@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./GamebitAuthorizations.sol";
+import "../Authorization/IGamebitAuthorizations.sol";
 
 contract GamebitTreasury {
     uint256 rngFee;
@@ -90,6 +90,10 @@ contract GamebitTreasury {
         return address(this).balance;
     }
 
+    function getGameFunds(address _game) public view returns (uint256) {
+        return authorizedGameFunds[_game];
+    }
+
     // INTERNAL FUNCTIONS
 
     // todo hook up games sending the token to players on plays and game sessions
@@ -135,10 +139,6 @@ contract GamebitTreasury {
         // todo call distributeGamingIncentive
     }
 
-    /**
-        This allows a contract to distribute the winnings of a single bet
-        @notice The games need to be previously authorized to act on behalf of the treasury. Treasury profits were taken on acceptPlay
-     */
     function distributePlayWinnings(uint256 _winning, address payable _winner)
         public
         authForPlay
@@ -149,10 +149,6 @@ contract GamebitTreasury {
         authorizedGameFunds[msg.sender] -= _winning;
     }
 
-    /**
-        Allows a game to send funds when it's in a session. Profits are sent the session ends.
-        @notice this is a security risk. We'll need to implement security in the infra to limit game sessions to a time limit or something.
-     */
     function takeGameSessionBet(uint256 _bet)
         public
         payable
@@ -163,11 +159,6 @@ contract GamebitTreasury {
         authorizedGameFunds[msg.sender] += _bet;
     }
 
-    /**
-        This allows a contract to distribute the profits from a play session. 
-        @notice The games need to be previously authorized to act on behalf of the treasury
-
-     */
     function payGameSessionWinnings(
         uint256 _winning,
         uint256 _profits,
@@ -188,12 +179,6 @@ contract GamebitTreasury {
         emit ProfitTaken(ProfitType.GAME_SESSION_FEE, _profits, msg.sender);
     }
 
-    // GAMEBIT FUNCTIONS
-
-    /**
-        @dev This will allow the infrastructure to pay the treasury for oracle and rng requests
-     */
-
     function receiveRngPayment() public payable approvedGame {
         // TODO: URGENT GB DECREASE GAME FUNDS
         treasuryFunds += rngFee;
@@ -206,33 +191,4 @@ contract GamebitTreasury {
         authorizedGameFunds[msg.sender] -= rngFee;
         emit ProfitTaken(ProfitType.ORACLE_FEE, rngFee, _game);
     }
-}
-
-interface ITreasury {
-    function getFundsAVAXAmount() external view returns (uint256);
-
-    function receiveRngPayment() external payable;
-
-    function sendAvax(
-        uint256 _amount,
-        address payable _sendTo,
-        string calldata _assetType
-    ) external returns (bool);
-
-    function takeGameSessionBet(uint256 _bet) external payable;
-
-    function payGameSessionWinnings(
-        uint256 _winning,
-        uint256 _profits,
-        address payable _winner
-    ) external payable returns (bool);
-
-    function acceptPlay(uint256 _amount, uint256 _profits)
-        external
-        payable
-        returns (bool);
-
-    function distributePlayWinnings(uint256 _winning, address payable _winner)
-        external
-        returns (bool);
 }
