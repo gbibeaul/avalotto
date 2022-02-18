@@ -10,6 +10,7 @@
     "rng": "yarn workspace @gamble/blockchain run rng",
     "test:blockchain": "yarn turbo run test --scope=*blockchain*",
     "deliver": "yarn turbo run deliver",
+    "gen-types": "yarn workspace @gamble/blockchain run gen-types",
     "deploy:dev": "yarn workspace @gamble/blockchain run deploy:dev",
     "deploy:fuji": "yarn workspace @gamble/blockchain run deploy:fuji",
     "start:admin": "yarn workspace @gamble/admin run dev",

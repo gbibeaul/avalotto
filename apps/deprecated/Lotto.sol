@@ -1,6 +1,6 @@
 pragma solidity ^0.8.10;
 
-import "./Infra.sol";
+import "../Protocol/Infra.sol";
 import "./Game.sol";
 
 contract LottoGamebit is Game {
@@ -139,6 +139,4 @@ contract LottoGamebit is Game {
         betsClosed = true;
         requestRng();
     }
-
-
 }

@@ -1,6 +1,7 @@
 import { task } from "hardhat/config";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers";
+import "hardhat-jest-plugin";
 import "@nomiclabs/hardhat-waffle";
 import "hardhat-erc1820";
 import "@openzeppelin/hardhat-upgrades";

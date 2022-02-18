@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./Game.sol";
+import "../Game.sol";
 import "./CasinoNFT.sol";
 
 /**
@@ -41,7 +41,10 @@ interface IScratchOff {
     /**
      * Get current state: revealed == true
      */
-    function getStatus(uint256 tokenId) external view returns(ScratchOffStatus);
+    function getStatus(uint256 tokenId)
+        external
+        view
+        returns (ScratchOffStatus);
 
     /**
      * State transition: minted ==> scratched
@@ -51,7 +54,10 @@ interface IScratchOff {
     /**
      * Get the scratched off, revealed values
      */
-    function getBalls(uint256 tokenId) external view returns(uint256[9] memory);
+    function getBalls(uint256 tokenId)
+        external
+        view
+        returns (uint256[9] memory);
 
     /**
      * State transition: scratched ==> redeemed
@@ -73,12 +79,17 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
     mapping(uint256 => uint256[9]) private tokenToRolls;
     mapping(uint256 => uint256) private rngToToken;
 
-
-    constructor(address _treasury, address _gamebitAuth, address _gamebitInfra, address _casinoNFT)
+    constructor(
+        address _treasury,
+        address _gamebitAuth,
+        address _gamebitInfra,
+        address _casinoNFT
+    )
         ERC721("ScratchOffCard", "SCRATCH")
-        Game(_treasury, _gamebitAuth, _gamebitInfra) {
-            casinoNFT = CasinoNFT(_casinoNFT);
-        }
+        Game(_treasury, _gamebitAuth, _gamebitInfra)
+    {
+        casinoNFT = CasinoNFT(_casinoNFT);
+    }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://tbd";
@@ -90,10 +101,11 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
         _safeMint(to, tokenId);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
-        internal
-        override
-    {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal override {
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
@@ -101,7 +113,11 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
         safeMint(_msgSender());
     }
 
-    function getStatus(uint256 tokenId) external view returns(ScratchOffStatus) {
+    function getStatus(uint256 tokenId)
+        external
+        view
+        returns (ScratchOffStatus)
+    {
         return _statuses[tokenId];
     }
 
@@ -109,10 +125,14 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
         require(_statuses[_tokenId] == ScratchOffStatus.Minted);
         require(ownerOf(_tokenId) == _msgSender());
         uint256 requestId = requestRng();
-        rngToToken[requestId] = _tokenId; 
+        rngToToken[requestId] = _tokenId;
     }
 
-    function expand(uint256 randomValue, uint256 n) public pure returns (uint256[] memory expandedValues) {
+    function expand(uint256 randomValue, uint256 n)
+        public
+        pure
+        returns (uint256[] memory expandedValues)
+    {
         expandedValues = new uint256[](n);
         for (uint256 i = 0; i < n; i++) {
             expandedValues[i] = uint256(keccak256(abi.encode(randomValue, i)));
@@ -133,7 +153,11 @@ contract ScratchOffCard is IScratchOff, ERC721, Game {
         emit Scratched(tokenId, tokenToRolls[tokenId]);
     }
 
-    function getBalls(uint256 tokenId) external view returns(uint256[9] memory) {
+    function getBalls(uint256 tokenId)
+        external
+        view
+        returns (uint256[9] memory)
+    {
         require(_statuses[tokenId] != ScratchOffStatus.Minted);
         return tokenToRolls[tokenId];
     }
