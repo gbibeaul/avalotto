@@ -1,9 +1,0 @@
-/**
- * Universal box-sizing. Width and height values apply to the content, padding, and border.
- */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
