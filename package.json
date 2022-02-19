@@ -13,11 +13,8 @@
     "gen-types": "yarn workspace @gamble/blockchain run gen-types",
     "deploy:dev": "yarn workspace @gamble/blockchain run deploy:dev",
     "deploy:fuji": "yarn workspace @gamble/blockchain run deploy:fuji",
-    "start:admin": "yarn workspace @gamble/admin run dev",
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
-    "dev": "yarn deploy:dev && yarn workspace gamble run dev",
-    "dev:admin": "yarn workspace admin run dev",
-    "dev:fuji": "yarn workspace gamble run dev",
+    "dev": "yarn workspace app run dev",
     "dev:gamble": "yarn workspace gamble run dev"
   },
   "devDependencies": {

@@ -6,9 +6,11 @@ import { Hero } from "components/app/Hero";
 import { Featured } from "components/app/Featured";
 import { Features } from "components/app/Features";
 import { HomePageLayout } from "components/app/HomepageLayout";
+import { VideoBanner } from "components/app/VideoBanner";
 
 const IndexPage = () => (
   <HomePageLayout>
+    <VideoBanner />
     <Hero />
     <Features />
     <Featured />

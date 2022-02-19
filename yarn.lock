@@ -4901,40 +4901,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"admin@workspace:apps/admin":
-  version: 0.0.0-use.local
-  resolution: "admin@workspace:apps/admin"
-  dependencies:
-    "@gamble/blockchain": "workspace:^"
-    "@gamble/config": "workspace:^"
-    "@headlessui/react": latest
-    "@heroicons/react": ^1.0.5
-    "@tailwindcss/forms": ^0.4.0
-    "@types/node": 17.0.15
-    "@types/react": 17.0.39
-    add: ^2.0.6
-    autoprefixer: ^10.4.2
-    eslint: 8.8.0
-    eslint-config-next: 12.0.10
-    ethers: ^5.5.4
-    next: 12.0.10
-    next-auth: ^4.2.1
-    next-transpile-modules: ^9.0.0
-    postcss: ^8.4.6
-    react: 17.0.2
-    react-dom: 17.0.2
-    react-hot-toast: ^2.2.0
-    react-icons: ^4.3.1
-    react-lottie-player: ^1.4.1
-    react-use: ^17.3.2
-    swr: ^1.2.1
-    tailwindcss: ^3.0.18
-    typescript: 4.5.5
-    wagmi: ^0.2.9
-    yarn: ^1.22.17
-  languageName: unknown
-  linkType: soft
-
 "aes-js@npm:3.0.0":
   version: 3.0.0
   resolution: "aes-js@npm:3.0.0"
@@ -5140,6 +5106,40 @@ __metadata:
   checksum: 985163db2292fac9e5a1e072bf99f1b5baccf196e4de25a0b0b81865ebddeb3b3eb4480734ef0a2ac8c002845396b91aa89121f5b84f93981a4658164a9ec6e9
   languageName: node
   linkType: hard
+
+"app@workspace:apps/app":
+  version: 0.0.0-use.local
+  resolution: "app@workspace:apps/app"
+  dependencies:
+    "@gamble/blockchain": "workspace:^"
+    "@gamble/config": "workspace:^"
+    "@headlessui/react": latest
+    "@heroicons/react": ^1.0.5
+    "@tailwindcss/forms": ^0.4.0
+    "@types/node": 17.0.15
+    "@types/react": 17.0.39
+    add: ^2.0.6
+    autoprefixer: ^10.4.2
+    eslint: 8.8.0
+    eslint-config-next: 12.0.10
+    ethers: ^5.5.4
+    next: 12.0.10
+    next-auth: ^4.2.1
+    next-transpile-modules: ^9.0.0
+    postcss: ^8.4.6
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-hot-toast: ^2.2.0
+    react-icons: ^4.3.1
+    react-lottie-player: ^1.4.1
+    react-use: ^17.3.2
+    swr: ^1.2.1
+    tailwindcss: ^3.0.18
+    typescript: 4.5.5
+    wagmi: ^0.2.9
+    yarn: ^1.22.17
+  languageName: unknown
+  linkType: soft
 
 "aproba@npm:^1.0.3":
   version: 1.2.0

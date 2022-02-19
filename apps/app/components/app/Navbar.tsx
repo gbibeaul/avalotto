@@ -5,18 +5,19 @@ import { CreditCardIcon } from "@heroicons/react/solid";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useAccount } from "wagmi";
 import { useConnectModal } from "hooks/user";
+import NftBanner from "components/app/NftBanner";
+import { useState } from "react";
 
 export const Navbar = () => {
   const [{ data: accountData }] = useAccount();
   const [_, setOpen] = useConnectModal();
+  const [showNftBanner, setShowNftBanner] = useState(true);
 
   return (
-    <Disclosure
-      as="nav"
-      className="sticky top-0 z-20 mt-[-100%]  md:mt-[-700px] bg-black/[0.35]"
-    >
+    <Disclosure as="nav" className="sticky top-0 z-20 bg-black">
       {({ open }) => (
         <>
+          {showNftBanner && <NftBanner />}
           <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-8 md:max-w-5xl">
             <div className="relative flex items-center justify-between h-16">
               <div className="flex-1 flex  px-6 ">
