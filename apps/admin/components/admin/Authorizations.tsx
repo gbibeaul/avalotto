@@ -91,17 +91,17 @@ export const Authorizations: React.VFC<AuthorizationsProps> = ({
       <ul role="list" className="divide-y divide-gray-200">
         <Toggle
           title="Protocol Approved"
-          enabled={isApproved}
+          enabled={Boolean(isApproved)}
           onChange={approveGame}
         />
         <Toggle
           title="RNG Approved"
-          enabled={isRngApproved}
+          enabled={Boolean(isRngApproved)}
           onChange={toggleRng}
         />
         <Toggle
           title="Play Profit Approved"
-          enabled={isPlayProfitApproved}
+          enabled={Boolean(isPlayProfitApproved)}
           onChange={togglePlayProfit}
         />
       </ul>
