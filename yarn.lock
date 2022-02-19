@@ -2444,7 +2444,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gamble/blockchain@workspace:apps/blockchain":
+"@gamble/blockchain@workspace:^, @gamble/blockchain@workspace:apps/blockchain":
   version: 0.0.0-use.local
   resolution: "@gamble/blockchain@workspace:apps/blockchain"
   dependencies:
@@ -2453,8 +2453,6 @@ __metadata:
     "@defi-wonderland/smock": ^2.0.7
     "@ethereum-waffle/jest": ^3.3.0
     "@gamble/config": "workspace:^"
-    "@gamble/gamebit-authorizations": "workspace:^"
-    "@gamble/infra": "workspace:^"
     "@nomiclabs/hardhat-ethers": ^2.0.3
     "@nomiclabs/hardhat-waffle": ^2.0.1
     "@openzeppelin/contracts": ^4.4.1
@@ -2465,7 +2463,6 @@ __metadata:
     "@types/fs-extra": ^9.0.13
     "@types/jest": ^27.4.0
     "@types/node": ^17.0.18
-    config: "*"
     cross-env: ^7.0.3
     ethereum-waffle: ^3.4.0
     ethers: ^5.5.2
@@ -2533,7 +2530,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamble/gamebit-authorizations@workspace:^, @gamble/gamebit-authorizations@workspace:packages/GamebitAuthorizations":
+"@gamble/gamebit-authorizations@workspace:packages/GamebitAuthorizations":
   version: 0.0.0-use.local
   resolution: "@gamble/gamebit-authorizations@workspace:packages/GamebitAuthorizations"
   languageName: unknown
@@ -2545,19 +2542,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamble/infra@workspace:^, @gamble/infra@workspace:packages/Infra":
+"@gamble/infra@workspace:packages/Infra":
   version: 0.0.0-use.local
   resolution: "@gamble/infra@workspace:packages/Infra"
   languageName: unknown
   linkType: soft
 
-"@gamble/lotto-mock-winner@^1.0.0, @gamble/lotto-mock-winner@workspace:^, @gamble/lotto-mock-winner@workspace:packages/LottoMockWinner":
+"@gamble/lotto-mock-winner@^1.0.0, @gamble/lotto-mock-winner@workspace:packages/LottoMockWinner":
   version: 0.0.0-use.local
   resolution: "@gamble/lotto-mock-winner@workspace:packages/LottoMockWinner"
   languageName: unknown
   linkType: soft
 
-"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:^, @gamble/lotto@workspace:packages/Lotto":
+"@gamble/lotto@^1.0.0, @gamble/lotto@workspace:packages/Lotto":
   version: 0.0.0-use.local
   resolution: "@gamble/lotto@workspace:packages/Lotto"
   languageName: unknown
@@ -5346,11 +5343,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "admin@workspace:apps/admin"
   dependencies:
+    "@gamble/blockchain": "workspace:^"
     "@gamble/config": "workspace:^"
-    "@gamble/gamebit-authorizations": "workspace:^"
-    "@gamble/infra": "workspace:^"
-    "@gamble/lotto": "workspace:^"
-    "@gamble/lotto-mock-winner": "workspace:^"
     "@headlessui/react": latest
     "@heroicons/react": ^1.0.5
     "@tailwindcss/forms": ^0.4.0
@@ -5363,6 +5357,7 @@ __metadata:
     ethers: ^5.5.4
     next: 12.0.10
     next-auth: ^4.2.1
+    next-transpile-modules: ^9.0.0
     postcss: ^8.4.6
     react: 17.0.2
     react-dom: 17.0.2
@@ -8245,15 +8240,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"config@npm:*":
-  version: 3.3.7
-  resolution: "config@npm:3.3.7"
-  dependencies:
-    json5: ^2.1.1
-  checksum: 53b68dbf303a262b16ee376bb8ee08a9f1f4d09ea5d35a45cd9a47a47591a0817c00d5d10f0d53328221f2a927c98ef8eb921679ad9722c80400df6839c40861
-  languageName: node
-  linkType: hard
-
 "confusing-browser-globals@npm:^1.0.10":
   version: 1.0.11
   resolution: "confusing-browser-globals@npm:1.0.11"
@@ -9438,6 +9424,16 @@ __metadata:
     object-assign: ^4.0.1
     tapable: ^0.2.7
   checksum: c6b423c04bf5defb75f114c0cb35e1d7e29721df0b907d2d5d74959e7f71bcd4e89619df3848ba40ab48e5dd665ec93af8c9af9f8a2eca15a533e487e4e09a43
+  languageName: node
+  linkType: hard
+
+"enhanced-resolve@npm:^5.7.0":
+  version: 5.9.0
+  resolution: "enhanced-resolve@npm:5.9.0"
+  dependencies:
+    graceful-fs: ^4.2.4
+    tapable: ^2.2.0
+  checksum: 06435f52670229eb7fd8d92ea2d988a275f9a1b8c08b9023ba45767c6ed844bc87aa9c9c7e6d044eef99ad73fc3b066b78101163696e5c53121909e5bf8efe8b
   languageName: node
   linkType: hard
 
@@ -15028,7 +15024,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:2.x, json5@npm:^2.1.1, json5@npm:^2.1.2":
+"json5@npm:2.x, json5@npm:^2.1.2":
   version: 2.2.0
   resolution: "json5@npm:2.2.0"
   dependencies:
@@ -16869,6 +16865,16 @@ __metadata:
   version: 1.0.0
   resolution: "next-tick@npm:1.0.0"
   checksum: 83fcb3d4f8d9380210b1c2b8a610463602d80283f0c0c8571c1688e1ad6cbf3a16b345f5bb7212617d4898bedcfa10dff327dc09ec20a112a5bf43a0271375fb
+  languageName: node
+  linkType: hard
+
+"next-transpile-modules@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "next-transpile-modules@npm:9.0.0"
+  dependencies:
+    enhanced-resolve: ^5.7.0
+    escalade: ^3.1.1
+  checksum: 9a5d86d80cedc2404b2b1d5bd4994f2f7bf60e5e20f24e8cc5cfec34da1418b4a439916f37a95ca336bcf6d81094c3647354ac6a0c6737b3df59e62b6380507d
   languageName: node
   linkType: hard
 
@@ -21413,6 +21419,13 @@ __metadata:
   version: 0.2.9
   resolution: "tapable@npm:0.2.9"
   checksum: 73922f3043b581106622dca60a8a3b9ba044213243c44fa738944cd4f9fa08eb8c159e7340a67349b0f91939bb95f82778f1aa4343979850496771e2e0ff2572
+  languageName: node
+  linkType: hard
+
+"tapable@npm:^2.2.0":
+  version: 2.2.1
+  resolution: "tapable@npm:2.2.1"
+  checksum: 3b7a1b4d86fa940aad46d9e73d1e8739335efd4c48322cb37d073eb6f80f5281889bf0320c6d8ffcfa1a0dd5bfdbd0f9d037e252ef972aca595330538aac4d51
   languageName: node
   linkType: hard
 

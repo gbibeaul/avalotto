@@ -8,11 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gamble/blockchain": "workspace:^",
     "@gamble/config": "workspace:^",
-    "@gamble/gamebit-authorizations": "workspace:^",
-    "@gamble/infra": "workspace:^",
-    "@gamble/lotto": "workspace:^",
-    "@gamble/lotto-mock-winner": "workspace:^",
     "@headlessui/react": "latest",
     "@heroicons/react": "^1.0.5",
     "@tailwindcss/forms": "^0.4.0",
@@ -20,6 +17,7 @@
     "ethers": "^5.5.4",
     "next": "12.0.10",
     "next-auth": "^4.2.1",
+    "next-transpile-modules": "^9.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hot-toast": "^2.2.0",

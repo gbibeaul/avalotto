@@ -12,7 +12,7 @@ export const useIsStaff = (forceLogout = false) => {
 
   const [{ data: accountData }] = useAccount();
   const { data, error } = useSWR("is-staff", () =>
-    auth.isStaff(accountData?.address)
+    auth.isStaff(accountData?.address!)
   );
 
   React.useEffect(() => {

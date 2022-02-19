@@ -1,11 +1,10 @@
-import { ethers, Signer } from "ethers";
-import { authorizationConfigParser } from "utils/config.utils";
+import { Signer, ethers } from "ethers";
+import { addresses, provider } from "utils/config.utils";
+import { GamebitAuthorizations__factory } from "@gamble/blockchain";
 
 export const authorizationProvider = (signer?: Signer) => {
-  const { abi, networkAddress, address } = authorizationConfigParser();
-  return new ethers.Contract(
-    address,
-    abi,
-    signer ?? new ethers.providers.JsonRpcProvider(networkAddress)
+  return GamebitAuthorizations__factory.connect(
+    addresses.Authorization,
+    signer ?? provider
   );
 };

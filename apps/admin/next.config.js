@@ -1,6 +1,8 @@
+const withTM = require("next-transpile-modules")(["@gamble/blockchain"]); // pass the modules you would like to see transpiled
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+  // reactStrictMode: true,
+};
 
-module.exports = nextConfig
+module.exports = withTM(nextConfig);

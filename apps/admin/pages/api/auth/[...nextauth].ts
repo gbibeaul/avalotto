@@ -14,9 +14,6 @@ export default NextAuth({
           return null;
         }
 
-        const auth = await authorizationProvider();
-        const isStaff = await auth.isStaff(req.body?.address);
-
         const user = { address: req.body.address };
 
         return user;
@@ -28,10 +25,15 @@ export default NextAuth({
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const auth = await authorizationProvider();
-      const isStaff = await auth.isStaff(user.address);
+      try {
+        const auth = await authorizationProvider();
+        const isStaff = await auth.isStaff(String(user.address));
 
-      return isStaff;
+        return isStaff;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
     },
     async session({ session, user, token }) {
       return session;
