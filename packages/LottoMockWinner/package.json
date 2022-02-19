@@ -1,8 +1,0 @@
-{
-    "name": "@gamble/lotto-mock-winner",
-    "version": "1.0.0",
-    "main": "LottoMockWinner.json",
-    "description": "The resulting bytecode and ABI for lotto winner mocked contract protocol. This is never meant to be ran on mainnet avax",
-    "license": "MIT",
-    "types": "LottoMockWinner.json"
-}

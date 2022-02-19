@@ -1,8 +1,0 @@
-{
-    "name": "@gamble/infra",
-    "version": "1.0.0",
-    "main": "GamebitInfra.json",
-    "description": "The resulting bytecode and ABI for infra contract",
-    "license": "MIT",
-    "types": "Lotto.json"
-}
