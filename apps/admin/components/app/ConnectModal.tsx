@@ -2,38 +2,76 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import styles from "styles/Animations.module.css";
 import { useConnectModal } from "hooks/user";
-import { useAccount, useConnect } from "wagmi";
+import { Connector, useAccount, useConnect, useNetwork } from "wagmi";
+
+enum WalletConnectState {
+  Connect,
+  ConfirmNetwork,
+  Error,
+  Connected,
+  Loading,
+}
 
 export const ConnectModal: React.VFC = () => {
   const [{ data: connectData }, connect] = useConnect();
   const [{ data: accountData }, disconnect] = useAccount();
+  const [{ data: networkData }, switchNetwork] = useNetwork();
 
   const [open, setOpen] = useConnectModal();
   const [step, setStep] = useState(0);
+  const [state, setState] = useState<WalletConnectState>(
+    WalletConnectState.Connect
+  );
 
   useEffect(() => {
     if (accountData?.address) {
-      setStep(2);
-      return;
+      if (networkData.chain?.unsupported) {
+        setState(WalletConnectState.ConfirmNetwork);
+      } else {
+        setState(WalletConnectState.Connected);
+      }
+    } else {
+      setState(WalletConnectState.Connect);
     }
+  }, [accountData?.address, networkData.chain]);
+
+  // title animation
+  useEffect(() => {
     if (open) {
       setTimeout(() => setStep(1), 5000);
     }
     if (!open) {
       setTimeout(() => setStep(0), 2000);
     }
-  }, [open, accountData?.address]);
+  }, [open]);
 
-  const handleConnect = async () => {
-    await connect(connectData.connectors[0]);
-    setStep(2);
-    setOpen(false);
+  const handleConnect = async (connector: Connector) => {
+    const { data, error } = await connect(connector);
+    if (error) {
+      setState(WalletConnectState.Error);
+      return;
+    }
+    setState(WalletConnectState.Connected);
   };
 
   const handleDisconnect = async () => {
+    disconnect();
     setOpen(false);
     setStep(0);
-    await disconnect();
+    setState(WalletConnectState.Connect);
+  };
+
+  const handleSwitchNetwork = async () => {
+    try {
+      if (
+        typeof networkData.chain !== "undefined" &&
+        typeof switchNetwork !== "undefined"
+      ) {
+        await switchNetwork(networkData.chains[0].id);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -75,57 +113,101 @@ export const ConnectModal: React.VFC = () => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl h-96 transform transition-all sm:my-8 sm:align-middle w-96 sm:p-6">
-              {step === 0 && (
-                <div
-                  className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
-                >
-                  Entering Gamebit...
-                </div>
-              )}
-              {step === 1 && (
-                <div
-                  className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
-                >
-                  Select provider...
-                </div>
-              )}
-              {step !== 2 && (
-                <div className="mt-8 animate-pulse">
-                  <button
-                    type="button"
-                    onClick={handleConnect}
-                    className="flex justify-center w-1/2 inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-white"
-                  >
-                    Metamask
-                  </button>
-
-                  <button
-                    type="button"
-                    className="-ml-px w-1/2 flex justify-center relative inline-flex items-center border rounded-r-md border-gray-300  px-4 py-2 text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none  focus:ring-white"
-                  >
-                    Wallet Connect
-                  </button>
-                </div>
-              )}
-
-              {step === 2 && (
-                <div
-                  className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
-                >
-                  {accountData?.address}
-                </div>
+              {(state === WalletConnectState.Connect ||
+                state === WalletConnectState.Error) && (
+                <>
+                  {step === 0 && (
+                    <div
+                      className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
+                    >
+                      Entering Gamebit...
+                    </div>
+                  )}
+                  {step === 1 && (
+                    <div
+                      className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
+                    >
+                      Select provider...
+                    </div>
+                  )}
+                  <div className="flex  justify-center mt-8 animate-pulse">
+                    {connectData.connectors.map(
+                      (connector) =>
+                        connector.ready && (
+                          <button
+                            key={connector.id}
+                            type="button"
+                            onClick={() => handleConnect(connector)}
+                            className=" w-1/2 items-center px-4 py-2 first:rounded-l-md last:rounded-r-md border border-gray-300 text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-white"
+                          >
+                            {connector.name}
+                          </button>
+                        )
+                    )}
+                  </div>
+                </>
               )}
 
-              {step === 2 && (
-                <div className="mt-8 flex justify-center items-center h-2/3">
-                  <button
-                    type="button"
-                    onClick={handleDisconnect}
-                    className="inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              {state === WalletConnectState.Connected && (
+                <>
+                  <div
+                    className={`text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
                   >
-                    Disconnect
-                  </button>
-                </div>
+                    Connected
+                  </div>
+                  <div
+                    className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
+                  >
+                    {accountData?.address}
+                  </div>
+                  <div className="mt-8 flex justify-center items-center h-2/3">
+                    <button
+                      type="button"
+                      onClick={handleDisconnect}
+                      className="inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    >
+                      Disconnect
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {state === WalletConnectState.ConfirmNetwork && (
+                <>
+                  <div
+                    className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
+                  >
+                    Wrong Network
+                  </div>
+                  {/* switchNetwork fn not available in case of walletconnect provider */}
+                  {switchNetwork ? (
+                    <div className="mt-8 flex justify-center items-center h-2/3">
+                      <button
+                        type="button"
+                        onClick={handleSwitchNetwork}
+                        className="inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      >
+                        Switch to {networkData.chains[0].name}
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mt-8 text-pink-600 text-xl after:bg-pink-500 text-ellipsis">
+                        Please switch to {networkData.chains[0].name} in your
+                        wallet
+                      </div>
+                      <div className="mt-8 flex justify-center items-center h-2/3">
+                        <button
+                          type="button"
+                          onClick={handleDisconnect}
+                          className="inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        >
+                          Disconnect
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
               )}
             </div>
           </Transition.Child>
