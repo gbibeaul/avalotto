@@ -13,7 +13,7 @@ const IndexPage = () => (
     <VideoBanner />
     <Hero />
     <Features />
-    <Featured />
+    {/* <Featured /> */}
   </HomePageLayout>
 );
 

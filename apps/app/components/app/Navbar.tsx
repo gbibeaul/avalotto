@@ -47,24 +47,20 @@ export const Navbar = () => {
                   <div className="flex md:space-x-1 lg:space-x-4 ">
                     <Link passHref href="/">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                        Dashboard
+                        Home
                       </span>
                     </Link>
-                    <Link passHref href="/games">
+
+                    <Link passHref href="/mint">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                        Games
+                        Mint
                       </span>
                     </Link>
-                    <Link passHref href="/">
-                      <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                        Counter
-                      </span>
-                    </Link>
-                    <Link passHref href="/events">
+                    {/* <Link passHref href="/events">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Events
                       </span>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -127,26 +123,20 @@ export const Navbar = () => {
                 as="span"
                 className="cursor-pointer bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                <Link href="/">Dashboard</Link>
+                <Link href="/">Home</Link>
               </Disclosure.Button>
               <Disclosure.Button
                 as="span"
                 className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                <Link href="/games">Games</Link>
+                <Link href="/mint">Mint</Link>
               </Disclosure.Button>
-              <Disclosure.Button
-                as="span"
-                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                <Link href="/">Counter</Link>
-              </Disclosure.Button>
-              <Disclosure.Button
+              {/* <Disclosure.Button
                 as="span"
                 className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 <Link href="/events">Events</Link>
-              </Disclosure.Button>
+              </Disclosure.Button> */}
             </div>
           </Disclosure.Panel>
         </>

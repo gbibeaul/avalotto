@@ -43,7 +43,7 @@ export const Featured = () => {
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
           {products.map((product) => (
-            <Link key={product.id} href={product.href}>
+            <Link passHref key={product.id} href={product.href}>
               <div className="group cursor-pointer relative drop-shadow-[0_70px_70px_rgba(242,180,176,0.25)]">
                 <div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden group-hover:opacity-75 lg:h-72 xl:h-80">
                   <Image

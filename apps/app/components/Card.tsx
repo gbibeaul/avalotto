@@ -39,7 +39,7 @@ export const Card: React.VFC<CardProps> = ({
       </div>
       <div className="bg-gray-50 px-5 py-3">
         <div className="text-sm">
-          <Link href={href}>
+          <Link passHref href={href}>
             <span className="cursor-pointer font-medium text-cyan-700 hover:text-cyan-900 underline">
               See Details
             </span>
