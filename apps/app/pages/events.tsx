@@ -87,9 +87,37 @@ export default function Example() {
     <GameLayout class="h-full">
       <section>
         <div className="md:grid bg-gray-800 p-12 overflow-scroll h-[75vh] rounded-xl md:grid-cols-2 md:divide-x md:divide-white mt-12">
+          <div className="hidden md:block md:pr-14">
+            <div className="flex items-center">
+              <h2 className="flex-auto font-semibold text-white">March 2022</h2>
+              <button
+                type="button"
+                className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-white "
+              >
+                <span className="sr-only">Previous month</span>
+                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-white "
+              >
+                <span className="sr-only">Next month</span>
+                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="mt-10 grid grid-cols-7 text-center text-xs leading-6 text-white">
+              <div>M</div>
+              <div>T</div>
+              <div>W</div>
+              <div>T</div>
+              <div>F</div>
+              <div>S</div>
+              <div>S</div>
+            </div>
+          </div>
           <section className="mt-12 md:mt-0 md:pl-14">
             <h2 className="font-semibold text-white">
-              Schedule for <time dateTime="2022-01-21">March, 2022</time>
+              Schedule for <time dateTime="2022-01-21">January 21, 2022</time>
             </h2>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-white">
               {meetings.map((meeting) => (
