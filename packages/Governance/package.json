@@ -1,8 +1,0 @@
-{
-    "name": "@gamble/governance",
-    "version": "1.0.0",
-    "main": "Lotto.json",
-    "description": "The resulting bytecode and ABI for gamble governance protocol",
-    "license": "MIT",
-    "types": "Governance.json"
-}
