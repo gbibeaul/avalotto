@@ -3,8 +3,10 @@ import Lottie from "lottie-react";
 import styles from "styles/Animations.module.css";
 import animation from "components/app/avax-coin-explossion.animation.json";
 import Head from "next/head";
+import Link from "next/link";
 import fetcher from "tranport/fetcher";
 import { useRouter } from "next/router";
+import { HomePageLayout } from "components/app/HomepageLayout";
 
 const description = `This exciting universe of NFTs is a fun and exciting
 place to explore. With tons of games and activities to
@@ -59,7 +61,7 @@ const MintPage = () => {
         <div className="flex justify-center items-center h-full ">
           {animationStep === 1 && (
             <Lottie
-              className={styles.fade}
+              className={`${styles.fade} h-full w-full`}
               animationData={animation}
               autoPlay={false}
               loop={false}
@@ -74,7 +76,23 @@ const MintPage = () => {
             <div className="inline-block bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle  sm:p-6">
               <div>
                 <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
-                  <div className="relative rounded-2xl px-6 py-10  overflow-hidden shadow-xl sm:px-12 sm:py-20">
+                  <Link passHref href="/">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 cursor-pointer"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="white"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
+                      />
+                    </svg>
+                  </Link>
+                  <div className="relative rounded-2xl px-6 py-10  overflow-hidden sm:px-12 sm:py-20">
                     <div className="relative">
                       <div className="sm:text-center">
                         <h2 className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
