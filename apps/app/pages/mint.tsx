@@ -33,7 +33,10 @@ const MintPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await fetcher("/mint", { method: "POST", body: JSON.stringify({ email }) });
+    await fetcher("/email-list", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    });
     setShowSuccess(true);
 
     setTimeout(() => {
