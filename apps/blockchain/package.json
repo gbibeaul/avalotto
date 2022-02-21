@@ -5,10 +5,12 @@
   "license": "MIT",
   "main": "typechain/index.ts",
   "scripts": {
+    "bet:test": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network Fuji scripts/bet-test-game.ts",
     "build": "hardhat compile",
     "deliver": "ts-node scripts/deliver-contract.ts",
     "deploy:dev": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network Local scripts/deploy-gamebit.ts",
     "deploy:fuji": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network Fuji scripts/deploy-gamebit.ts",
+    "deploy:test": "TS_NODE_TRANSPILE_ONLY=1 hardhat run --network Fuji scripts/deploy-test-game.ts",
     "gen-types": "yarn build  && TS_NODE_TRANSPILE_ONLY=1 ts-node scripts/types.ts",
     "start:chain": "hardhat node",
     "test": "npx hardhat test:jest"

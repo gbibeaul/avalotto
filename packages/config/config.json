@@ -21,6 +21,11 @@
         "name": "Auditor",
         "address": "0x0",
         "contractType": "Protocol"
+      },
+      "TestGame": {
+        "name": "TestGame",
+        "address": "0x0",
+        "contractType": "Game"
       }
     }
   },
@@ -50,6 +55,11 @@
         "name": "Auditor",
         "address": "0x07CcBBc85C417D08cCD9987d10F489d01231A9A7",
         "contractType": "Protocol"
+      },
+      "TestGame": {
+        "name": "TestGame",
+        "address": "0x6b4881652de8B5679509d90a94200B95647ffa45",
+        "contractType": "Game"
       }
     }
   },
@@ -79,6 +89,11 @@
         "name": "Auditor",
         "address": "0x0",
         "contractType": "Protocol"
+      },
+      "TestGame": {
+        "name": "TestGame",
+        "address": "0x0",
+        "contractType": "Game"
       }
     }
   }

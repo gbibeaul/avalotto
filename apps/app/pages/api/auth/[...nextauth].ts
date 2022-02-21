@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authorizationProvider } from "tranport/authorization";
+import { authorizationProvider } from "tranport/protocol";
 
 export default NextAuth({
   providers: [

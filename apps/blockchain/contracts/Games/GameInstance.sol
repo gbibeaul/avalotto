@@ -26,7 +26,7 @@ contract GameInstance is Game {
 
     // it is common for a game to open a public function that lets people play or bet
     function play() public payable {
-        require(msg.value == 1);
+        require(msg.value == 1 ether, "You must bet 1 ether");
         Game.acceptPlay(0.95 ether, 0.05 ether);
         jackpot += 0.95 ether;
 

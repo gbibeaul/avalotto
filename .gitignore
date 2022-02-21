@@ -13,3 +13,4 @@ node_modules
 !.yarn/sdks
 !.yarn/versions
 // end ignore list for Yarn v3
+.vercel

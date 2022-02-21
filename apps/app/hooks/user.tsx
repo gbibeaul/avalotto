@@ -1,4 +1,4 @@
-import { authorizationProvider } from "tranport/authorization";
+import { authorizationProvider } from "tranport/protocol";
 import * as React from "react";
 import { useAccount } from "wagmi";
 import useSWR from "swr";

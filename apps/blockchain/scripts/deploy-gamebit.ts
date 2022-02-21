@@ -5,7 +5,6 @@ import {
   deployAuthorization,
   deployGovernance,
   deployTreasury,
-  deployGameInstance,
   deployAuditor,
 } from "./deployers";
 

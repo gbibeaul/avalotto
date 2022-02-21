@@ -15,6 +15,7 @@
     "deploy:fuji": "yarn workspace @gamble/blockchain run deploy:fuji",
     "start:chain": "yarn workspace @gamble/blockchain run start:chain",
     "dev": "yarn workspace app run dev",
+    "dev:oracle": "yarn workspace @gamble/rng run dev",
     "dev:gamble": "yarn workspace gamble run dev"
   },
   "devDependencies": {
