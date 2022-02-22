@@ -12,7 +12,6 @@ abstract contract Game {
 
     address payable treasuryContract;
     uint256 contractTreasuryAccount = 0;
-    uint256 currentRequestNonce = 1;
     uint256 currentRequestId;
 
     event RngReceived(uint256);
@@ -73,21 +72,20 @@ abstract contract Game {
     function requestRng() internal {
         treasury.receiveRngPayment();
         auditor.getRequest(1);
-        currentRequestId = auditor.logRNGRequest(currentRequestNonce);
+        currentRequestId = auditor.logRNGRequest();
         emit RngRequested(currentRequestId);
-        currentRequestNonce++;
     }
 
-    function receiveRng(uint256 _rng, uint256 _requestId)
-        public
-        onlyRngOracle
-        returns (uint256)
-    {
+    function receiveRng(
+        uint256 _requestId,
+        uint256 _round,
+        uint256 _value
+    ) public onlyRngOracle returns (uint256) {
+        require(auditor.isRngValid(_requestId, _round, _value), "Invalid RNG");
         require(currentRequestId == _requestId, "Invalid request id");
-        auditor.consumeRNG(_rng, _requestId);
-        emit RngReceived(_rng);
-        useRng(_rng, _requestId);
-        return _rng;
+        emit RngReceived(_value);
+        useRng(_value, _requestId);
+        return _value;
     }
 
     function useRng(uint256 _rng, uint256 _requestId) internal virtual {}

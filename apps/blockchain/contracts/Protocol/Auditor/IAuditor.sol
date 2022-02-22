@@ -1,36 +1,23 @@
 interface IAuditor {
     enum RequestState {
         REQUESTED,
-        FULLFILLED,
-        CONSUMED
+        FULLFILLED
     }
     struct RNGRequest {
         address requestedBy;
-        uint256 requestNonce;
         uint256 requestedAt;
     }
 
     struct RNGFullfillment {
-        uint256 fullfillmentNonce;
+        uint256 round;
+        uint256 value;
         uint256 fullfillmentAt;
-        uint256 fullfillmentValue;
     }
 
-    struct RNGConsumption {
-        uint256 consumptionNonce;
-        uint256 consumptionAt;
-        uint256 consumptionValue;
-    }
+    function logRNGRequest() external returns (uint256);
 
-    function logRNGRequest(uint256 _requestNonce) external returns (uint256);
-
-    function fullfillRNG(
-        uint256 _fullfillmentNonce,
-        uint256 _fullfillmentValue,
-        uint256 _requestId
-    ) external;
-
-    function consumeRNG(uint256 _consumptionValue, uint256 _requestId) external;
+    function fullfillRNG(uint256 _fullfillmentValue, uint256 _requestId)
+        external;
 
     function getRequestState(uint256 _requestId)
         external
@@ -44,7 +31,9 @@ interface IAuditor {
         external
         returns (RNGFullfillment memory);
 
-    function getConsumption(uint256 _consumptionId)
-        external
-        returns (RNGConsumption memory);
+    function isRngValid(
+        uint256 _requestId,
+        uint256 _round,
+        uint256 _value
+    ) external returns (bool);
 }
