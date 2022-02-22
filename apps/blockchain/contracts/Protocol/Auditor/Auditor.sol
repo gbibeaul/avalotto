@@ -33,7 +33,6 @@ contract Auditor {
     }
 
     struct RNGFullfillment {
-        uint256 fullfillmentNonce;
         uint256 fullfillmentAt;
         uint256 fullfillmentValue;
     }
@@ -114,22 +113,20 @@ contract Auditor {
     /**
     ACTIONS TAKEN BY THE RNG ORACLE
     */
-    function fullfillRNG(
-        uint256 _fullfillmentNonce,
-        uint256 _fullfillmentValue,
-        uint256 _requestId
-    ) public onlyRngOracle {
+    function fulfillRNG(uint256 _fulfillmentValue, uint256 _requestId)
+        public
+        onlyRngOracle
+    {
         require(
             requestState[_requestId] == RequestState.REQUESTED,
             "This request is not in requested state, only requested non consumed requests can be fullfilled"
         );
         fullfillment[_requestId] = RNGFullfillment(
-            _fullfillmentNonce,
             block.timestamp,
-            _fullfillmentValue
+            _fulfillmentValue
         );
         requestState[_requestId] = RequestState.FULLFILLED;
-        emit RNGFullfilled(currentId, msg.sender, _fullfillmentValue);
+        emit RNGFullfilled(currentId, msg.sender, _fulfillmentValue);
     }
 
     /**
