@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/governance/Governor.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
@@ -14,16 +14,15 @@ contract GamebitGovernance is
     GovernorVotes,
     GovernorVotesQuorumFraction
 {
-    constructor(ERC20Votes _token)
+    constructor(IVotes _token)
         Governor("GamebitGovernance")
-
         GovernorSettings(
-            1, 
-            60480, 
+            1, /* 1 block */
+            17280, /* 1 day */
             10000e18
         )
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(60)
+        GovernorVotesQuorumFraction(5)
     {}
 
     // The following functions are overrides required by Solidity.

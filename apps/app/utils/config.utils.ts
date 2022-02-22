@@ -106,6 +106,7 @@ export const addresses = {
   Governance: configuration[network].contracts.Governance.address,
   Treasury: configuration[network].contracts.Treasury.address,
   Auditor: configuration[network].contracts.Auditor.address,
+  GameInstance: configuration[network].contracts.TestGame.address,
 };
 
 export const networkAddress = NetworkAddress[network];

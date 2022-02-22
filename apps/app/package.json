@@ -8,8 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@gamble/blockchain": "workspace:^",
-    "@gamble/config": "workspace:^",
+    "@gamble/blockchain": "*",
+    "@gamble/config": "*",
     "@headlessui/react": "latest",
     "@heroicons/react": "^1.0.5",
     "@supabase/supabase-js": "^1.30.4",

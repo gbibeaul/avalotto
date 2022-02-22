@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
 import { Switch } from "@headlessui/react";
 import { utils } from "ethers";
 import { useSigner } from "wagmi";
-import { useIsGameAuthorized, useIsGameRngAuthorized } from "hooks/adminGame";
-import { authorizationProvider } from "tranport/authorization";
-import useSWR, { useSWRConfig } from "swr";
+import { authorizationProvider } from "tranport/protocol";
+import useSWR from "swr";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");

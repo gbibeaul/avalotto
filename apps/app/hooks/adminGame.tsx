@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { authorizationProvider } from "tranport/authorization";
+import { authorizationProvider } from "tranport/protocol";
 
 export const useIsGameAuthorized = (gameName: string) => {
   const auth = authorizationProvider();
