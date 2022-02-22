@@ -7,7 +7,7 @@ export default function NftBanner() {
         <span>Play to win exclusive and ultra-rare collectibles.</span>
         <Link passHref href="/mint">
           <span className="text-white underline sm:ml-2 cursor-pointer">
-            Get Whitelisted!
+            Get on the allow list!
           </span>
         </Link>
       </p>
