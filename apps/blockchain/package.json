@@ -16,7 +16,7 @@
     "test": "npx hardhat test:jest"
   },
   "dependencies": {
-    "@gamble/config": "workspace:^",
+    "@gamble/config": "*",
     "@typechain/ethers-v5": "^9.0.0",
     "@typechain/hardhat": "^4.0.0",
     "isomorphic-unfetch": "^3.1.0",
