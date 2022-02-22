@@ -5028,9 +5028,11 @@ __metadata:
   linkType: hard
 
 "antlr4ts@npm:^0.5.0-alpha.4":
-  version: 0.5.0-alpha.4
-  resolution: "antlr4ts@npm:0.5.0-alpha.4"
-  checksum: 37948499d59477f5b5a8ea71dfb8b5330e71d5a7cee60f57351dd744219b8619fa6aac1a5b6ec1a9991846e8ddc9ca47680eb166c59b44333369b3115e7aa358
+  version: 0.5.0-dev
+  resolution: "antlr4ts@npm:0.5.0-dev"
+  dependencies:
+    source-map-support: ^0.5.16
+  checksum: 640dae2229124372b0329315e9614ae983bb80b1af237d8c0b3e90a2d85fb534e851c51d65d1897c92b36d27851d041ad8d95aab44af19cf7355b3ad11a3ddbf
   languageName: node
   linkType: hard
 
@@ -18380,7 +18382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.0, source-map-support@npm:^0.5.13, source-map-support@npm:^0.5.6":
+"source-map-support@npm:^0.5.0, source-map-support@npm:^0.5.13, source-map-support@npm:^0.5.16, source-map-support@npm:^0.5.6":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
