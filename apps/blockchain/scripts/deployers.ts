@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
 import {
   GameInstance,
@@ -6,6 +7,7 @@ import {
   GamebitToken,
   Auditor,
   GamebitTreasury,
+  GameBitNFT,
 } from "../typechain";
 
 export const deployToken = async (): Promise<GamebitToken> => {
@@ -79,4 +81,14 @@ export const deployGameInstance = async (
   await gameInstance.deployed();
 
   return gameInstance as GameInstance;
+};
+
+export const deployGameBitNFT = async (): Promise<GameBitNFT> => {
+  const GameBitNFTFactory = await ethers.getContractFactory("GameBitNFT");
+
+  const GameBitNFTF = await GameBitNFTFactory.deploy();
+
+  await GameBitNFTF.deployed();
+
+  return GameBitNFTF as GameBitNFT;
 };
