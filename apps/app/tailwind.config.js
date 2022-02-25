@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        bangers: ["Bangers", "cursive"],
+      },
       keyframes: {
         gradient: {
           "0%, 100%": { "background-position": "0% 50%" },

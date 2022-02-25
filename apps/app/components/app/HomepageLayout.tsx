@@ -9,7 +9,7 @@ export const HomePageLayout: React.FC = ({ children }) => {
     <ConnectModalProvider>
       <ConnectModal />
       <main className="bg-black f-full h-full">
-        <Navbar />
+        <Navbar showNftBanner />
         {children}
         <Footer />
       </main>

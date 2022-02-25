@@ -1,11 +1,12 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { HomePageLayout } from "components/app/HomepageLayout";
+import Image from "next/image";
 import {
   AnnotationIcon,
-  GlobeAltIcon,
+  CakeIcon,
   LightningBoltIcon,
-  MailIcon,
-  ScaleIcon,
+  PuzzleIcon,
+  CogIcon,
 } from "@heroicons/react/outline";
 import Head from "next/head";
 
@@ -14,38 +15,38 @@ const transferFeatures = [
     id: 1,
     name: "Bleeding Edge Gaming Infrastructure - Q1 2022",
     description:
-      "We are building the next generation of web3 gaming infrastructure to deliver the best gaming experience to our users. Trusted decentralized RNGs and smart contracts power the Gamebit engine",
-    icon: GlobeAltIcon,
+      "We are building the next generation of web3 gaming infrastructure to deliver the best gaming experience to our players. Trusted decentralized RNGs and smart contracts power the Gamebit engine.",
+    icon: CogIcon,
   },
   {
     id: 2,
     name: "NFT Launch - Q1 2022",
     description:
-      "Our mint will let early adopters of the Gamebit Universe play for free and earn rewards for playing games and activities on the Gamebit Universe. Test your luck with our NFT lottery and scratch cards",
-    icon: ScaleIcon,
+      "Our mint will allow early adopters of the Gamebit Universe to play  and earn rewards for playing games within the Gamebit Universe. Test your luck with our NFT lottery and scratch cards!",
+    icon: CakeIcon,
   },
   {
     id: 3,
-    name: "NFT fight league - Q3 2022",
+    name: "NFT battles - Q2 2022",
     description:
-      "Use your NFTs and sponsor them to fights against other collections of NFTs. Earn rewards for winning and participating in the league Matches will be broadcasted live on the Gamebit Universe",
+      "Use your NFTs in battle-style games against other NFTs from other collections. Earn rewards for winning and participating in league matches; games will be broadcasted live on the Gamebit Universe - Esports meets NFTs & web3.",
     icon: LightningBoltIcon,
   },
 ];
 const communicationFeatures = [
   {
     id: 1,
-    name: "Event platform",
+    name: "Events platform",
     description:
-      "Strong communities power web3. Gamebit is creating a platform for events, tournaments, giveaways and parties. Gamebit is where you will find the best happenigns in Avalanche!",
+      "Strong communities power web3. Gamebit is creating a platform for events, tournaments, giveaways and parties. Gamebit is where the game is for GameFi on Avalanche!",
     icon: AnnotationIcon,
   },
   {
     id: 2,
     name: "More Games!",
     description:
-      "Gamebit will launch NFT fantasy leagues, NFT racing and more. You will be able to play for free and earn rewards for playing games and activities on the Gamebit Universe. Mix and match your favorite NFT collections in those games!",
-    icon: MailIcon,
+      "Gamebit will launch NFT fantasy leagues, NFT racing and more. You will be able to play and earn rewards for playing games and activities in the Gamebit Universe. Mix and match your favorite NFT collections across an assortment of fun games!",
+    icon: PuzzleIcon,
   },
 ];
 
@@ -72,30 +73,31 @@ export default function Roadmap() {
                 Gamebit Universe Roadmap
               </h2>
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-white">
-                Enter a world of thrill and excitement with the Gamebit
-                Universe. Use your favorite NFT characters to take part in
-                online battles and tournaments, socialize with other players,
-                and much more.
+                nter a world of thrill and excitement with the Gamebit Universe.
+                Use your favorite NFT characters to participate in online
+                battles and tournaments: earn rewards for participating,
+                socialize with other players, and much more.
               </p>
             </div>
 
             <div className="relative mt-12 lg:mt-24 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
               <div className="relative">
                 <h3 className="text-2xl font-extrabold text-white tracking-tight sm:text-3xl">
-                  Phase 1 (Q2-2002): NFT, Protocol and Community
+                  Phase 1 (Q2-2022): NFT, Protocol and Community
                 </h3>
                 <p className="mt-3 text-lg text-white">
-                  The the first phase our roadmap see us launching the Universe
-                  and Protocol. Our NFT collection serves as the foundation of
-                  our community. Holders will receive exclusive first access to
-                  our event space, giveaways and discord community.
+                  The first phase of our roadmap will see us launching the
+                  Universe and Protocol. Our NFT collection is based on rarity
+                  and serves as the foundation of our community. Holders will
+                  receive exclusive VIP access to our event spaces, giveaways
+                  and the discord community.
                 </p>
 
                 <dl className="mt-10 space-y-10">
                   {transferFeatures.map((item) => (
                     <div key={item.id} className="relative">
                       <dt>
-                        <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-tr from-violet-500 to-orange-300 text-white">
                           <item.icon className="h-6 w-6" aria-hidden="true" />
                         </div>
                         <p className="ml-16 text-lg leading-6 font-medium text-white">
@@ -110,11 +112,12 @@ export default function Roadmap() {
                 </dl>
               </div>
 
-              <div className="mt-10 -mx-4 relative lg:mt-0" aria-hidden="true">
-                <img
-                  className="relative mx-auto"
-                  width={490}
-                  src="https://tailwindui.com/img/features/feature-example-1.png"
+              <div className="px-12 -mx-4 relative lg:mt-0" aria-hidden="true">
+                <Image
+                  width={200}
+                  height={200}
+                  layout="responsive"
+                  src="/Avascratch.jpg"
                   alt=""
                 />
               </div>
@@ -127,17 +130,18 @@ export default function Roadmap() {
                     Phase 2 (Q4 - 2022): Events, Giveaways and Games
                   </h3>
                   <p className="mt-3 text-lg text-white">
-                    Phase 2 will see us launching the events space and
-                    giveaways. Gamebit is a place for the community to come
-                    together. We will host token launch parties, metaverse
-                    concerts and conventions, and much more.
+                    In Phase 2, we will be launching our event spaces and
+                    giveaways. Gamebit is focused on community and will be a
+                    platform for the community to come together. We will host
+                    token launch parties, metaverse concerts, conventions and
+                    much more.
                   </p>
 
                   <dl className="mt-10 space-y-10">
                     {communicationFeatures.map((item) => (
                       <div key={item.id} className="relative">
                         <dt>
-                          <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                          <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-tr from-violet-500 to-orange-300 text-white">
                             <item.icon className="h-6 w-6" aria-hidden="true" />
                           </div>
                           <p className="ml-16 text-lg leading-6 font-medium text-white">
@@ -152,11 +156,15 @@ export default function Roadmap() {
                   </dl>
                 </div>
 
-                <div className="mt-10 -mx-4 relative lg:mt-0 lg:col-start-1">
-                  <img
-                    className="relative mx-auto"
-                    width={490}
-                    src="https://tailwindui.com/img/features/feature-example-2.png"
+                <div
+                  className="px-12 -mx-4 relative lg:mt-0"
+                  aria-hidden="true"
+                >
+                  <Image
+                    width={200}
+                    height={200}
+                    layout="responsive"
+                    src="/Avalotto.jpg"
                     alt=""
                   />
                 </div>
