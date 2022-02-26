@@ -5067,6 +5067,7 @@ __metadata:
     lottie-react: ^2.2.1
     next: 12.0.10
     next-auth: ^4.2.1
+    next-share: ^0.13.0
     next-transpile-modules: ^9.0.0
     postcss: ^8.4.6
     react: 17.0.2
@@ -14924,6 +14925,17 @@ __metadata:
     nodemailer:
       optional: true
   checksum: 08733486e731d38801606b70a9bfb21a213a5771f4de21ef7f64e13aa94b5cc45508b424ccb549b7b73be69ed597b87e3dcfba520c75195b46ccf44e3d199ea5
+  languageName: node
+  linkType: hard
+
+"next-share@npm:^0.13.0":
+  version: 0.13.0
+  resolution: "next-share@npm:0.13.0"
+  peerDependencies:
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-scripts: ^4.0.3
+  checksum: 372c2cab63725300864b9e6193b726e53cf5527006baf81dfe2a0e76fa637c38be9469c20e0332456816374f43139cf731a4168c399843caa361a8e67035b39a
   languageName: node
   linkType: hard
 

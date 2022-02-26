@@ -7,8 +7,11 @@ import {
   LightningBoltIcon,
   PuzzleIcon,
   CogIcon,
+  ShareIcon,
 } from "@heroicons/react/outline";
 import Head from "next/head";
+import { SocialShare } from "components/app/SocialShare";
+import { useRouter } from "next/router";
 
 const transferFeatures = [
   {
@@ -69,13 +72,18 @@ export default function Roadmap() {
         <div className="py-16 bg-black overflow-hidden lg:py-24">
           <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
             <div className="relative">
-              <h2 className="text-center text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
+              <h2 className="text-center text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl flex justify-center items-center">
                 Gamebit Universe Roadmap
+                <span className="ml-1 mt-1">
+                  <SocialShare title="Gamebit Roadmap" text="" />
+                </span>
               </h2>
+              <span className="flex justify-center mt-4"></span>
+
               <p className="mt-4 max-w-3xl mx-auto text-center text-xl text-white">
-                nter a world of thrill and excitement with the Gamebit Universe.
-                Use your favorite NFT characters to participate in online
-                battles and tournaments: earn rewards for participating,
+                Enter a world of thrill and excitement with the Gamebit
+                Universe. Use your favorite NFT characters to participate in
+                online battles and tournaments: earn rewards for participating,
                 socialize with other players, and much more.
               </p>
             </div>

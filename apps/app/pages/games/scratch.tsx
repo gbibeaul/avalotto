@@ -20,7 +20,7 @@ export default function Avalotto() {
                     }}
                     className="uppercase font-bangers text-6xl font-extrabold text-yellow-400 to-yellow-600"
                   >
-                    Scratch 'N'
+                    Scratch &apos;N&apos;
                   </h1>
 
                   <h1
