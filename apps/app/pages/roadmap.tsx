@@ -75,7 +75,10 @@ export default function Roadmap() {
               <h2 className="text-center text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl flex justify-center items-center">
                 Gamebit Universe Roadmap
                 <span className="ml-1 mt-1">
-                  <SocialShare title="Gamebit Roadmap" text="" />
+                  <SocialShare
+                    title="Gamebit Roadmap"
+                    text="Check out the @GameBitAVAX platform roadmap! at https://gamebit.app/roadmap/ #avax #gamefi"
+                  />
                 </span>
               </h2>
               <span className="flex justify-center mt-4"></span>
