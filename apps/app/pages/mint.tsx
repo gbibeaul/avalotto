@@ -71,7 +71,7 @@ const MintPage = () => {
             />
           )}
           {animationStep === 2 && (
-            <p className={`${styles.reveal} mt-1 italic text-9xl text-white`}>
+            <p className={`${styles.reveal} mt-1 italic text-8xl text-white`}>
               Gamebit
             </p>
           )}

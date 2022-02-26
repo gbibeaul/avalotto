@@ -2,6 +2,7 @@ import styles from "styles/Animations.module.css";
 import Image from "next/image";
 import { useConnectModal } from "hooks/user";
 import { useAccount } from "wagmi";
+import Link from "next/link";
 
 export const Hero = () => {
   const [_, setOpen] = useConnectModal();
@@ -43,14 +44,10 @@ export const Hero = () => {
                 We offer the best in crypto gaming with unmatched rewards and
                 bonuses. Visit us today and start playing to earn!
               </p>
-              {!accountData?.address && (
-                <button
-                  onClick={() => setOpen(true)}
-                  className="hidden lg:block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
-                >
-                  Connect your wallet
-                </button>
-              )}
+
+              <button className="hidden lg:block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-indigo-700 hover:bg-gray-50 sm:inline-block sm:w-auto">
+                <Link href="/roadmap">See the roadmap!</Link>
+              </button>
             </div>
           </div>
         </div>
