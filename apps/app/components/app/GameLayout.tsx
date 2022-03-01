@@ -9,7 +9,7 @@ export const GameLayout: React.FC = ({ children }) => {
     <ConnectModalProvider>
       <ConnectModal />
       <main className="bg-black h-full f-full">
-        <Navbar />
+        <Navbar showNftBanner={false} />
         <section className="relative flex justify-center">{children}</section>
         <Footer />
       </main>

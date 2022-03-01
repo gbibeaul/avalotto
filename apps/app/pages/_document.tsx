@@ -24,7 +24,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html className="h-full">
-        <Head />
+        <Head>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
         <body className="h-full bg-black">
           <Main />
           <NextScript />

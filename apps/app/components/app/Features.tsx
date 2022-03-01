@@ -11,13 +11,13 @@ const features = [
     name: "Earn rewards for playing games",
     icon: "/RewardIcon.svg",
     description:
-      "Each time you play, you'll be rewarded GMBT tokens, giving you a share of the profits of the game.",
+      "Get rewarded for playing games and activities on the Gamebit Universe.",
   },
   {
     name: "Exclusive events for NFT holders",
     icon: "/NftIcon.svg",
     description:
-      "Owner of All IN! NFTs can participate in exclusive events and earn GMBT tokens.",
+      "Owner of All IN! NFTs can participate in exclusive events and be the first to win!",
   },
 ];
 

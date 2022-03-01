@@ -8,16 +8,15 @@ import { useConnectModal } from "hooks/user";
 import NftBanner from "components/app/NftBanner";
 import { useState } from "react";
 
-export const Navbar = () => {
+export const Navbar = (props: { showNftBanner: boolean }) => {
   const [{ data: accountData }] = useAccount();
   const [_, setOpen] = useConnectModal();
-  const [showNftBanner, setShowNftBanner] = useState(true);
 
   return (
     <Disclosure as="nav" className="sticky top-0 z-20 bg-black">
       {({ open }) => (
         <>
-          {showNftBanner && <NftBanner />}
+          {props.showNftBanner && <NftBanner />}
           <div className="max-w-4xl mx-auto px-2 sm:px-4 md:px-8 md:max-w-5xl">
             <div className="relative flex items-center justify-between h-16">
               <div className="flex-1 flex  px-6 ">
@@ -48,6 +47,12 @@ export const Navbar = () => {
                     <Link passHref href="/">
                       <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Home
+                      </span>
+                    </Link>
+
+                    <Link passHref href="/roadmap">
+                      <span className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Roadmap
                       </span>
                     </Link>
 
@@ -118,12 +123,17 @@ export const Navbar = () => {
 
           <Disclosure.Panel className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
               <Disclosure.Button
                 as="span"
                 className="cursor-pointer bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 <Link href="/">Home</Link>
+              </Disclosure.Button>
+              <Disclosure.Button
+                as="span"
+                className="cursor-pointer bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                <Link href="/roadmap">Roadmap</Link>
               </Disclosure.Button>
               <Disclosure.Button
                 as="span"
