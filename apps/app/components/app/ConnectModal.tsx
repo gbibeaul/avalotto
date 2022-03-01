@@ -4,6 +4,7 @@ import styles from "styles/Animations.module.css";
 import { useConnectModal } from "hooks/user";
 import { Connector, useAccount, useConnect, useNetwork } from "wagmi";
 import { XIcon } from "@heroicons/react/solid";
+import fetcher from "tranport/fetcher";
 
 enum WalletConnectState {
   Connect,
@@ -23,6 +24,10 @@ export const ConnectModal: React.VFC = () => {
   const [state, setState] = useState<WalletConnectState>(
     WalletConnectState.Connect
   );
+  const [showEmailField, setShowEmailField] = useState(false);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   useEffect(() => {
     if (accountData?.address) {
@@ -72,6 +77,23 @@ export const ConnectModal: React.VFC = () => {
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const submitEmailNotifications = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      await fetcher("/email-list", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      setEmailSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting email for notifications: ', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -189,14 +211,46 @@ export const ConnectModal: React.VFC = () => {
                   >
                     {accountData?.address}
                   </div>
-                  <div className="mt-8 flex justify-center items-center h-2/3">
+                  <div className="mt-16 flex flex-col justify-center items-center h-2/3">
                     <button
                       type="button"
                       onClick={handleDisconnect}
-                      className="inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      className="flex items-center mb-4 px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                     >
                       Disconnect
                     </button>
+                    {(!emailSubmitted && 
+                      <>
+                        {(!showEmailField && <button
+                          type="button"
+                          onClick={() => setShowEmailField(true)}
+                          className="flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        >
+                          Sign up for email notifications!
+                        </button>)}
+                        {(showEmailField &&
+                          <form className="flex flex-col w-full">
+                            <input
+                              type="email"
+                              name="email-notifications"
+                              id="email-notifications"
+                              className="mb-2"
+                              value={email}
+                              onChange={(e) => setEmail(e?.target?.value ?? '')}
+                              placeholder={'example@email.com'}
+                            />
+                            <button
+                              type="submit"
+                              disabled={loading}
+                              onClick={submitEmailNotifications}
+                              className="w-32 px-4 py-2 self-center border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                            >
+                              Submit email
+                            </button>
+                          </form>
+                        )}
+                      </>
+                    )}
                   </div>
                 </>
               )}
