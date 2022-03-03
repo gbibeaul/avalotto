@@ -3,6 +3,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import styles from "styles/Animations.module.css";
 import { useConnectModal } from "hooks/user";
 import { Connector, useAccount, useConnect, useNetwork } from "wagmi";
+import { XIcon } from "@heroicons/react/solid";
+import fetcher from "tranport/fetcher";
 
 enum WalletConnectState {
   Connect,
@@ -22,6 +24,10 @@ export const ConnectModal: React.VFC = () => {
   const [state, setState] = useState<WalletConnectState>(
     WalletConnectState.Connect
   );
+  const [showEmailField, setShowEmailField] = useState(false);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   useEffect(() => {
     if (accountData?.address) {
@@ -74,6 +80,23 @@ export const ConnectModal: React.VFC = () => {
     }
   };
 
+  const submitEmailNotifications = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      await fetcher("/email-list", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      setEmailSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting email for notifications: ', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -113,23 +136,56 @@ export const ConnectModal: React.VFC = () => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl h-96 transform transition-all sm:my-8 sm:align-middle w-96 sm:p-6">
+              {/* Title of modal with close icon. */}
+              <div className={`flex text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}>
+                {(state === WalletConnectState.Connect ||
+                  state === WalletConnectState.Error) && (
+                  <>
+                    {step === 0 && (
+                      <div
+                        className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
+                      >
+                        Entering Gamebit...
+                      </div>
+                    )}
+                    {step === 1 && (
+                      <div
+                        className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
+                      >
+                        Select provider...
+                      </div>
+                    )}
+                  </>
+                )}
+                {state === WalletConnectState.Connected && (
+                  <>
+                    <div
+                      className={`text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
+                    >
+                      Connected
+                    </div>
+                  </>
+                )}
+                {state === WalletConnectState.ConfirmNetwork && (
+                  <>
+                    <div className="flex text-pink-600">
+                      <div
+                        className={`${styles.blink} text-xl after:bg-pink-500 text-ellipsis`}
+                      >
+                        Wrong Network
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                <button className="ml-auto" onClick={() => setOpen(false)}>
+                  <XIcon width={24} />
+                </button>
+              </div>
+
               {(state === WalletConnectState.Connect ||
                 state === WalletConnectState.Error) && (
                 <>
-                  {step === 0 && (
-                    <div
-                      className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
-                    >
-                      Entering Gamebit...
-                    </div>
-                  )}
-                  {step === 1 && (
-                    <div
-                      className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500`}
-                    >
-                      Select provider...
-                    </div>
-                  )}
                   <div className="flex  justify-center mt-8 animate-pulse">
                     {connectData.connectors.map(
                       (connector) =>
@@ -151,34 +207,56 @@ export const ConnectModal: React.VFC = () => {
               {state === WalletConnectState.Connected && (
                 <>
                   <div
-                    className={`text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
-                  >
-                    Connected
-                  </div>
-                  <div
                     className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
                   >
                     {accountData?.address}
                   </div>
-                  <div className="mt-8 flex justify-center items-center h-2/3">
+                  <div className="mt-16 flex flex-col justify-center items-center h-2/3">
                     <button
                       type="button"
                       onClick={handleDisconnect}
-                      className="inline-flex items-center px-4 py-2  border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      className="flex items-center mb-4 px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                     >
                       Disconnect
                     </button>
+                    {(!emailSubmitted && 
+                      <>
+                        {(!showEmailField && <button
+                          type="button"
+                          onClick={() => setShowEmailField(true)}
+                          className="flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        >
+                          Sign up for email notifications!
+                        </button>)}
+                        {(showEmailField &&
+                          <form className="flex flex-col w-full">
+                            <input
+                              type="email"
+                              name="email-notifications"
+                              id="email-notifications"
+                              className="mb-2"
+                              value={email}
+                              onChange={(e) => setEmail(e?.target?.value ?? '')}
+                              placeholder={'example@email.com'}
+                            />
+                            <button
+                              type="submit"
+                              disabled={loading}
+                              onClick={submitEmailNotifications}
+                              className="w-32 px-4 py-2 self-center border-transparent shadow-sm text-sm font-medium rounded-md text-white Pastel bg-gradient-to-tr from-violet-500 to-orange-300 hover:opcaity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                            >
+                              Submit email
+                            </button>
+                          </form>
+                        )}
+                      </>
+                    )}
                   </div>
                 </>
               )}
 
               {state === WalletConnectState.ConfirmNetwork && (
                 <>
-                  <div
-                    className={`${styles.blink} text-pink-600 text-xl after:bg-pink-500 text-ellipsis`}
-                  >
-                    Wrong Network
-                  </div>
                   {/* switchNetwork fn not available in case of walletconnect provider */}
                   {switchNetwork ? (
                     <div className="mt-8 flex justify-center items-center h-2/3">
@@ -211,6 +289,7 @@ export const ConnectModal: React.VFC = () => {
               )}
             </div>
           </Transition.Child>
+          
         </div>
       </Dialog>
     </Transition.Root>
